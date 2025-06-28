@@ -1,0 +1,23 @@
+{
+  "name": "jsondb-lite",
+  "version": "2.0.0",
+  "description": "",
+  "main": "dist/jsondb.js",
+  "types": "dist/jsondb.d.ts",
+  "scripts": {
+    "start": "ts-node src/main.ts",
+    "build": "tsc"
+  },
+  "files": [
+    "dist"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@sufalctl/rwlock": "^1.0.0",
+    "typescript": "^5.8.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.4"
+  }
+}
