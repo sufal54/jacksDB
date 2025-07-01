@@ -402,3 +402,4 @@ export class Collection {
             if (!indexData) {
                 continue;
             }
+            for (const offset of indexData[val.toString()]) {
