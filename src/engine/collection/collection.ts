@@ -280,3 +280,4 @@ export class Collection {
                     results.push(doc);
                 }
             }
+        }
