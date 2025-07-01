@@ -147,3 +147,4 @@ export class Collection {
                 // we pass if target not null and target is object and its not a array 
                 // so pass object for marge else empty object as sourse for overwrite
                 // and srcvalue as target for marge
+                target[key] = this.deepMerge(
