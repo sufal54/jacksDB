@@ -10,3 +10,4 @@ export class Collection {
         this.fileManager = new FileManager(collectionName, secret);
     }
 
+    /**
