@@ -154,3 +154,4 @@ export class Collection {
             } else {
                 target[key] = srcVal;
             }
+        }
