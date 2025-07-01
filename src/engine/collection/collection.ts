@@ -344,3 +344,4 @@ export class Collection {
             if (doc.offset == null) {
                 console.warn("Skipping null offset");
                 continue;
+            }
