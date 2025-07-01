@@ -102,3 +102,4 @@ export class Collection {
             } else {
                 if (Array.isArray(fieldVal)) {
                     // return false if value is not have in array
+                    if (!fieldVal.includes(value)) {
