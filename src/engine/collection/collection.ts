@@ -322,3 +322,4 @@ export class Collection {
             return;
         }
 
+        const target = found[0];
