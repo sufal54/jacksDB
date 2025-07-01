@@ -366,3 +366,4 @@ export class Collection {
             const val = query[key];
             const indexData = await this.fileManager.indexFind(`${key}.idx.bson`, val.toString());
             if (!indexData) {
+                continue;
