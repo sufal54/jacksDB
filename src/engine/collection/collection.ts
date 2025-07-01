@@ -96,3 +96,4 @@ export class Collection {
                             break;
                         default:
                             console.warn(`Unsupported operator: ${op}`);
+                            return false;
