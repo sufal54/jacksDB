@@ -217,3 +217,4 @@ export class Collection {
             console.error("Document does not macth with schema!");
             return;
         }
+        await this.fileManager.dataBaseInsert("main.db.bson", doc);
