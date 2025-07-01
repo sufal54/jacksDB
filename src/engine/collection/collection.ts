@@ -48,3 +48,4 @@ export class Collection {
                         case "$eq":
                             if (fieldVal !== val) {
                                 return false;
+                            }
