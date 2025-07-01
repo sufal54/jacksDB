@@ -251,3 +251,4 @@ export class Collection {
 
         let usedIndex = false;
         for (const key of keys) {
+            const val = query[key];
