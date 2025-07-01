@@ -52,3 +52,4 @@ export class Collection {
                             break;
                         case "$ne":
                             if (fieldVal === val) {
+                                return false;
