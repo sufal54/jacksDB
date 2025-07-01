@@ -345,3 +345,4 @@ export class Collection {
                 console.warn("Skipping null offset");
                 continue;
             }
+
