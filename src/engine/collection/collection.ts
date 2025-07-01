@@ -16,3 +16,4 @@ export class Collection {
      * @param query - query
      * @returns - if query condition is in our doc so return true else false
      */
+
