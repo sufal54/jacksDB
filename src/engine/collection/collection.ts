@@ -189,3 +189,4 @@ export class Collection {
             for (let i = 0; i < parts.length; i++) {
                 const part = parts[i];
                 // case last part then add it
+                if (i === parts.length - 1) {
