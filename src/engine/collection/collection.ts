@@ -226,3 +226,4 @@ export class Collection {
      * @param docs[] - array of document
      * @returns 
      */
+
