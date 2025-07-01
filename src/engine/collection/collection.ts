@@ -164,3 +164,4 @@ export class Collection {
      * Example:
      * Input:
      * {
+     *   "user.name": "Alice",
