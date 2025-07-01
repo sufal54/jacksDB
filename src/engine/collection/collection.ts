@@ -215,3 +215,4 @@ export class Collection {
         // if fasle donot insert return
         if (!validated) {
             console.error("Document does not macth with schema!");
+            return;
