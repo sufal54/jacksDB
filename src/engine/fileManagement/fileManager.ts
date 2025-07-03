@@ -369,3 +369,13 @@ export class FileManager {
                 await this.deleteFieldFromIndexes(k, v, offset, fullPath);
             }
             // Primitive Data
+        } else if (["string", "number", "boolean"].includes(typeof value)) {
+            const valStr = value.toString();
+            const indexFile = `${fullPath}.idx.bson`;
+            await this.deleteFileIdxOffset(indexFile, valStr, offset);
+        }
+    }
+
+
+
+
