@@ -339,3 +339,13 @@ export class Collection {
     async updateMany(filter: Record<string, any>, update: Partial<any>): Promise<void> {
         const found = await this.find(filter);
         const updateParsed = this.dotPathToObject(update);
+
+        for (const doc of found) {
+            if (doc.offset == null) {
+                console.warn("Skipping null offset");
+                continue;
+            }
+
+            const deepCloned = structuredClone(doc);
+            delete deepCloned.offset;
+
