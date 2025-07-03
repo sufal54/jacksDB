@@ -349,3 +349,13 @@ export class FileManager {
     }
 
     /**
+     * 
+     * @param key 
+     * @param value 
+     * @param offset 
+     * @param pathPrefix - Object case for join prevous filed
+     */
+    private async deleteFieldFromIndexes(key: string, value: any, offset: number, pathPrefix: string = ""): Promise<void> {
+        const fullPath = [pathPrefix, key].filter(Boolean).join(".");
+        // Handle nested values usin g recurstion
+        // Case value array
