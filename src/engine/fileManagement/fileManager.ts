@@ -179,3 +179,13 @@ export class FileManager {
             await file.close().catch((e) => console.error(e));
             rel();
         }
+    }
+
+    /**
+     * Time O(1)
+     * It's takes Database offset and MArk it as deleted
+     * @param offset - Database offset
+     * @returns 
+     */
+    async dataBaseDelete(offset: number): Promise<void> {
+        const [_, rel] = await this.getLock(this.mainDB).write();
