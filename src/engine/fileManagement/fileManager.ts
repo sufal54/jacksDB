@@ -639,3 +639,13 @@ export class FileManager {
             await write.sync();
         } catch (err) {
             console.error("appendIndexEntry error:", err);
+        } finally {
+            await write.close();
+            rel();
+        }
+    }
+
+
+    /**
+        * Delete main database field indexs update index file
+        * @param fileName - name of file with extenstion
