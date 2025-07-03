@@ -89,3 +89,13 @@ export class Collection {
                             if (typeof val !== "boolean") {
                                 return false;
                             }
+                            const exists = fieldVal !== undefined;
+                            if (val !== exists) {
+                                return false;
+                            }
+                            break;
+                        default:
+                            console.warn(`Unsupported operator: ${op}`);
+                            return false;
+                    }
+                }
