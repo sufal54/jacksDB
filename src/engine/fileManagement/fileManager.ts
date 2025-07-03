@@ -629,3 +629,13 @@ export class FileManager {
      * @param {Partial<IndexEntry>} doc - The document to store (value-to-offset mapping).
      */
     private async appendIndexEntry(fileName: string, doc: Partial<IndexEntry>): Promise<void> {
+        const [_, rel] = await this.getLock(fileName).write();
+        const fullPath = path.join(this.dataBasePath, fileName);
+        const write = await fsp.open(fullPath, "a");
+        try {
+            doc.offset = (await write.stat()).size;
+            const encodeDoc = this.crypto.encrypt(JSON.stringify(doc));
+            await write.write(encodeDoc);
+            await write.sync();
+        } catch (err) {
+            console.error("appendIndexEntry error:", err);
