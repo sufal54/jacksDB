@@ -389,3 +389,13 @@ export class FileManager {
      */
 
 
+    async dataBaseInsert(fileName: string, ...docs: Partial<IndexEntry>[]): Promise<void> {
+
+        const flatDocs: Partial<IndexEntry>[] = docs.flat(); // Remove nestet array
+
+        const [_, rel] = await this.getLock(fileName).write();
+        const fullPath = path.join(this.dataBasePath, fileName);
+        const write = await fsp.open(fullPath, "a");
+
+        // Size of file is the offset of new Doc
+        let offset = (await write.stat()).size;
