@@ -609,3 +609,13 @@ export class FileManager {
         // Ensure fiel exist or create new
         this.ensureFile(file);
         const valStr = val.toString();
+
+        const exists = await this.indexFind(file, valStr);
+        if (exists) {
+            // Append anothe offset
+            await this.addFileIdxOffset(file, valStr, offset);
+        } else {
+            // Create new index object
+            const idxDoc = { [valStr]: [offset], offset };
+            await this.appendIndexEntry(file, idxDoc);
+        }
