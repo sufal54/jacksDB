@@ -539,3 +539,13 @@ export class FileManager {
                         }
 
                         const capacity = buffer.readUInt32LE(i + 5); // Datas capacity
+                        const totalSize = 1 + 4 + 4 + 16 + capacity; // Entire Data
+
+                        if (i + totalSize > buffer.length) {// Incomplete block body
+                            isBroke = true;
+                            break;
+                        }
+                        // If it Mark as Vaild Data
+                        if (tag === 0xFD) {
+                            const bufferData = buffer.slice(i, i + totalSize); // Slice block of data
+                            const decryptData = this.crypto.decrypt(bufferData); // Encrypt the data
