@@ -119,3 +119,13 @@ export class FileManager {
                     }
 
                     // Skip both deleted (0xDE) and valid (0xFD) blocks
+                    offset += totalSize;
+                }
+
+                leftover = buffer.slice(offset); // Store leftover for next chunk
+            });
+
+            readStream.on("end", () => {
+                readStream.destroy();
+                rel();
+                resolve(results);
