@@ -669,3 +669,13 @@ export class FileManager {
         }
 
         const [_, rel] = await this.getLock(fileName).write();
+        const fileHandle = await fsp.open(fullPath, 'r+');
+
+        try {
+            idxData[value].push(...dataBaseOffset);
+            const newData: Record<string, any> = {
+                [value]: idxData[value],
+                offset: idxData.offset,
+            };
+
+            const encodeDoc = this.crypto.encrypt(JSON.stringify(newData));
