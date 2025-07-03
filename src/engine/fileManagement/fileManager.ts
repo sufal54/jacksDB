@@ -739,3 +739,13 @@ export class FileManager {
             await fileHandle.close();
             rel();
             return;
+        }
+
+        // Update block with remaining offsets
+        idxData[value] = newOffsetArray;
+        const newData: Record<string, any> = {};
+        newData[value] = newOffsetArray;
+        newData.offset = idxData.offset;
+
+        try {
+            const encodeDoc = this.crypto.encrypt(JSON.stringify(newData));
