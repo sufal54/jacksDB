@@ -159,3 +159,13 @@ export class FileManager {
 
             // Invalidate tag
             if (headerBuffer[0] !== 0xFD) {
+                // console.warn("Invalid Header: not a valid block")
+                return;
+            }
+
+            // const length = headerBuffer.readUInt32LE(1);
+            const capacity = headerBuffer.readUInt32LE(5);
+
+            // Total block size
+            const totalSize = 1 + 4 + 4 + 16 + capacity;
+
