@@ -259,3 +259,13 @@ export class FileManager {
 
     /**
      * update database if new doc length is greater then its capacity then delete old doce append new also update indxes
+     * @param offset - offset of database
+     * @param newDoc - the doc we are going to insert
+     * @returns 
+     */
+
+    async dataBaseUpdate(offset: number, newDoc: Partial<IndexEntry>) {
+        const [_, rel] = await this.getLock(this.mainDB).read();
+        const fullPath = path.join(this.dataBasePath, this.mainDB);
+        const readFile = await fsp.open(fullPath, "r+");
+
