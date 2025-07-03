@@ -149,3 +149,13 @@ export class FileManager {
      */
     async dataBaseFind(offset: number) {
         const [_, rel] = await this.getLock(this.mainDB).read();
+        const fullPath = path.join(this.dataBasePath, this.mainDB);
+        const file = await fsp.open(fullPath, 'r');
+
+        try {
+            // Read the header first: 1 + 4 + 4 + 16 = 25 bytes
+            const headerBuffer = Buffer.alloc(25);
+            await file.read(headerBuffer, 0, 25, offset);
+
+            // Invalidate tag
+            if (headerBuffer[0] !== 0xFD) {
