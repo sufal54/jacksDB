@@ -29,3 +29,13 @@ export class FileManager {
         this.crypto = new Crypto(secret);
 
         // Make path if does not exist
+        fs.mkdirSync(this.dataBasePath, { recursive: true });
+
+        // Main DB file
+        this.ensureFile(`main.db.bson`);
+
+    }
+    /**
+     * Ensure file and lock file exists if not it will create in sync mananer
+     * @param {string} fileName - name of file path with extension
+     */
