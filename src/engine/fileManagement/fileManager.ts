@@ -719,3 +719,13 @@ export class FileManager {
         }
 
         const [_, rel] = await this.getLock(fileName).write();
+        const fileHandle = await fsp.open(fullPath, 'r+');
+
+        const offsetArray = idxData[value];
+        const newOffsetArray = offsetArray.filter((item) => item !== dataBaseOffset);
+
+        if (offsetArray.length === newOffsetArray.length) {
+            await fileHandle.close();
+            rel();
+            return;
+        }
