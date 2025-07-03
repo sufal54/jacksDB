@@ -319,3 +319,13 @@ export class FileManager {
             capacityBuf.copy(encoded, 5);
 
             // Cut extra buffer we adds +50 byte for future update
+            // Some case it will Overlap with next Doc
+            encoded = encoded.slice(0, 1 + 4 + 4 + 16 + newLength);
+
+            const [_, writeRel] = await this.getLock(this.mainDB).write();
+            const writeFile = await fsp.open(fullPath, "r+");
+            // Overwrite new Doc on old location
+            await writeFile.write(encoded, 0, encoded.length, offset);
+            await writeFile.sync(); // Flush data into disk
+            await writeFile.close();
+            writeRel();
