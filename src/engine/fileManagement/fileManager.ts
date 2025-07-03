@@ -829,3 +829,13 @@ export class FileManager {
                                 if (err) {
                                     writeStream.destroy();
                                     readStream.destroy();
+                                    rel();
+                                    return reject(err);
+                                }
+                            });
+                        }
+
+                        i += totalSize; // Skip either block type
+                    } else {
+                        // Not part of a block, just skip or optionally handle
+                        i++;
