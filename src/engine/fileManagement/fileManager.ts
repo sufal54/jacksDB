@@ -199,3 +199,13 @@ export class FileManager {
             await file.read(header, 0, 25, offset);
 
             if (header[0] !== 0xFD) {
+                // await file.close();
+                // rel();
+                console.warn("Block already deleted or invalid");
+                return;
+            }
+
+            const capacity = header.readUInt32LE(5);
+            const totalSize = 25 + capacity;
+            const fullBuf = Buffer.alloc(totalSize);
+            await file.read(fullBuf, 0, totalSize, offset);
