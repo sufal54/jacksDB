@@ -329,3 +329,13 @@ export class Collection {
         const deepCloned = structuredClone(target);
 
         // It's overwrite update vallue into clone and return updated doc 
+        const newDoc = this.deepMerge(deepCloned, updateParsed);
+        // delete newDoc.offset;
+        await this.fileManager.dataBaseUpdate(target.offset, newDoc);
+
+
+    }
+
+    async updateMany(filter: Record<string, any>, update: Partial<any>): Promise<void> {
+        const found = await this.find(filter);
+        const updateParsed = this.dotPathToObject(update);
