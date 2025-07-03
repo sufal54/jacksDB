@@ -839,3 +839,13 @@ export class FileManager {
                     } else {
                         // Not part of a block, just skip or optionally handle
                         i++;
+                    }
+                }
+
+                if (isBroke) {
+                    leftover = buffer.slice(i); // Save only the unprocessed part
+                } else {
+                    leftover = Buffer.alloc(0); // Clean it — nothing to carry over
+                }
+            });
+
