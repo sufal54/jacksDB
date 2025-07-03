@@ -519,3 +519,13 @@ export class FileManager {
             const [_, rel] = await this.getLock(fileName).read();
             const readStream = fs.createReadStream(path.join(this.dataBasePath, fileName));
             let leftover = Buffer.alloc(0); // Store half or incomplete previous chunk data
+
+            let isBroke = false; // check is leftover store data or clean
+
+            readStream.on("data", (chunk) => {
+
+                // Marge prevouse data and curren chunk data
+                const buffer = Buffer.concat([leftover, Buffer.from(chunk)]);
+                let i = 0;
+
+                while (i < buffer.length) {
