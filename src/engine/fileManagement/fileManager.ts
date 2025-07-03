@@ -79,3 +79,13 @@ export class FileManager {
     async fullScan(): Promise<any[]> {
         const results: any[] = [];
         const [_, rel] = await this.getLock(this.mainDB).read();
+        const fullPath = path.join(this.dataBasePath, this.mainDB);
+
+        return new Promise((resolve, reject) => {
+            const readStream = fs.createReadStream(fullPath);
+            let leftover = Buffer.alloc(0);
+
+            readStream.on("data", (chunk) => {
+                const buffer = Buffer.concat([leftover, Buffer.from(chunk)]);
+                let offset = 0;
+
