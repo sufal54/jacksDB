@@ -469,3 +469,13 @@ export class FileManager {
             const valStr = value.toString();
             if (!map.has(basePath)) {
                 map.set(basePath, new Map());
+            }
+            const pathMap = map.get(basePath)!;
+            if (!pathMap.has(valStr)) {
+                pathMap.set(valStr, []);
+            }
+            pathMap.get(valStr)!.push(offset);
+        }
+    }
+
+    /**
