@@ -21,3 +21,4 @@ export class JacksDB {
             this.collections.set(name, col);
         }
         return this.collections.get(name)!;
+    }
