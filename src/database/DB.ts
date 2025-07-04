@@ -13,3 +13,4 @@ export class JacksDB {
      * 
      * @param name - name of collection
      * @param schema - collection schema
+     * @returns -new collection object
