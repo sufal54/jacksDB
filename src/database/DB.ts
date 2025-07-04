@@ -6,3 +6,4 @@ export class JacksDB {
     private secret?: string;
 
     constructor(secret?: string) {
+        this.secret = secret;
