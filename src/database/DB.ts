@@ -15,3 +15,4 @@ export class JacksDB {
      * @param schema - collection schema
      * @returns -new collection object
      */
+    collection(name: string, schema: Schema): Collection {
