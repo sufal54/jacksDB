@@ -9,3 +9,4 @@ export class JacksDB {
         this.secret = secret;
     }
 
+    /**
