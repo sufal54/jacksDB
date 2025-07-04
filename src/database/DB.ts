@@ -17,3 +17,4 @@ export class JacksDB {
      */
     collection(name: string, schema: Schema): Collection {
         if (!this.collections.has(name)) {
+            const col = new Collection(name, schema, this.secret);
