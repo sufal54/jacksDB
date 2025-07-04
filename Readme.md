@@ -109,3 +109,13 @@ await users.find(
     skip: 10,
     limit: 5,
   }
+);
+```
+
+- findOne(query)
+
+```ts
+const user = await users.findOne({ name: "Alice" });
+```
+
+## Update Documents
