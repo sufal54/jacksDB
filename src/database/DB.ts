@@ -16,3 +16,4 @@ export class JacksDB {
      * @returns -new collection object
      */
     collection(name: string, schema: Schema): Collection {
+        if (!this.collections.has(name)) {
