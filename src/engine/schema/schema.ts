@@ -19,3 +19,13 @@ class Schema {
                 const item = value[0];
                 if (this.isPlainObject(item)) {
                     // Array of nested schemas
+                    this.definition[key] = [new Schema(item as SchemaDefinition)];
+                } else {
+                    // Array of primitives
+                    this.definition[key] = value;
+                }
+            } else if (this.isPlainObject(value)) {
+                // Nested object schema
+                this.definition[key] = new Schema(value as SchemaDefinition);
+            } else {
+                // Primitive (StringConstructor, NumberConstructor, etc.)
