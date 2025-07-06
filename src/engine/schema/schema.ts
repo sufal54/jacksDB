@@ -39,3 +39,13 @@ class Schema {
         return typeof obj === "object" && obj !== null && !Array.isArray(obj) && !(obj instanceof Schema);
     }
 
+    validate(doc: any): boolean {
+        // Check for unexpected fields
+        for (const key in doc) {
+            if (!(key in this.definition)) {
+                throw new Error(`Unexpected field: ${key}`);
+            }
+        }
+
+        for (const key in this.definition) {
+            const expected = this.definition[key];
