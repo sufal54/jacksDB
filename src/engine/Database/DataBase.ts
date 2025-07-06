@@ -1,266 +1,227 @@
-import fs from "node:fs/promises";
+import fs from "node:fs";
+import fsp from "node:fs/promises";
 import path from "node:path";
-import Schema from "../schemaValid/schemaValid";
-import { FileManager } from "../fileManagement/fileManager";
+import crypto from "node:crypto";
 
-export type Primitive = string | number | boolean;
+interface Document {
+    _id: string;
+    [key: string]: any;
+}
 
-// Field logical opreators
-export type QueryOperator =
-    | { $eq: Primitive }
-    | { $ne: Primitive }
-    | { $gt: number }
-    | { $gte: number }
-    | { $lt: number }
-    | { $lte: number }
-    | { $in: Primitive[] }
-    | { $nin: Primitive[] };
+interface IndexEntry {
+    _id: string;
+    offset: number;
+    length: number;
+    deleted?: boolean;
+}
 
-// Query can be a field match or a logical query
-export type Query =
-    | Record<string, Primitive | QueryOperator>
-    | { $or: Query[] }
-    | { $and: Query[] };
+export class JsonDBLite<T extends Document> {
+    private dataPath: string;
+    private mainIndexPath: string;
+    private fieldIndexes: Record<string, Map<string, Set<string>>> = {};
+    private fullTextIndexes: Record<string, Map<string, Set<string>>> = {};
 
-export class Database<T extends Record<string, any>> {
-    private DatabaseName = "JsonDBLite";
-    private data: T[] = [];
-    private index: Map<string, Map<string, Set<number>>> = new Map();
+    constructor(private dbDir: string, private indexedFields: (keyof T)[], private fullTextFields: (keyof T)[]) {
+        this.dataPath = path.join(dbDir, "data.db");
+        this.mainIndexPath = path.join(dbDir, "main.idx.json");
 
-    constructor(
-        private name: string,
-        private schema: Schema,
-        private indexFields: (keyof T)[]
-    ) {
-        this.DatabaseName = path.join(this.DatabaseName, name);
-        const fileManager = new FileManager(name, schema);
-    }
-    // Returns Database path
-    private get dataFile() {
-        return path.join(this.DatabaseName, `${this.name}.db.bson`);
-    }
-    // Returns index file path
-    private get indexFile() {
-        return path.join(this.DatabaseName, `${this.name}.idx.bson`);
-    }
-    // Load Database and index file data on memory
-    async load(): Promise<void> {
-        try {
-            // Load Database data
-            const raw = await fs.readFile(this.dataFile, "utf8");
-            this.data = JSON.parse(raw);
-        } catch {
-            this.data = [];
-            // Database File does not exist
-            // Create file with empty array
-            await fs.mkdir(this.DatabaseName, { recursive: true });
-            await fs.writeFile(this.dataFile, "");
-        }
-
-        try {
-            // Load indexs
-            const rawIdx = await fs.readFile(this.indexFile, "utf8");
-            // Parse json to object
-            const parsed: Record<string, Record<string, number[]>> = JSON.parse(rawIdx);
-            // Clear previous index data
-            this.index.clear();
-            // Iterate all index fields
-            for (const field in parsed) {
-                // Create map that store value which is key here and it's index
-                const map = new Map<any, Set<number>>();
-
-                for (const key in parsed[field]) {
-                    map.set(key, new Set(parsed[field][key]));
-                }
-                this.index.set(field, map);
-            }
-        } catch {
-            // load all fields from Database and its index
-            this.rebuildIndex();
-            await this.saveIndex();
-            // Index File does not exist
-            // Save empty index file
-            await fs.mkdir(this.DatabaseName, { recursive: true });
-            await fs.writeFile(this.indexFile, "");
+        if (!fs.existsSync(dbDir)) {
+            fs.mkdirSync(dbDir, { recursive: true });
         }
     }
 
-    // Save this.data on Database
-    private async save(): Promise<void> {
-        await fs.mkdir(this.DatabaseName, { recursive: true });
-        await fs.writeFile(this.dataFile, JSON.stringify(this.data, null, 2));
-    }
-    // Get index and save it this.index
-    private async saveIndex(): Promise<void> {
-        const json: Record<string, Record<any, number[]>> = {};
-        for (const [field, fieldMap] of this.index.entries()) {
-            json[field] = {};
-            for (const [key, ids] of fieldMap.entries()) {
-                json[field][key] = Array.from(ids);
-            }
-        }
-        // overwrite
-        await fs.writeFile(this.indexFile, JSON.stringify(json, null, 2));
+    async init() {
+
+        await this.loadMainIndex();
+        await this.loadFieldIndexes();
+        await this.loadFullTextIndexes();
+
+
     }
 
-    // Iterate all field in data and build indexes
-    private rebuildIndex(): void {
-        this.index.clear();
-        for (let i = 0; i < this.data.length; i++) {
-            const doc = this.data[i];
-            for (const field of this.indexFields) {
-                const val = this.getValue(doc, field as string);
-                const map = this.index.get(field as string) ?? new Map();
-                if (!map.has(val)) map.set(val, new Set());
-                map.get(val)!.add(i);
-                this.index.set(field as string, map);
+    private async loadMainIndex() {
+        if (!fs.existsSync(this.mainIndexPath)) {
+            await fsp.writeFile(this.mainIndexPath, "[]");
+        }
+    }
+
+    private async loadFieldIndexes() {
+        for (const field of this.indexedFields) {
+            const indexPath = this.getFieldIndexPath(field);
+            if (fs.existsSync(indexPath)) {
+                const raw = await fsp.readFile(indexPath, "utf8");
+                const obj = JSON.parse(raw) as Record<string, string[]>;
+
+                this.fieldIndexes[String(field)] = new Map(Object.entries(obj).map(([k, v]) => [k, new Set(v)]));
+            } else {
+                this.fieldIndexes[String(field)] = new Map();
             }
         }
     }
 
-    private getValue(doc: any, fieldPath: string): any {
-        // split "." then check each key in object and gets nested value from object
-        return fieldPath.split(".").reduce((acc, key) => acc?.[key], doc);
-    }
+    private async loadFullTextIndexes() {
+        for (const field of this.fullTextFields) {
+            const indexPath = path.join(this.dbDir, `textindex.${String(field)}.json`);
 
-    private match(value: any, condition: any): boolean {
-        if (typeof condition !== "object" || condition === null || Array.isArray(condition)) {
-            return value === condition;
-        }
+            if (fs.existsSync(indexPath)) {
+                const raw = await fsp.readFile(indexPath, "utf8");
 
-        for (const op in condition) {
-            const expected = condition[op];
-            switch (op) {
-                case "$eq":
-                    if (value !== expected) return false;
-                    break;
-                case "$ne":
-                    if (value === expected) return false;
-                    break;
-                case "$gt":
-                    if (value <= expected) return false;
-                    break;
-                case "$gte":
-                    if (value < expected) return false;
-                    break;
-                case "$lt":
-                    if (value >= expected) return false;
-                    break;
-                case "$lte":
-                    if (value > expected) return false;
-                    break;
-                case "$in":
-                    if (!expected.includes(value)) return false;
-                    break;
-                case "$nin":
-                    if (expected.includes(value)) return false;
-                    break;
-                default:
-                    throw new Error(`Unsupported operator: ${op}`);
+                const obj = JSON.parse(raw) as Record<string, string[]>;
+
+                this.fullTextIndexes[String(field)] = new Map(
+                    Object.entries(obj).map(([k, v]) => [k, new Set(v)])
+
+                );
+            } else {
+                this.fullTextIndexes[String(field)] = new Map();
             }
         }
-
-        return true;
     }
 
-    private matchesQuery(doc: T, query: Query): boolean {
-        if (typeof query === "object" && !Array.isArray(query) && query !== null) {
-            if ("$or" in query && Array.isArray(query.$or)) {
-                return query.$or.some(sub => this.matchesQuery(doc, sub));
+    private async saveFullTextIndex() {
+        for (const [field, map] of Object.entries(this.fullTextIndexes)) {
+            const json: Record<string, string[]> = {};
+            for (const [value, ids] of map.entries()) {
+                json[value] = Array.from(ids)
             }
-            if ("$and" in query && Array.isArray(query.$and)) {
-                return query.$and.every(sub => this.matchesQuery(doc, sub));
+
+            await fsp.writeFile(path.join(this.dbDir, `textindex.${field}.json`), JSON.stringify(json), "utf8");
+        }
+    }
+
+    private getFieldIndexPath(field: keyof T) {
+        return path.join(this.dbDir, `index.${String(field)}.json`);
+    };
+
+    private async saveFieldIndexes() {
+        for (const [field, map] of Object.entries(this.fieldIndexes)) {
+            const json: Record<string, string[]> = {};
+
+            for (const [value, ids] of map.entries()) {
+                json[value] = Array.from(ids)
             }
+
+            await fsp.writeFile(this.getFieldIndexPath(field as keyof T), JSON.stringify(json), "utf8");
+        }
+    }
+    private async getMainIndex(): Promise<IndexEntry[]> {
+        const raw = await fsp.readFile(this.mainIndexPath, "utf8");
+
+        if (!raw.trim()) {
+            return [];
         }
 
-        return Object.entries(query as Record<string, any>).every(([key, cond]) =>
-            this.match(this.getValue(doc, key), cond)
-        );
+        return JSON.parse(raw);
     }
 
-    async insert(doc: T): Promise<void> {
-        // Validate schema
-        this.schema.validate(doc);
-        // The length of data from database
-        const idx = this.data.length;
-        // Push the data on thsi.data
-        this.data.push(doc);
+    private async saveMainIndex(idex: IndexEntry[]) {
+        await fsp.writeFile(this.mainIndexPath, JSON.stringify(idex), "utf8");
+    }
 
-        for (const field of this.indexFields) {
-            // Get value or nested value
-            const val = this.getValue(doc, field as string);
-            // If the field already exist or create new
-            const map = this.index.get(field as string) ?? new Map();
-            // Inside field value which is act as a key not exist
+    private tokenize(text: string): string[] {
+        return text.toLowerCase().replace(/[^a-z0-9]/g, '').split('').filter(Boolean);
+    }
+
+    private async addToFieldIndexs(doc: T) {
+        for (const field of this.indexedFields) {
+            const val = String(doc[field]);
+            const map = this.fieldIndexes[String(field)];
+
             if (!map.has(val)) {
-                map.set(val, new Set())
-            };
-            // Insert new index data
-            map.get(val)!.add(idx);
-            this.index.set(field as string, map);
+                map.set(val, new Set());
+            }
+
+            map.get(val)!.add(doc._id);
         }
-        // Save all
-        await this.save();
-        await this.saveIndex();
+
+        for (const field of this.fullTextFields) {
+            const tokens = this.tokenize(String(doc[field]));
+
+            const map = this.fullTextIndexes[String(field)];
+
+            for (const token of tokens) {
+                if (!map.has(token)) {
+                    map.set(token, new Set());
+                }
+
+                map.get(token)!.add(doc._id);
+            }
+        }
     }
 
-    find(
-        query: Query,
-        options?: {
-            projection?: Partial<Record<keyof T, 0 | 1>>; // Partial when we want to make inside everything optinal
-            sort?: Partial<Record<keyof T, 1 | -1>>;
-            limit?: number;
-            skip?: number;
-        }
-    ): Partial<T>[] {
-        let results: Partial<T>[] = this.data.filter(doc =>
-            this.matchesQuery(doc, query)
-        );
+    private async removeFromFieldIndexes(doc: T) {
+        for (const field of this.indexedFields) {
+            const val = String(doc[field]);
+            const map = this.fieldIndexes[String(field)];
 
-        if (options?.sort) {
-            for (const [key, dir] of Object.entries(options.sort).reverse()) {
-                results.sort((a, b) => {
-                    const va = this.getValue(a, key);
-                    const vb = this.getValue(b, key);
-                    return dir === 1
-                        ? va > vb
-                            ? 1
-                            : va < vb
-                                ? -1
-                                : 0
-                        : vb > va
-                            ? 1
-                            : vb < va
-                                ? -1
-                                : 0;
-                });
+            map.get(val)?.delete(doc._id);
+
+            if (map.get(val)?.size === 0) {
+                map.delete(val);
             }
         }
 
-        if (options?.skip) {
-            results = results.slice(options.skip);
-        }
+        for (const field of this.fullTextFields) {
+            const tokens = this.tokenize(String(doc[field]));
 
-        if (options?.limit) {
-            results = results.slice(0, options.limit);
-        }
+            const map = this.fullTextIndexes[String(field)];
 
-        if (options?.projection) {
-            results = results.map(doc => {
-                const projected: Partial<T> = {};
-                for (const key in options.projection) {
-                    if (options.projection[key] === 1) {
-                        projected[key] = this.getValue(doc, key);
-                    }
+            for (const token of tokens) {
+                if (!map.has(token)) {
+                    map.set(token, new Set());
                 }
-                return projected;
-            });
-        }
 
-        return results;
+                map.get(token)!.add(doc._id);
+            }
+        }
     }
 
-    all(): T[] {
-        return [...this.data];
+    private generateId(): string {
+        return crypto.randomBytes(12).toString();
+    }
+
+    private encodeDoc(doc: object): Buffer {
+        const str = JSON.stringify(doc);
+        const content = Buffer.from(str, "utf8");
+
+        const len = Buffer.alloc(4);
+        len.writeUint32BE(content.length, 0);
+        return Buffer.concat([len, content]);
+    }
+
+    private decodeDoc(buffer: Buffer): any {
+        const len = buffer.readUInt32BE(0);
+
+        const str = buffer.slice(4, 4 + len).toString("utf8");
+
+        return JSON.parse(str);
+    }
+
+    async insert(doc: Omit<T, "_id"> & Partial<Pick<T, "_id">>): Promise<T> {
+        const _id = doc._id || this.generateId();
+
+        const fullDoc = { ...doc, _id } as T;
+
+        const buf = this.encodeDoc(fullDoc);
+        console.log(this.dataPath);
+
+        const fh = await fsp.open(this.dataPath, "a+");
+
+        const { size } = await fh.stat();
+
+        await fh.write(buf);
+        await fh.close();
+
+        const index = await this.getMainIndex();
+
+        index.push({ _id, offset: size, length: buf.length });
+        await this.saveMainIndex(index);
+
+        await this.addToFieldIndexs(fullDoc);
+
+        await this.saveFieldIndexes();
+        await this.saveFullTextIndex();
+
+        return fullDoc;
     }
 }
