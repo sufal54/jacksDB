@@ -29,3 +29,13 @@ class Schema {
                 this.definition[key] = new Schema(value as SchemaDefinition);
             } else {
                 // Primitive (StringConstructor, NumberConstructor, etc.)
+                this.definition[key] = value;
+            }
+        }
+    }
+
+
+    private isPlainObject(obj: any) {
+        return typeof obj === "object" && obj !== null && !Array.isArray(obj) && !(obj instanceof Schema);
+    }
+
