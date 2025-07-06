@@ -319,3 +319,13 @@ export class Collection {
     async updateOne(filter: Record<string, any>, update: Partial<any>): Promise<void> {
         const found = await this.find(filter);
         if (found.length === 0) {
+            return;
+        }
+
+        const target = found[0];
+        // meta.city to meta{city}
+        const updateParsed = this.dotPathToObject(update);
+        // JS function for deep clone to avoid mutaion on share value
+        const deepCloned = structuredClone(target);
+
+        // It's overwrite update vallue into clone and return updated doc 
