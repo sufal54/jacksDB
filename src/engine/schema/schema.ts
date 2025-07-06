@@ -79,3 +79,13 @@ class Schema {
                     }
                 }
 
+                // Handle nested object
+            } else if (expected instanceof Schema) {
+                if (!this.isPlainObject(actual)) {
+                    throw new Error(`Field "${key}" must be a nested object`);
+                }
+                expected.validate(actual);
+
+                // Handle primitives
+            } else {
+                const expectedTypeName = this.getTypeName(expected);
