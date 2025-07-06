@@ -69,3 +69,13 @@ class Schema {
                         if (!this.isPlainObject(item)) {
                             throw new Error(`Field "${key}[${i}]" must be a nested object`);
                         }
+                        itemType.validate(item);
+                    } else {
+                        const expectedTypeName = this.getTypeName(itemType);
+                        const actualItemType = typeof item;
+                        if (actualItemType !== expectedTypeName) {
+                            throw new Error(`Field "${key}[${i}]" must be ${expectedTypeName}, got ${actualItemType}`);
+                        }
+                    }
+                }
+
