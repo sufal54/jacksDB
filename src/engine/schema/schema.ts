@@ -99,3 +99,13 @@ class Schema {
         return true;
     }
 
+    private getTypeName(type: Function): string {
+        switch (type) {
+            case String: return "string";
+            case Number: return "number";
+            case Boolean: return "boolean";
+            default:
+                throw new Error(`Unsupported type in schema: ${type}`);
+        }
+    }
+}
