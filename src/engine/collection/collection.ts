@@ -259,3 +259,13 @@ export class Collection {
                 }
                 usedIndex = true;
                 break;
+            }
+        }
+
+        const results: any[] = [];
+        if (usedIndex) {
+            for (const offset of matchedOffsets) {
+                try {
+                    const data = await this.fileManager.dataBaseFind(offset);
+                    if (this.matches(data, query)) {
+                        results.push(data);
