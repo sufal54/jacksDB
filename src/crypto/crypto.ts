@@ -14,34 +14,58 @@ class Crypto {
     }
 
     encrypt(text: string): Buffer {
+        text = text.replace(/\s+/g, "");
+
         const iv = crypto.randomBytes(16);
         const cipher = crypto.createCipheriv(this.algorithm, this.key, iv);
 
-        let encrypted = cipher.update(text, 'utf8', 'hex');
-        encrypted += cipher.final('hex');
-        const buffer = Buffer.from(encrypted);
-        const recuve = Buffer.alloc(5);
-        recuve.writeUint8(0xFD, 0);
-        recuve.writeUint32LE(buffer.length, 1);
+        let encodeDoc = cipher.update(text, 'utf8', 'hex');
+        encodeDoc += cipher.final('hex');
+        const buffer = Buffer.from(encodeDoc, "hex");
+        const header = Buffer.alloc(9);
+        header.writeUint8(0xFD, 0);
+        header.writeUint32LE(buffer.length, 1); // length of data
+        header.writeUint32LE(buffer.length + 50, 5); // capacity
 
-        const newBuffer = Buffer.concat([recuve, iv, buffer]);
+        const extraBytes = Buffer.alloc(50);
+
+        const newBuffer = Buffer.concat([header, iv, buffer, extraBytes]);
 
         return newBuffer;
     }
 
-    decrypt(encrypted: Buffer): string {
-        if (encrypted[0] !== 0xFD) {
-            throw new Error("Invaild Encrypted Data");
+    decrypt(encodeDoc: Buffer): string {
+        if (encodeDoc[0] !== 0xFD) {
+            throw new Error("Invaild encodeDoc Data");
         }
-        const len = encrypted.readUint32LE(1);
+        const len = encodeDoc.readUint32LE(1);
 
-        const iv = encrypted.slice(5, 21);
-        const encryptedText = encrypted.slice(21, 21 + len).toString("utf8");
+        const iv = encodeDoc.slice(9, 25);
+        const encodeDocText = encodeDoc.slice(25, 25 + len).toString("hex");
 
         const decipher = crypto.createDecipheriv(this.algorithm, this.key, iv);
-        let decrypted = decipher.update(encryptedText, 'hex', 'utf8');
-        decrypted += decipher.final('utf8');
-        return decrypted;
+        let decodeDoc = decipher.update(encodeDocText, 'hex', 'utf8');
+        decodeDoc += decipher.final();
+        return decodeDoc;
+    }
+
+    isWithinCapacity(oldDoc: Buffer, newDoc: Buffer): Buffer | null {
+        const oldCapacity = oldDoc.readUint32LE(5);
+        const newDataLen = newDoc.readUInt32LE(1);
+
+        if (oldCapacity < newDataLen) {
+            return null;
+        }
+
+        // Update header with new data length
+        oldDoc.writeUInt32LE(newDataLen, 1);            // Set new length in old header
+
+        // Copy new IV
+        newDoc.copy(oldDoc, 9, 9, 25);                  // IV (16 bytes)
+
+        // Copy new encrypted data
+        newDoc.copy(oldDoc, 25, 25, 25 + newDataLen);
+        return oldDoc;
     }
 }
 export default Crypto;
