@@ -49,7 +49,7 @@
 // })()
 
 
-function assertEqual(actual, expected, message) {
+function assertEqual(actual: any, expected: any, message: any) {
   if (actual !== expected) {
     console.error(`❌ ${message}: expected ${expected}, got ${actual}`);
     process.exitCode = 1;
@@ -59,7 +59,7 @@ function assertEqual(actual, expected, message) {
 }
 
 // Example test
-function add(a, b) {
+function add(a: number, b: number) {
   return a + b;
 }
 
