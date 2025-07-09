@@ -31,3 +31,4 @@ class Schema {
                 // Primitive (StringConstructor, NumberConstructor, etc.)
                 this.definition[key] = value;
             }
+        }
