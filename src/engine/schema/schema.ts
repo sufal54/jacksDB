@@ -15,3 +15,4 @@ class Schema {
         for (const key in definition) {
             const value = definition[key];
 
+            if (Array.isArray(value)) {
