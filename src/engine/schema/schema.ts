@@ -23,3 +23,4 @@ class Schema {
                 } else {
                     // Array of primitives
                     this.definition[key] = value;
+                }
