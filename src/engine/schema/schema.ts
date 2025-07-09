@@ -4,3 +4,4 @@ export type SchemaDefinition = {
     | NumberConstructor
     | BooleanConstructor
     | SchemaDefinition
+    | [StringConstructor | NumberConstructor | BooleanConstructor | SchemaDefinition];
