@@ -59,3 +59,4 @@ class Schema {
             // Handle array types
             if (Array.isArray(expected)) {
                 if (!Array.isArray(actual)) {
+                    throw new Error(`Field "${key}" must be an array`);
