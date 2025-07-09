@@ -30,3 +30,4 @@ class Schema {
             } else {
                 // Primitive (StringConstructor, NumberConstructor, etc.)
                 this.definition[key] = value;
+            }
