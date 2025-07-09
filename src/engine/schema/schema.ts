@@ -81,3 +81,4 @@ class Schema {
 
                 // Handle nested object
             } else if (expected instanceof Schema) {
+                if (!this.isPlainObject(actual)) {
