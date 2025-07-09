@@ -43,3 +43,4 @@ class Schema {
         // Check for unexpected fields
         for (const key in doc) {
             if (!(key in this.definition)) {
+                throw new Error(`Unexpected field: ${key}`);
