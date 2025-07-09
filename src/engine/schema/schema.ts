@@ -22,3 +22,4 @@ class Schema {
                     this.definition[key] = [new Schema(item as SchemaDefinition)];
                 } else {
                     // Array of primitives
+                    this.definition[key] = value;
