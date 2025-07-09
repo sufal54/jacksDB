@@ -28,3 +28,4 @@ class Schema {
                 // Nested object schema
                 this.definition[key] = new Schema(value as SchemaDefinition);
             } else {
+                // Primitive (StringConstructor, NumberConstructor, etc.)
