@@ -45,3 +45,4 @@ class Schema {
             if (!(key in this.definition)) {
                 throw new Error(`Unexpected field: ${key}`);
             }
+        }
