@@ -68,3 +68,4 @@ class Schema {
                     if (itemType instanceof Schema) {
                         if (!this.isPlainObject(item)) {
                             throw new Error(`Field "${key}[${i}]" must be a nested object`);
+                        }
