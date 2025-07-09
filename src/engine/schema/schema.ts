@@ -98,3 +98,4 @@ class Schema {
 
         return true;
     }
+
