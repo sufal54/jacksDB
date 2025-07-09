@@ -46,3 +46,4 @@ class Schema {
                 throw new Error(`Unexpected field: ${key}`);
             }
         }
+
