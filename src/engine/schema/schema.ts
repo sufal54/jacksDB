@@ -52,3 +52,4 @@ class Schema {
 
             if (!(key in doc)) {
                 throw new Error(`Missing field: ${key}`);
+            }
