@@ -57,3 +57,4 @@ class Schema {
             const actual = doc[key];
 
             // Handle array types
+            if (Array.isArray(expected)) {
