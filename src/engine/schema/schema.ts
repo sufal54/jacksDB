@@ -69,3 +69,4 @@ class Schema {
                         if (!this.isPlainObject(item)) {
                             throw new Error(`Field "${key}[${i}]" must be a nested object`);
                         }
+                        itemType.validate(item);
