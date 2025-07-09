@@ -75,3 +75,4 @@ class Schema {
                         const actualItemType = typeof item;
                         if (actualItemType !== expectedTypeName) {
                             throw new Error(`Field "${key}[${i}]" must be ${expectedTypeName}, got ${actualItemType}`);
+                        }
