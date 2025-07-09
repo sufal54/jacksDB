@@ -27,3 +27,4 @@ class Schema {
             } else if (this.isPlainObject(value)) {
                 // Nested object schema
                 this.definition[key] = new Schema(value as SchemaDefinition);
+            } else {
