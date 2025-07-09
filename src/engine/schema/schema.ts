@@ -73,3 +73,4 @@ class Schema {
                     } else {
                         const expectedTypeName = this.getTypeName(itemType);
                         const actualItemType = typeof item;
+                        if (actualItemType !== expectedTypeName) {
