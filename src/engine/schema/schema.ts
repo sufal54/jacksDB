@@ -17,3 +17,4 @@ class Schema {
 
             if (Array.isArray(value)) {
                 const item = value[0];
+                if (this.isPlainObject(item)) {
