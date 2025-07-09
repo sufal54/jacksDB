@@ -103,3 +103,4 @@ class Schema {
         switch (type) {
             case String: return "string";
             case Number: return "number";
+            case Boolean: return "boolean";
