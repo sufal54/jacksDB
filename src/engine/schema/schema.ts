@@ -87,3 +87,4 @@ class Schema {
                 expected.validate(actual);
 
                 // Handle primitives
+            } else {
