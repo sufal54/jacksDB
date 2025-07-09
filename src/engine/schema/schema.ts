@@ -54,3 +54,4 @@ class Schema {
                 throw new Error(`Missing field: ${key}`);
             }
 
+            const actual = doc[key];
