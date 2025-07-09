@@ -19,3 +19,4 @@ class Schema {
                 const item = value[0];
                 if (this.isPlainObject(item)) {
                     // Array of nested schemas
+                    this.definition[key] = [new Schema(item as SchemaDefinition)];
