@@ -21,7 +21,7 @@ import { data } from "./data.test";
   const crypto = new Crypto();
   const fm = new FileManager("hello", schem);
   for (const d of data) {
-    fm.appendInFile("main.db.bson", d);
+    await fm.appendInFile("main.db.bson", d);
   }
 
 })()
