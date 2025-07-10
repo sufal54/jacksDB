@@ -14,7 +14,9 @@ class Crypto {
     }
 
     encrypt(text: string): Buffer {
-        text = text.replace(/\s+/g, "");
+        text = text.replace(/("[^"]*")|(\s+)/g, (match, quoted, space) => {
+            return quoted ? quoted : "";
+        });
 
         const iv = crypto.randomBytes(16);
         const cipher = crypto.createCipheriv(this.algorithm, this.key, iv);

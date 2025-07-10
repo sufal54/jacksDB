@@ -5,8 +5,9 @@
   "main": "dist/jsondb.js",
   "types": "dist/jsondb.d.ts",
   "scripts": {
+    "start":"ts-node test/main.test.ts",
     "build": "tsc",
-    "test":"node test/main.test.js"
+    "test":"node dist/test/main.test.js"
   },
   "files": [
     "dist"
