@@ -20,10 +20,14 @@ import { data } from "./data.test";
   });
   const crypto = new Crypto();
   const fm = new FileManager("hello", schem);
-  for (const d of data) {
-    await fm.appendInFile("main.db.bson", d);
-  }
 
+  // await fm.appendInFile("main.db.bson", data);
+  const rd = await fm.readFileIdx("age.idx.bson", "35");
+  if (!rd?.offset) {
+    return
+  }
+  console.log(rd);
+  console.log(await fm.readFromDataBase(rd["35"][0]));
 })()
 
 

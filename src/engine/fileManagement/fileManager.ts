@@ -6,7 +6,8 @@ import RwLock from "@sufalctl/rwlock";
 import Crypto from "../../crypto/crypto";
 
 type IndexEntry = {
-    offset: number;
+    offset?: number;
+    capacity?: number;
     [key: string]: any;
 };
 
@@ -35,12 +36,11 @@ export class FileManager {
     * @return {this} 
   */
     constructor(
-        private name: string,
+        name: string,
         private schema: Schema,
         secret?: string
     ) {
         this.dataBasePath = path.join(this.dataBasePath, name);
-        this.mainDB = path.join(this.dataBasePath, this.mainDB);
         this.crypto = new Crypto(secret);
 
         // Make path if does not exist
@@ -55,7 +55,10 @@ export class FileManager {
      * @param {string} fileName - name of file path with extension
      */
     private ensureFile(fileName: string): void {
+        console.log(fileName);
         const fullPath = path.join(this.dataBasePath, fileName);
+        console.log(fullPath);
+
         try {
             if (!fs.existsSync(fullPath)) {
                 fs.writeFileSync(fullPath, "");
@@ -64,6 +67,7 @@ export class FileManager {
                 this.fileLocks.set(fileName, new RwLock<void>(undefined));
             }
         } catch (err) {
+            console.log(err);
             throw new Error(`Error Occurs when try to ensure file ${fileName}`)
         }
     }
@@ -75,6 +79,10 @@ export class FileManager {
      * @returns {RwLock} - Return specfice index RwLock
      */
     private getLock(fileName: string): RwLock<void> {
+        if (!this.fileLocks.has(fileName)) {
+            this.ensureFile(fileName);
+        }
+
         const lock = this.fileLocks.get(fileName);
         if (!lock) {
             throw new Error(`Missing lock for file: ${fileName}`);
@@ -84,7 +92,7 @@ export class FileManager {
 
     async readFromDataBase(offset: number) {
         const [_, rel] = await this.getLock(this.mainDB).read();
-        const fullPath = path.join(this.dataBasePath, this.mainDB)
+        const fullPath = path.join(this.dataBasePath, this.mainDB);
         const file = await fsp.open(fullPath, 'r');
 
         try {
@@ -110,6 +118,7 @@ export class FileManager {
             return JSON.parse(jsonData);
         } finally {
             await file.close();
+            rel();
         }
     }
 
@@ -207,20 +216,47 @@ export class FileManager {
      * @param {IndexEntry} doc - Object data we are going to insert
       */
 
-    async appendInFile(fileName: string, doc: Partial<IndexEntry>): Promise<void> {
+
+    async appendInFile(fileName: string, ...docs: Partial<IndexEntry>[]): Promise<void> {
+
+        const flatDocs: Partial<IndexEntry>[] = docs.flat(); // Remove nestet array
+
         const [_, rel] = await this.getLock(fileName).write();
         const fullPath = path.join(this.dataBasePath, fileName);
         const write = await fsp.open(fullPath, "a");
 
-        let encodeDoc: Buffer;
-        let size: number | undefined;
+        let offset = (await write.stat()).size;
+
+        let encodeBufferDoc: Buffer[] = [];
+
+        const indexFields = new Map<string, Map<string, number[]>>();
 
         try {
-            size = (await write.stat()).size;
-            doc.offset = size;
+            for (const doc of flatDocs) {
+                if (!doc) {
+                    continue;
+                }
 
-            encodeDoc = this.crypto.encrypt(JSON.stringify(doc));
-            await write.write(encodeDoc);
+                const currOffset = offset;
+
+                doc.offset = currOffset;
+                const encodeDoc = this.crypto.encrypt(JSON.stringify(doc));
+                encodeBufferDoc.push(encodeDoc);
+                const capacity = encodeDoc.readUInt32LE(5);
+                offset += 1 + 4 + 4 + 16 + capacity;
+
+
+
+                // Send all key value for nested value 
+                for (const [key, value] of Object.entries(doc)) {
+                    if (key === "offset") {
+                        continue;
+                    }
+                    this.indexAllFields(indexFields, value, currOffset, capacity, key);
+                }
+            }
+
+            await write.write(Buffer.concat(encodeBufferDoc));
         } catch (err) {
             console.error("appendInFile error:", err);
             await write.close();
@@ -231,14 +267,8 @@ export class FileManager {
         await write.close();
         rel();
 
-        // If size is defined, do indexing
-        if (typeof size === "number") {
-            // Send all key value for nested value 
-            for (const [key, value] of Object.entries(doc)) {
-                if (key === "offset") continue;
-                await this.indexAllFields(value, size, key);
-            }
-        }
+        await this.writeIndexMap(indexFields);
+
     }
 
     /**
@@ -250,24 +280,86 @@ export class FileManager {
      * @param {string} basePath - name of our index file 
      */
 
-    private async indexAllFields(value: any, offset: number, basePath: string): Promise<void> {
+    private indexAllFields(map: Map<string, Map<string, number[]>>, value: any, offset: number, capacity: number, basePath: string): void {
         // Array Case
         if (Array.isArray(value)) {
             for (const item of value) {
-                await this.indexAllFields(item, offset, basePath); // Keep path as field name for array 
+                this.indexAllFields(map, item, offset, capacity, basePath); // Keep path as field name for array 
             }
             // Object case
         } else if (typeof value === "object" && value !== null) {
             for (const [key, val] of Object.entries(value)) {
                 const fullPath = `${basePath}.${key}`;
-                await this.indexAllFields(val, offset, fullPath);
+                this.indexAllFields(map, val, offset, capacity, fullPath);
             }
 
             // For Primitive data
         } else if (["string", "number", "boolean"].includes(typeof value)) {
-            await this.indexField(basePath, value, offset);
+            const valStr = value.toString();
+            if (!map.has(basePath)) {
+                map.set(basePath, new Map());
+            }
+            const pathMap = map.get(basePath)!;
+            if (!pathMap.has(valStr)) {
+                pathMap.set(valStr, []);
+            }
+            pathMap.get(valStr)!.push(offset);
         }
     }
+
+    private async writeIndexMap(indexMap: Map<string, Map<string, number[]>>): Promise<void> {
+        // for (const [field, valueMap] of indexMap.entries()) {
+        //     const file = `${field}.idx.bson`;
+        //     this.ensureFile(file); // create file if not exist
+
+        //     const [_, rel] = await this.getLock(file).write();
+        //     const fullPath = path.join(this.dataBasePath, file);
+        //     const writeHandle = await fsp.open(fullPath, "a");
+
+        //     try {
+        //         let offset = (await writeHandle.stat()).size;
+        //         const buffers: Buffer[] = [];
+
+        //         for (const [valStr, offsets] of valueMap.entries()) {
+        //             const doc: Partial<IndexEntry> = {
+        //                 [valStr]: offsets,
+        //                 offset
+        //             };
+        //             const encoded = this.crypto.encrypt(JSON.stringify(doc));
+        //             buffers.push(encoded);
+        //             offset += encoded.length;
+        //         }
+
+        //         const finalBuffer = Buffer.concat(buffers);
+        //         await writeHandle.write(finalBuffer);
+        //     } catch (err) {
+        //         console.error(`writeIndexMap error (${file}):`, err);
+        //     } finally {
+        //         await writeHandle.close();
+        //         rel();
+        //     }
+        // }
+
+        for (const [key, valMap] of indexMap.entries()) {
+            const file = `${key}.idx.bson`;
+            this.ensureFile(file);
+
+            for (const [valStr, offsets] of valMap.entries()) {
+                const existing = await this.readFileIdx(file, valStr);
+                if (existing) {
+                    await this.addFileIdxOffset(file, valStr, ...offsets); // handles merge
+                } else {
+                    const doc: Partial<IndexEntry> = {
+                        [valStr]: offsets,
+                        offset: undefined // will be added by appendIndexEntry
+                    };
+                    await this.appendIndexEntry(file, doc);
+                }
+            }
+        }
+    }
+
+
 
     /**
    * Adds an index entry for a specific key and value pointing to a data offset.
@@ -321,12 +413,68 @@ export class FileManager {
 
 
     /**
-     * Delete main database field indexs update index file
-     * @param fileName - name of file with extenstion
-     * @param value - field value which is key of index file
-     * @param dataBaseOffset - main database offset which is save on index file
-     * @returns - void promise
-     */
+        * Delete main database field indexs update index file
+        * @param fileName - name of file with extenstion
+        * @param value - field value which is key of index file
+        * @param dataBaseOffset - main database offset which is save on index file
+        * @returns - void promise
+        */
+
+    async addFileIdxOffset(fileName: string, value: string, ...dataBaseOffset: number[]) {
+
+        const [v, relRead] = await this.getLock(fileName).read();
+        const idxData = await this.readFileIdx(fileName, value);
+        const fullPath = path.join(this.dataBasePath, fileName);
+        relRead();
+        if (!idxData) {
+            console.error(`${value} not found in ${fullPath}`);
+            return;
+        }
+        const [_, rel] = await this.getLock(fileName).write();
+
+        const fileHandle = await fsp.open(fullPath, 'r+');
+
+
+        idxData[value].push(...dataBaseOffset);
+        const newData: Record<string, any> = {};
+
+        newData[value] = idxData[value];
+        newData.offset = idxData.offset;
+
+        try {
+            const encodeDoc = this.crypto.encrypt(JSON.stringify(newData));
+
+            if (idxData.capacity < encodeDoc.readUInt32LE(1)) {
+                await fileHandle.close();
+                rel();
+                await this.makeAsDeleteAddNew(fileName, idxData.offset, newData);
+                return
+            }
+
+            const capacityBuffer = Buffer.alloc(4);
+            capacityBuffer.writeInt32LE(idxData.capacity);
+            // Old data capacity
+            capacityBuffer.copy(encodeDoc, 5, 0, 4);
+            await fileHandle.write(encodeDoc, 0, encodeDoc.length, idxData.offset);
+
+            await fileHandle.close();
+            rel();
+        } catch (err) {
+            console.error(err);
+            await fileHandle.close();
+            rel();
+        }
+
+
+    }
+
+    /**
+   * Delete main database field indexs update index file
+   * @param fileName - name of file with extenstion
+   * @param value - field value which is key of index file
+   * @param dataBaseOffset - main database offset which is save on index file
+   * @returns - void promise
+   */
 
     async deleteFileIdxOffset(fileName: string, value: string, dataBaseOffset: number) {
 
@@ -368,61 +516,6 @@ export class FileManager {
         }
     }
 
-    /**
-        * Delete main database field indexs update index file
-        * @param fileName - name of file with extenstion
-        * @param value - field value which is key of index file
-        * @param dataBaseOffset - main database offset which is save on index file
-        * @returns - void promise
-        */
-
-    async addFileIdxOffset(fileName: string, value: string, dataBaseOffset: number) {
-
-        const [v, relRead] = await this.getLock(fileName).read();
-        const idxData = await this.readFileIdx(fileName, value);
-        const fullPath = path.join(this.dataBasePath, fileName);
-        relRead();
-        if (!idxData) {
-            console.error(`${value} not found in ${fullPath}`);
-            return;
-        }
-        const [_, rel] = await this.getLock(fileName).write();
-
-        const fileHandle = await fsp.open(fullPath, 'r+');
-
-
-        idxData[value].push(dataBaseOffset);
-        const newData: Record<string, any> = {};
-
-        newData[value] = idxData[value];
-        newData.offset = idxData.offset;
-
-        try {
-            const encodeDoc = this.crypto.encrypt(JSON.stringify(newData));
-
-            if (idxData.capacity < encodeDoc.readUInt32LE(1)) {
-                await fileHandle.close();
-                rel();
-                await this.makeAsDeleteAddNew(fileName, idxData.offset, newData);
-                return
-            }
-
-            const capacityBuffer = Buffer.alloc(4);
-            capacityBuffer.writeInt32LE(idxData.capacity);
-            // Old data capacity
-            capacityBuffer.copy(encodeDoc, 5, 0, 4);
-            await fileHandle.write(encodeDoc, 0, encodeDoc.length, idxData.offset);
-
-            await fileHandle.close();
-            rel();
-        } catch (err) {
-            console.error(err);
-            await fileHandle.close();
-            rel();
-        }
-
-
-    }
 
     /**
        * Mark as delete data and append new one
