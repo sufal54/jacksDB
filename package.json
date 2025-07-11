@@ -1,6 +1,6 @@
 {
-  "name": "JacksDB",
-  "version": "1.0.0",
+  "name": "jacksdb",
+  "version": "1.0.1",
   "description": "",
   "main": "dist/jsondb.js",
   "types": "dist/jsondb.d.ts",
