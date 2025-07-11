@@ -1,13 +1,11 @@
 import fs from "node:fs";
 import fsp from "node:fs/promises";
 import path from "node:path";
-import Schema from "../schema/schema";
 import RwLock from "@sufalctl/rwlock";
 import Crypto from "../../crypto/crypto";
 
 type IndexEntry = {
     offset?: number;
-    capacity?: number;
     [key: string]: any;
 };
 
@@ -37,7 +35,6 @@ export class FileManager {
   */
     constructor(
         name: string,
-        private schema: Schema,
         secret?: string
     ) {
         this.dataBasePath = path.join(this.dataBasePath, name);
@@ -55,9 +52,7 @@ export class FileManager {
      * @param {string} fileName - name of file path with extension
      */
     private ensureFile(fileName: string): void {
-        console.log(fileName);
         const fullPath = path.join(this.dataBasePath, fileName);
-        console.log(fullPath);
 
         try {
             if (!fs.existsSync(fullPath)) {
@@ -90,7 +85,71 @@ export class FileManager {
         return lock;
     }
 
-    async readFromDataBase(offset: number) {
+    async fullScan(): Promise<any[]> {
+        const results: any[] = [];
+        const [_, rel] = await this.getLock(this.mainDB).read();
+        const fullPath = path.join(this.dataBasePath, this.mainDB);
+
+        return new Promise((resolve, reject) => {
+            const readStream = fs.createReadStream(fullPath);
+            let leftover = Buffer.alloc(0);
+
+            readStream.on("data", (chunk) => {
+                const buffer = Buffer.concat([leftover, Buffer.from(chunk)]);
+                let offset = 0;
+
+                while (offset < buffer.length) {
+                    const remaining = buffer.length - offset;
+
+                    if (remaining < 25) {
+                        // Not enough for even the header
+                        break;
+                    }
+
+                    const tag = buffer[offset];
+                    const length = buffer.readUInt32LE(offset + 1);
+                    const capacity = buffer.readUInt32LE(offset + 5);
+                    const totalSize = 1 + 4 + 4 + 16 + capacity;
+
+                    if (offset + totalSize > buffer.length) {
+                        // Incomplete block
+                        break;
+                    }
+
+                    const block = buffer.slice(offset, offset + totalSize);
+
+                    if (tag === 0xFD) {
+                        try {
+                            const decrypted = this.crypto.decrypt(block);
+                            const json = JSON.parse(decrypted);
+                            results.push(json);
+                        } catch (err) {
+                            console.warn(`Error decrypting block at ${offset}:`, err);
+                        }
+                    }
+
+                    // Skip both deleted (0xDE) and valid (0xFD) blocks
+                    offset += totalSize;
+                }
+
+                leftover = buffer.slice(offset); // Store leftover for next chunk
+            });
+
+            readStream.on("end", () => {
+                rel();
+                resolve(results);
+            });
+
+            readStream.on("error", (err) => {
+                rel();
+                reject(err);
+            });
+        });
+    }
+
+
+
+    async dataBaseFind(offset: number) {
         const [_, rel] = await this.getLock(this.mainDB).read();
         const fullPath = path.join(this.dataBasePath, this.mainDB);
         const file = await fsp.open(fullPath, 'r');
@@ -122,102 +181,142 @@ export class FileManager {
         }
     }
 
-    /**
-    For Index files
-    Reads a binary file and extracts valid blocks (tagged with 0xFD).
-    Skips deleted blocks (tagged with 0xDE).
-    
-    * @param {string} fileName - Name of the file to read.
-    * @return {Promise<IndexEntry | null>} - A fields indexs or null if not found
-  */
+    async dataBaseDelete(offset: number): Promise<void> {
+        const [_, rel] = await this.getLock(this.mainDB).write();
+        const fullPath = path.join(this.dataBasePath, this.mainDB);
+        const file = await fsp.open(fullPath, "r+");
 
-    async readFileIdx(fileName: string, value: string): Promise<IndexOut | null> {
-        return new Promise(async (resolve, reject) => {
+        try {
+            const header = Buffer.alloc(25);
+            await file.read(header, 0, 25, offset);
 
-            const [_, rel] = await this.getLock(fileName).read();
-            const readStream = fs.createReadStream(path.join(this.dataBasePath, fileName));
-            let leftover = Buffer.alloc(0); // Store half or incomplete previous chunk data
+            if (header[0] !== 0xFD) {
+                console.warn("Block already deleted or invalid");
+                return;
+            }
 
-            let isBroke = false; // check is leftover store data or clean
+            const capacity = header.readUInt32LE(5);
+            const totalSize = 25 + capacity;
+            const fullBuf = Buffer.alloc(totalSize);
+            await file.read(fullBuf, 0, totalSize, offset);
 
-            readStream.on("data", (chunk) => {
+            const decrypted = this.crypto.decrypt(fullBuf);
+            const jsonData = JSON.parse(decrypted) as IndexEntry;
 
-                // Marge prevouse data and curren chunk data
-                const buffer = Buffer.concat([leftover, Buffer.from(chunk)]);
-                let i = 0;
+            // Remove index entries
 
-                while (i < buffer.length) {
-                    // Check current index
-                    const tag = buffer[i];
+            // Mark as deleted
+            const markBuf = Buffer.alloc(1);
+            markBuf.writeUInt8(0xDE);
+            await file.write(markBuf, 0, 1, offset);
 
-                    if (tag === 0xFD || tag === 0xDE) {
-                        if (i + 9 > buffer.length) {// Incomplete block header
-                            isBroke = true;
-                            break;
-                        }
-
-                        const capacity = buffer.readUInt32LE(i + 5); // Data's capacity
-                        const totalSize = 1 + 4 + 4 + 16 + capacity; // Entire Data
-
-                        if (i + totalSize > buffer.length) {// Incomplete block body
-                            isBroke = true;
-                            break;
-                        }
-                        // If it Mark as Vaild Data
-                        if (tag === 0xFD) {
-                            const bufferData = buffer.slice(i, i + totalSize); // Slice block of data
-                            const decryptData = this.crypto.decrypt(bufferData); // Encrypt the data
-                            const jsonData = JSON.parse(decryptData) as IndexOut; // Json Parse
-                            if (Object.keys(jsonData)[0] == value) { // Check is current data is targeted data
-                                jsonData.length = bufferData.readInt32LE(1); // Inside object add data length
-                                jsonData.capacity = bufferData.readInt32LE(5); // Inside object add data capacity
-
-                                readStream.close() // Close readStream
-                                rel(); // Release lock
-                                return resolve(jsonData); // Resolve and return
-                            }
-                        }
-
-                        i += totalSize; // Skip either block type
-                    } else {
-                        // Not part of a block, just skip or optionally handle
-                        i++;
-                    }
-                }
-
-                if (isBroke) {
-                    leftover = buffer.slice(i); // Save only the unprocessed part
-                } else {
-                    leftover = Buffer.alloc(0); // Clean it — nothing to carry over
-                }
-            });
-            // End of readStream
-            readStream.on("end", () => {
-                readStream.close();
-                rel();
-                resolve(null);
-            });
-            // On Error
-            readStream.on("error", (err) => {
-                readStream.close()
-                rel();
-                console.error(err);
-                reject(null);
-
-            });
-        })
+            await file.close();
+            rel();
+            await this.cleanupIndexesFromDoc(jsonData);
+        } catch (err) {
+            await file.close();
+            rel();
+        }
     }
+
+    async dataBaseUpdate(offset: number, newDoc: Partial<IndexEntry>) {
+        const [_, rel] = await this.getLock(this.mainDB).read();
+        const fullPath = path.join(this.dataBasePath, this.mainDB);
+        const readFile = await fsp.open(fullPath, "r+");
+
+        try {
+            const header = Buffer.alloc(25);
+            await readFile.read(header, 0, 25, offset);
+
+            if (header[0] !== 0xFD) {
+                throw new Error("Invalid block or already deleted");
+            }
+
+            const oldCapacity = header.readUInt32LE(5);
+            const totalSize = 1 + 4 + 4 + 16 + oldCapacity;
+
+            const oldBlockBuf = Buffer.alloc(totalSize);
+            await readFile.read(oldBlockBuf, 0, totalSize, offset);
+            const oldJson = JSON.parse(this.crypto.decrypt(oldBlockBuf)) as IndexEntry;
+
+            const encoded = this.crypto.encrypt(JSON.stringify({ ...newDoc, offset }));
+            const newLength = encoded.readUInt32LE(1);
+
+            await readFile.close();
+            rel();
+
+            if (newLength > oldCapacity) {
+                await this.cleanupIndexesFromDoc(oldJson);
+                await this.makeAsDeleteAddNew(this.mainDB, offset, newDoc);
+                return;
+            }
+
+            // In-place update
+
+            await this.cleanupIndexesFromDoc(oldJson);
+
+            const indexFields = new Map<string, Map<string, number[]>>();
+            for (const [key, val] of Object.entries(newDoc)) {
+                if (key === "offset") continue;
+                this.indexAllFields(indexFields, val, offset, oldCapacity, key);
+            }
+            await this.writeIndexMap(indexFields);
+
+            const capacityBuf = Buffer.alloc(4);
+            capacityBuf.writeUInt32LE(oldCapacity);
+            capacityBuf.copy(encoded, 5);
+            const [_, writeRel] = await this.getLock(this.mainDB).write();
+            const writeFile = await fsp.open(fullPath, "r+");
+            await writeFile.write(encoded, 0, encoded.length, offset);
+            writeRel();
+        } catch (err) {
+            console.log(err);
+            await readFile.close();
+            rel();
+
+        }
+    }
+
+    private async cleanupIndexesFromDoc(doc: IndexEntry): Promise<void> {
+        for (const [key, val] of Object.entries(doc)) {
+            if (key === "offset") {
+                continue;
+            }
+            await this.deleteFieldFromIndexes(key, val, doc.offset!);
+        }
+    }
+    private async deleteFieldFromIndexes(key: string, value: any, offset: number, pathPrefix: string = ""): Promise<void> {
+        const fullPath = [pathPrefix, key].filter(Boolean).join(".");
+
+        if (Array.isArray(value)) {
+            for (const item of value) {
+                await this.deleteFieldFromIndexes("", item, offset, fullPath);
+            }
+        } else if (typeof value === "object" && value !== null) {
+            for (const [k, v] of Object.entries(value)) {
+                await this.deleteFieldFromIndexes(k, v, offset, fullPath);
+            }
+        } else if (["string", "number", "boolean"].includes(typeof value)) {
+            const valStr = value.toString();
+            const indexFile = `${fullPath}.idx.bson`;
+            await this.deleteFileIdxOffset(indexFile, valStr, offset);
+        }
+    }
+
+
+
+
     /**
-     * Append document to the Database
-     * Also Update/Create indexes to the specfice index file
-     * 
-     * @param {string} fileName - Name of the file to write with extenstion.
-     * @return {Promise<void>}  
-     * @param {IndexEntry} doc - Object data we are going to insert
-      */
+    * Append document to the Database
+    * Also Update/Create indexes to the specfice index file
+    * 
+    * @param {string} fileName - Name of the file to write with extenstion.
+    * @return {Promise<void>}  
+    * @param {IndexEntry} doc - Object data we are going to insert
+     */
 
 
-    async appendInFile(fileName: string, ...docs: Partial<IndexEntry>[]): Promise<void> {
+    async dataBaseInsert(fileName: string, ...docs: Partial<IndexEntry>[]): Promise<void> {
 
         const flatDocs: Partial<IndexEntry>[] = docs.flat(); // Remove nestet array
 
@@ -226,6 +325,7 @@ export class FileManager {
         const write = await fsp.open(fullPath, "a");
 
         let offset = (await write.stat()).size;
+
 
         let encodeBufferDoc: Buffer[] = [];
 
@@ -308,44 +408,13 @@ export class FileManager {
     }
 
     private async writeIndexMap(indexMap: Map<string, Map<string, number[]>>): Promise<void> {
-        // for (const [field, valueMap] of indexMap.entries()) {
-        //     const file = `${field}.idx.bson`;
-        //     this.ensureFile(file); // create file if not exist
-
-        //     const [_, rel] = await this.getLock(file).write();
-        //     const fullPath = path.join(this.dataBasePath, file);
-        //     const writeHandle = await fsp.open(fullPath, "a");
-
-        //     try {
-        //         let offset = (await writeHandle.stat()).size;
-        //         const buffers: Buffer[] = [];
-
-        //         for (const [valStr, offsets] of valueMap.entries()) {
-        //             const doc: Partial<IndexEntry> = {
-        //                 [valStr]: offsets,
-        //                 offset
-        //             };
-        //             const encoded = this.crypto.encrypt(JSON.stringify(doc));
-        //             buffers.push(encoded);
-        //             offset += encoded.length;
-        //         }
-
-        //         const finalBuffer = Buffer.concat(buffers);
-        //         await writeHandle.write(finalBuffer);
-        //     } catch (err) {
-        //         console.error(`writeIndexMap error (${file}):`, err);
-        //     } finally {
-        //         await writeHandle.close();
-        //         rel();
-        //     }
-        // }
 
         for (const [key, valMap] of indexMap.entries()) {
             const file = `${key}.idx.bson`;
             this.ensureFile(file);
 
             for (const [valStr, offsets] of valMap.entries()) {
-                const existing = await this.readFileIdx(file, valStr);
+                const existing = await this.indexFind(file, valStr);
                 if (existing) {
                     await this.addFileIdxOffset(file, valStr, ...offsets); // handles merge
                 } else {
@@ -358,6 +427,94 @@ export class FileManager {
             }
         }
     }
+
+    /**
+    For Index files
+    Reads a binary file and extracts valid blocks (tagged with 0xFD).
+    Skips deleted blocks (tagged with 0xDE).
+    
+    * @param {string} fileName - Name of the file to read.
+    * @return {Promise<IndexEntry | null>} - A fields indexs or null if not found
+  */
+
+    async indexFind(fileName: string, value: string): Promise<IndexOut | null> {
+        return new Promise(async (resolve, reject) => {
+
+            const [_, rel] = await this.getLock(fileName).read();
+            const readStream = fs.createReadStream(path.join(this.dataBasePath, fileName));
+            let leftover = Buffer.alloc(0); // Store half or incomplete previous chunk data
+
+            let isBroke = false; // check is leftover store data or clean
+
+            readStream.on("data", (chunk) => {
+
+                // Marge prevouse data and curren chunk data
+                const buffer = Buffer.concat([leftover, Buffer.from(chunk)]);
+                let i = 0;
+
+                while (i < buffer.length) {
+                    // Check current index
+                    const tag = buffer[i];
+
+                    if (tag === 0xFD || tag === 0xDE) {
+                        if (i + 9 > buffer.length) {// Incomplete block header
+                            isBroke = true;
+                            break;
+                        }
+
+                        const capacity = buffer.readUInt32LE(i + 5); // Data's capacity
+                        const totalSize = 1 + 4 + 4 + 16 + capacity; // Entire Data
+
+                        if (i + totalSize > buffer.length) {// Incomplete block body
+                            isBroke = true;
+                            break;
+                        }
+                        // If it Mark as Vaild Data
+                        if (tag === 0xFD) {
+                            const bufferData = buffer.slice(i, i + totalSize); // Slice block of data
+                            const decryptData = this.crypto.decrypt(bufferData); // Encrypt the data
+                            const jsonData = JSON.parse(decryptData) as IndexOut; // Json Parse
+                            if (Object.keys(jsonData)[0] == value) { // Check is current data is targeted data
+                                jsonData.length = bufferData.readInt32LE(1); // Inside object add data length
+                                jsonData.capacity = bufferData.readInt32LE(5); // Inside object add data capacity
+
+
+                                readStream.close() // Close readStream
+                                rel(); // Release lock
+                                return resolve(jsonData); // Resolve and return
+                            }
+                        }
+
+                        i += totalSize; // Skip either block type
+                    } else {
+                        // Not part of a block, just skip or optionally handle
+                        i++;
+                    }
+                }
+
+                if (isBroke) {
+                    leftover = buffer.slice(i); // Save only the unprocessed part
+                } else {
+                    leftover = Buffer.alloc(0); // Clean it — nothing to carry over
+                }
+            });
+            // End of readStream
+            readStream.on("end", () => {
+                readStream.close();
+                rel();
+                resolve(null);
+            });
+            // On Error
+            readStream.on("error", (err) => {
+                readStream.close()
+                rel();
+                console.error(err);
+                reject(null);
+
+            });
+        })
+    }
+
 
 
 
@@ -377,7 +534,7 @@ export class FileManager {
         const valStr = val.toString();
         console.log(file);
 
-        const exists = await this.readFileIdx(file, valStr);
+        const exists = await this.indexFind(file, valStr);
         if (exists) {
             // Append anothe offset
             await this.addFileIdxOffset(file, valStr, offset);
@@ -423,7 +580,7 @@ export class FileManager {
     async addFileIdxOffset(fileName: string, value: string, ...dataBaseOffset: number[]) {
 
         const [v, relRead] = await this.getLock(fileName).read();
-        const idxData = await this.readFileIdx(fileName, value);
+        const idxData = await this.indexFind(fileName, value);
         const fullPath = path.join(this.dataBasePath, fileName);
         relRead();
         if (!idxData) {
@@ -477,37 +634,47 @@ export class FileManager {
    */
 
     async deleteFileIdxOffset(fileName: string, value: string, dataBaseOffset: number) {
-
         const [v, relRead] = await this.getLock(fileName).read();
-        const idxData = await this.readFileIdx(fileName, value);
+        const idxData = await this.indexFind(fileName, value);
         const fullPath = path.join(this.dataBasePath, fileName);
         relRead();
         if (!idxData) {
             console.error(`${value} not found in ${fullPath}`);
             return;
         }
-        const [_, rel] = await this.getLock(fileName).write();
 
+        const [_, rel] = await this.getLock(fileName).write();
         const fileHandle = await fsp.open(fullPath, 'r+');
 
         const offsetArray = idxData[value];
-
         const newOffsetArray = offsetArray.filter((item) => item !== dataBaseOffset);
 
         if (offsetArray.length === newOffsetArray.length) {
+            await fileHandle.close();
             rel();
             return;
         }
+
+        if (newOffsetArray.length === 0) {
+            // Delete the entire block
+            const markBuf = Buffer.alloc(1);
+            markBuf.writeUInt8(0xDE);
+            await fileHandle.write(markBuf, 0, 1, idxData.offset);
+            await fileHandle.close();
+            rel();
+            return;
+        }
+
+        // Update block with remaining offsets
         idxData[value] = newOffsetArray;
         const newData: Record<string, any> = {};
-
-        newData[value] = idxData[value];
+        newData[value] = newOffsetArray;
         newData.offset = idxData.offset;
+
         try {
             const encodeDoc = this.crypto.encrypt(JSON.stringify(newData));
             const capacityBuffer = Buffer.alloc(4);
             capacityBuffer.writeInt32LE(idxData.capacity);
-            // Old data capacity
             capacityBuffer.copy(encodeDoc, 5, 0, 4);
             await fileHandle.write(encodeDoc, 0, encodeDoc.length, idxData.offset);
         } finally {
@@ -515,7 +682,6 @@ export class FileManager {
             rel();
         }
     }
-
 
     /**
        * Mark as delete data and append new one
@@ -530,17 +696,17 @@ export class FileManager {
         const filePath = path.join(this.dataBasePath, fileName);
         const write = await fsp.open(filePath, "r+");
 
+
         const deletBufferMark = Buffer.alloc(1);
         deletBufferMark.writeUInt8(0xDE);
         await write.write(deletBufferMark, 0, 1, offset);
+        await write.close();
+        rel();
         if (doc) {
-            doc.offset = (await write.stat()).size;
-            await write.close();
-            rel();
-            await this.appendInFile(fileName, doc);
+            await this.dataBaseInsert(fileName, doc);
+
         } else {
-            await write.close();
-            rel();
+
         }
     }
 

@@ -1,7 +1,7 @@
 export const data = [
     {
         "id": 1,
-        "name": "Alice",
+        "name": "Alice khan",
         "age": 30,
         "tags": ["engineer", "blogger"],
         "meta": { "city": "Delhi", "active": true }
