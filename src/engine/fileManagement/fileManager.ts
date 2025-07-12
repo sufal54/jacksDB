@@ -29,7 +29,6 @@ export class FileManager {
     /**
     Initialize FileManager of a collection
     * @param {string} name - name of collection
-    * @param {Schema} schema - the scheam
     * @param {String} secret - option a secret key for better encryption
     * @return {this} 
   */
@@ -37,7 +36,7 @@ export class FileManager {
         name: string,
         secret?: string
     ) {
-        this.dataBasePath = path.join(this.dataBasePath, name);
+        this.dataBasePath = path.join(this.dataBasePath, name); // Path of collection in database
         this.crypto = new Crypto(secret);
 
         // Make path if does not exist
@@ -48,7 +47,7 @@ export class FileManager {
 
     }
     /**
-     * Ensure file exist or it will create it in sync
+     * Ensure file and lock file exists if not it will create in sync mananer
      * @param {string} fileName - name of file path with extension
      */
     private ensureFile(fileName: string): void {
@@ -84,7 +83,10 @@ export class FileManager {
         }
         return lock;
     }
-
+    /**
+     * scan entire database O(n) time
+     * @returns {any[]} - array of json data
+     */
     async fullScan(): Promise<any[]> {
         const results: any[] = [];
         const [_, rel] = await this.getLock(this.mainDB).read();
@@ -101,12 +103,11 @@ export class FileManager {
                 while (offset < buffer.length) {
                     const remaining = buffer.length - offset;
 
-                    if (remaining < 25) {
-                        // Not enough for even the header
+                    if (remaining < 25) { // Not enough for even the header
                         break;
                     }
 
-                    const tag = buffer[offset];
+                    const currByte = buffer[offset];
                     const length = buffer.readUInt32LE(offset + 1);
                     const capacity = buffer.readUInt32LE(offset + 5);
                     const totalSize = 1 + 4 + 4 + 16 + capacity;
@@ -118,7 +119,7 @@ export class FileManager {
 
                     const block = buffer.slice(offset, offset + totalSize);
 
-                    if (tag === 0xFD) {
+                    if (currByte === 0xFD) {
                         try {
                             const decrypted = this.crypto.decrypt(block);
                             const json = JSON.parse(decrypted);

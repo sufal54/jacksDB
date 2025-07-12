@@ -1,17 +1,18 @@
 {
   "name": "jacksdb",
-  "version": "1.0.1",
+  "version": "1.0.4",
   "description": "",
   "main": "dist/jsondb.js",
   "types": "dist/jsondb.d.ts",
   "scripts": {
-    "start":"ts-node test/main.test.ts",
+    "start":"ts-node src/test/main.test.ts",
     "build": "tsc",
     "test":"node dist/test/main.test.js"
   },
   "files": [
     "dist"
   ],
+  "keywords":["mongobd","nosql","database"],
   "author": "",
   "license": "ISC",
   "dependencies": {

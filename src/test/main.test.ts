@@ -1,5 +1,4 @@
-import { JacksDB } from "../src/lib/DB";
-import Schema from "../src/engine/schema/schema";
+import { JacksDB, Schema } from "../jacksdb/JacksDB";
 import assert from "node:assert";
 
 (async function testDB() {

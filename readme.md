@@ -18,45 +18,112 @@
 ## ✅ Usage
 
 ```ts
-import { Database } from "./engine/Database/Database";
-import Schema from "./engine/schema/schema";
+import { JacksDB, Schema } from "../jacksdb/JacksDB";
+import assert from "node:assert";
 
-// 1. Define schema
-const schema = new Schema({
-  id: Number,
-  name: String,
-  age: Number,
-  tags: [String],
-  meta: {
-    city: String,
-    active: Boolean,
-  },
-});
+(async function testDB() {
+  // 🧩 1. Define the schema for the collection
+  const userSchema = new Schema({
+    id: Number,
+    name: String,
+    age: Number,
+    tags: [String], // Array of strings
+    meta: {
+      city: String,
+      active: Boolean,
+    },
+  });
 
-// 2. Create DB instance
-const db = new Database("usersdb", schema, "my-secret-password");
+  // 🔐 2. Create a new JacksDB instance with a secret encryption key
+  const db = new JacksDB("secret-key");
 
-// 3. Access collection
-const users = db.collection("users");
+  // 📦 3. Access or create a collection with the defined schema
+  const users = db.collection("users", userSchema);
 
-// 4. Insert
-await users.insertOne({
-  id: 1,
-  name: "Alice",
-  age: 30,
-  tags: ["engineer", "blogger"],
-  meta: { city: "Delhi", active: true },
-});
+  // 📝 4. Prepare some user documents to insert
+  const data = [
+    {
+      id: 1,
+      name: "Alice",
+      age: 30,
+      tags: ["engineer", "blogger"],
+      meta: { city: "Delhi", active: true },
+    },
+    {
+      id: 2,
+      name: "Bob",
+      age: 25,
+      tags: ["coder", "blogger"],
+      meta: { city: "Mumbai", active: false },
+    },
+    {
+      id: 3,
+      name: "Charlie",
+      age: 30,
+      tags: ["engineer", "designer"],
+      meta: { city: "Delhi", active: true },
+    },
+  ];
 
-// 5. Find
-const result = await users.find({ age: 30 });
-console.log(result);
+  // ➕ 5. Insert multiple documents
+  await users.insertMany(data);
+  console.log("✅ Inserted users");
 
-// 6. Update
-await users.updateOne({ id: 1 }, { age: 31 });
+  // 🔍 6. Query users with age = 30
+  const age30 = await users.find({ age: 30 });
+  console.log("🔎 Query: { age: 30 } =>", age30);
+  console.assert(age30.length === 2);
+  console.log("✅ Found users with age 30");
 
-// 7. Delete
-await users.deleteOne({ id: 1 });
+  // 🔍 7. Query users who have the tag "blogger"
+  const bloggers = await users.find({ tags: "blogger" });
+  console.log("🔎 Query: { tags: 'blogger' } =>", bloggers);
+  console.assert(bloggers.length === 2);
+  console.log("✅ Found users with tag 'blogger'");
+
+  // 🔍 8. Query users in the city "Delhi"
+  const delhiUsers = await users.find({ "meta.city": "Delhi" });
+  console.log("🔎 Query: { 'meta.city': 'Delhi' } =>", delhiUsers);
+  console.assert(delhiUsers.length === 2);
+  console.log("✅ Found users in Delhi");
+
+  // 🛠️ 9. Update one user (id = 1) to name = Mona, age = 35
+  await users.updateOne({ id: 1 }, { name: "Mona", age: 35 });
+  const updatedMona = await users.find({ name: "Mona" });
+  console.log(
+    "🔄 After updateOne({ id: 1 }, { name: 'Mona', age: 35 }) =>",
+    updatedMona
+  );
+  console.assert(updatedMona[0].age === 35);
+  console.log("✅ Updated Alice to Mona and changed age");
+
+  // 🛠️ 10. Update all users with tag "blogger" to set meta.active = false
+  await users.updateMany({ tags: "blogger" }, { "meta.active": false });
+  const allBloggers = await users.find({ tags: "blogger" });
+  console.log("🔄 Bloggers after updateMany =>", allBloggers);
+  for (const u of allBloggers) {
+    console.assert(u.meta.active === false);
+  }
+  console.log("✅ All bloggers marked inactive");
+
+  // ❌ 11. Delete one user (Mona)
+  await users.deleteOne({ name: "Mona" });
+  const afterDeleteOne = await users.find({});
+  console.log("🗑️ After deleteOne({ name: 'Mona' }) =>", afterDeleteOne);
+  console.assert(afterDeleteOne.length === 2);
+  console.log("✅ Deleted one user (Mona)");
+
+  // ❌ 12. Delete all users from Delhi
+  await users.deleteMany({ "meta.city": "Delhi" });
+  const remaining = await users.find({});
+  console.log("🗑️ Remaining users after deleteMany =>", remaining);
+  console.assert(remaining.length === 1);
+  console.assert(remaining[0].name === "Bob");
+  console.log("✅ Deleted all users from Delhi");
+
+  // 🧪 Final assertion
+  console.log("🎉 All tests passed!");
+})();
 ```
 
 | Operation         | Time Complexity                 | Description                     |
