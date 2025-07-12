@@ -9,10 +9,10 @@ import assert from "node:assert";
     name: String,
     age: Number,
     tags: [String],
-    meta: new Schema({
+    meta: {
       city: String,
       active: Boolean
-    })
+    }
   });
 
   const db = new JacksDB("secret-key");
