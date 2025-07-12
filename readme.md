@@ -18,7 +18,7 @@
 ## ✅ Usage
 
 ```ts
-import { JacksDB, Schema } from "../jacksdb/JacksDB";
+import { JacksDB, Schema } from "jacksdb";
 import assert from "node:assert";
 
 (async function testDB() {

@@ -1,4 +1,4 @@
-import { JacksDB, Schema } from "../jacksdb/JacksDB";
+import { JacksDB, Schema } from "../index";
 import assert from "node:assert";
 
 (async function testDB() {
