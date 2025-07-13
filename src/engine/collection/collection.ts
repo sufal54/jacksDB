@@ -187,3 +187,4 @@ export class Collection {
             const parts = key.split(".");
             let curr = result;
             for (let i = 0; i < parts.length; i++) {
+                const part = parts[i];
