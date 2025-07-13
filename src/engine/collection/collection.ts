@@ -93,3 +93,4 @@ export class Collection {
                             if (val !== exists) {
                                 return false;
                             }
+                            break;
