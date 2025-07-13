@@ -329,3 +329,4 @@ export class Collection {
         const deepCloned = structuredClone(target);
 
         // It's overwrite update vallue into clone and return updated doc 
+        const newDoc = this.deepMerge(deepCloned, updateParsed);
