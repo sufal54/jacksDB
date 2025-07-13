@@ -24,3 +24,4 @@ export class Collection {
             const orConditions = query["$or"];
             if (!Array.isArray(orConditions)) {
                 return false;
+            }
