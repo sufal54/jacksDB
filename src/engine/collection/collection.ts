@@ -209,3 +209,4 @@ export class Collection {
      * @param doc - document for insert
      * @returns 
      */
+    async insertOne(doc: any): Promise<void> {
