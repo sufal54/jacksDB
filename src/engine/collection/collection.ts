@@ -287,3 +287,4 @@ export class Collection {
             results.sort((a, b) => {
                 for (const key in sort) {
                     const dir = sort[key];
+                    const aVal = this.deepGet(a, key);
