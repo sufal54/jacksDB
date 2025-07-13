@@ -211,3 +211,4 @@ export class Collection {
      */
     async insertOne(doc: any): Promise<void> {
         // validate all field is valid field and types
+        const validated = this.schema.validate(doc);
