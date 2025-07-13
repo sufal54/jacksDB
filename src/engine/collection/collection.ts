@@ -128,3 +128,4 @@ export class Collection {
 
     /**
      * it tooks two object and marge it source to target
+     * support nester objec
