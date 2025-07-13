@@ -78,3 +78,4 @@ export class Collection {
                         case "$in":
                             if (!Array.isArray(val) || !val.includes(fieldVal)) {
                                 return false;
+                            }
