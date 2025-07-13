@@ -1,20 +1,9 @@
-import fs from "node:fs";
+import fs, { write } from "node:fs";
 import fsp from "node:fs/promises";
 import path from "node:path";
 import RwLock from "@sufalctl/rwlock";
 import Crypto from "../../crypto/crypto";
-
-type IndexEntry = {
-    offset?: number;
-    [key: string]: any;
-};
-
-
-type IndexOut = {
-    offset: number;
-    length: number;
-    capacity: number;
-} & Record<string, number[]>;
+import { IndexEntry, IndexOut, FindOptions } from "./types";
 
 export class FileManager {
     private dataBasePath = "JacksDB";
@@ -217,6 +206,26 @@ export class FileManager {
         } catch (err) {
             await file.close();
             rel();
+        }
+    }
+
+    async deleteAllFiles(): Promise<void> {
+        const dir = this.dataBasePath;
+        const files = await fsp.readdir(dir);
+        if (files.length === 0) {
+            return;
+        }
+        for (const file of files) {
+            const fileLock = this.fileLocks.get(file);
+
+            if (fileLock) {
+                const [_, rel] = await fileLock.write();
+                await fsp.unlink(path.join(dir, file));
+                rel();
+            } else {
+                await fsp.unlink(path.join(dir, file));
+            }
+
         }
     }
 
@@ -501,13 +510,14 @@ export class FileManager {
             });
             // End of readStream
             readStream.on("end", () => {
-                readStream.close();
+
+                readStream.destroy();
                 rel();
                 resolve(null);
             });
             // On Error
             readStream.on("error", (err) => {
-                readStream.close()
+                readStream.destroy();
                 rel();
                 console.error(err);
                 reject(null);

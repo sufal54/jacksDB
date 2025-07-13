@@ -83,41 +83,68 @@ export class Collection {
         await this.fileManager.dataBaseInsert("main.db.bson", ...docs);
     }
 
-    async find(query: Record<string, any>): Promise<any[]> {
-        if (Object.keys(query).length === 0) {
-            return await this.fileManager.fullScan();
-        }
+    private deepGet(obj: any, path: string): any {
+        return path.split(".").reduce((acc, key) => acc?.[key], obj);
+    }
+
+    async find(query: Record<string, any> = {}, options: { sort?: Record<string, 1 | -1>, skip?: number, limit?: number } = {}): Promise<any[]> {
+        const { sort = {}, skip = 0, limit = 20 } = options;
 
         const keys = Object.keys(query);
-        const matchedOffsets = new Set<number>();
+        let matchedOffsets = new Set<number>();
 
+        let usedIndex = false;
         for (const key of keys) {
             const val = query[key];
             const indexData = await this.fileManager.indexFind(`${key}.idx.bson`, val.toString());
-            if (!indexData) {
-                continue;
-            }
-            for (const offset of indexData[val.toString()]) {
-                matchedOffsets.add(offset);
+            if (indexData && indexData[val.toString()]) {
+                for (const offset of indexData[val.toString()]) {
+                    matchedOffsets.add(offset);
+                }
+                usedIndex = true;
+                break;
             }
         }
 
         const results: any[] = [];
-        for (const offset of matchedOffsets) {
-            try {
-                const data = await this.fileManager.dataBaseFind(offset);
-                if (this.matches(data, query)) {
-                    results.push(data);
+        if (usedIndex) {
+            for (const offset of matchedOffsets) {
+                try {
+                    const data = await this.fileManager.dataBaseFind(offset);
+                    if (this.matches(data, query)) {
+                        results.push(data);
+                    }
+                } catch (err: any) {
+                    if (err.message !== "Invalid tag: not a valid block") throw err;
                 }
-            } catch (err: any) {
-                if (err.message !== "Invalid tag: not a valid block") {
-                    throw err;
+            }
+        } else {
+            for await (const doc of await this.fileManager.fullScan()) {
+                if (this.matches(doc, query)) {
+                    results.push(doc);
                 }
             }
         }
 
-        return results;
+        // Sort
+        if (Object.keys(sort).length > 0) {
+            results.sort((a, b) => {
+                for (const key in sort) {
+                    const dir = sort[key];
+                    const aVal = this.deepGet(a, key);
+                    const bVal = this.deepGet(b, key);
+
+                    if (aVal < bVal) return -1 * dir;
+                    if (aVal > bVal) return 1 * dir;
+                }
+                return 0;
+            });
+        }
+
+        // Apply skip and limit
+        return results.slice(skip, skip + limit);
     }
+
 
 
     async updateOne(filter: Record<string, any>, update: Partial<any>): Promise<void> {
@@ -188,6 +215,10 @@ export class Collection {
 
 
     async deleteMany(query: Record<string, any>): Promise<void> {
+        if (Object.keys(query).length === 0) {
+            await this.fileManager.deleteAllFiles();
+            return;
+        }
         const keys = Object.keys(query);
         const matchedOffsets = new Set<number>();
 
