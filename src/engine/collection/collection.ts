@@ -92,3 +92,4 @@ export class Collection {
                             const exists = fieldVal !== undefined;
                             if (val !== exists) {
                                 return false;
+                            }
