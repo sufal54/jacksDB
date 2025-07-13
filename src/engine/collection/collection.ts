@@ -288,3 +288,4 @@ export class Collection {
                 for (const key in sort) {
                     const dir = sort[key];
                     const aVal = this.deepGet(a, key);
+                    const bVal = this.deepGet(b, key);
