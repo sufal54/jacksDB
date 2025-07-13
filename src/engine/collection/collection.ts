@@ -343,3 +343,4 @@ export class Collection {
         for (const doc of found) {
             if (doc.offset == null) {
                 console.warn("Skipping null offset");
+                continue;
