@@ -294,3 +294,4 @@ export class Collection {
                     if (aVal > bVal) return 1 * dir;
                 }
                 return 0;
+            });
