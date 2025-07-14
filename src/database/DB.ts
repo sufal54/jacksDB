@@ -9,6 +9,12 @@ export class JacksDB {
         this.secret = secret;
     }
 
+    /**
+     * 
+     * @param name - name of collection
+     * @param schema - collection schema
+     * @returns -new collection object
+     */
     collection(name: string, schema: Schema): Collection {
         if (!this.collections.has(name)) {
             const col = new Collection(name, schema, this.secret);
