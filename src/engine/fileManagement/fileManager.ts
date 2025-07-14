@@ -126,11 +126,13 @@ export class FileManager {
             });
 
             readStream.on("end", () => {
+                readStream.destroy();
                 rel();
                 resolve(results);
             });
 
             readStream.on("error", (err) => {
+                readStream.destroy();
                 rel();
                 reject(err);
             });
@@ -571,6 +573,7 @@ export class FileManager {
             doc.offset = (await write.stat()).size;
             const encodeDoc = this.crypto.encrypt(JSON.stringify(doc));
             await write.write(encodeDoc);
+            await write.sync();
         } catch (err) {
             console.error("appendIndexEntry error:", err);
         } finally {
@@ -595,7 +598,10 @@ export class FileManager {
         const fullPath = path.join(this.dataBasePath, fileName);
         relRead();
         if (!idxData) {
-            console.error(`${value} not found in ${fullPath}`);
+            const newEntry: Partial<IndexEntry> = {
+                [value]: dataBaseOffset,
+            };
+            await this.appendIndexEntry(fileName, newEntry);
             return;
         }
         const [_, rel] = await this.getLock(fileName).write();
@@ -624,7 +630,7 @@ export class FileManager {
             // Old data capacity
             capacityBuffer.copy(encodeDoc, 5, 0, 4);
             await fileHandle.write(encodeDoc, 0, encodeDoc.length, idxData.offset);
-
+            await fileHandle.sync();
             await fileHandle.close();
             rel();
         } catch (err) {
@@ -671,6 +677,7 @@ export class FileManager {
             const markBuf = Buffer.alloc(1);
             markBuf.writeUInt8(0xDE);
             await fileHandle.write(markBuf, 0, 1, idxData.offset);
+            await fileHandle.sync();
             await fileHandle.close();
             rel();
             return;
