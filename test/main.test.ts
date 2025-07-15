@@ -17,7 +17,7 @@ import assert from "node:assert";
   const users = db.collection("users", userSchema);
 
   // Clean up any existing data
-  // await users.deleteMany({}); // Optional: add `deleteAll` if supported
+  await users.deleteMany({}); // Optional: add `deleteAll` if supported
 
   // Insert many
   const data = [
@@ -29,7 +29,7 @@ import assert from "node:assert";
   ];
 
   await users.insertMany(data);
-
+  console.log(await users.find({}));
   // insertOne
   await users.insertOne({ id: 6, name: "Frank", age: 27, tags: ["intern"], meta: { city: "Pune", active: true } });
   const frank = await users.find({ name: "Frank" });

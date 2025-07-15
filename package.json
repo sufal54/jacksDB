@@ -1,19 +1,27 @@
 {
   "name": "jacksdb",
-  "version": "1.1.9",
+  "version": "1.1.10",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  
   "scripts": {
-    "start":"ts-node test/main.test.ts",
+    "start": "ts-node test/main.test.ts",
+    "start:test": "node --trace-warnings ./node_modules/.bin/ts-node test/main.test.ts",
     "build": "tsc",
-    "test":"node dist/test/main.test.js"
+    "test": "node dist/test/main.test.js"
   },
   "files": [
     "dist"
   ],
-  "keywords":["mongobd","nosql","database"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sufal54/JacksDB.git"
+  },
+  "keywords": [
+    "mongobd",
+    "nosql",
+    "database"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {

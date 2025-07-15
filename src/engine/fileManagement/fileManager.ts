@@ -153,7 +153,8 @@ export class FileManager {
 
             // Validate tag
             if (headerBuffer[0] !== 0xFD) {
-                throw new Error("Invalid tag: not a valid block");
+                // console.warn("Invalid Header: not a valid block")
+                return;
             }
 
             // const length = headerBuffer.readUInt32LE(1);
@@ -168,7 +169,7 @@ export class FileManager {
             const jsonData = this.crypto.decrypt(fullBuffer);
             return JSON.parse(jsonData);
         } finally {
-            await file.close();
+            await file.close().catch((e) => console.error(e));
             rel();
         }
     }
@@ -178,11 +179,15 @@ export class FileManager {
         const fullPath = path.join(this.dataBasePath, this.mainDB);
         const file = await fsp.open(fullPath, "r+");
 
+        let jsonData: IndexEntry | null = null;
+
         try {
             const header = Buffer.alloc(25);
             await file.read(header, 0, 25, offset);
 
             if (header[0] !== 0xFD) {
+                file.close();
+                rel();
                 console.warn("Block already deleted or invalid");
                 return;
             }
@@ -193,21 +198,24 @@ export class FileManager {
             await file.read(fullBuf, 0, totalSize, offset);
 
             const decrypted = this.crypto.decrypt(fullBuf);
-            const jsonData = JSON.parse(decrypted) as IndexEntry;
-
-            // Remove index entries
+            jsonData = JSON.parse(decrypted) as IndexEntry;
 
             // Mark as deleted
             const markBuf = Buffer.alloc(1);
             markBuf.writeUInt8(0xDE);
             await file.write(markBuf, 0, 1, offset);
+            await file.sync();
+        } finally {
+            await file.close();
+            rel();
+        }
 
-            await file.close();
-            rel();
-            await this.cleanupIndexesFromDoc(jsonData);
-        } catch (err) {
-            await file.close();
-            rel();
+        if (jsonData) {
+            try {
+                await this.cleanupIndexesFromDoc(jsonData);
+            } catch (err) {
+                console.error("Failed to clean up index:", err);
+            }
         }
     }
 
@@ -241,6 +249,8 @@ export class FileManager {
             await readFile.read(header, 0, 25, offset);
 
             if (header[0] !== 0xFD) {
+                await readFile.close();
+                rel();
                 throw new Error("Invalid block or already deleted");
             }
 
@@ -253,7 +263,7 @@ export class FileManager {
 
             const encoded = this.crypto.encrypt(JSON.stringify({ ...newDoc, offset }));
             const newLength = encoded.readUInt32LE(1);
-
+            await readFile.sync();
             await readFile.close();
             rel();
 
@@ -280,6 +290,8 @@ export class FileManager {
             const [_, writeRel] = await this.getLock(this.mainDB).write();
             const writeFile = await fsp.open(fullPath, "r+");
             await writeFile.write(encoded, 0, encoded.length, offset);
+            await writeFile.sync();
+            await writeFile.close();
             writeRel();
         } catch (err) {
             console.log(err);
@@ -369,6 +381,7 @@ export class FileManager {
             }
 
             await write.write(Buffer.concat(encodeBufferDoc));
+            await write.sync();
         } catch (err) {
             console.error("appendInFile error:", err);
             await write.close();
@@ -491,7 +504,7 @@ export class FileManager {
                                 jsonData.capacity = bufferData.readInt32LE(5); // Inside object add data capacity
 
 
-                                readStream.close() // Close readStream
+                                readStream.destroy() // Close readStream
                                 rel(); // Release lock
                                 return resolve(jsonData); // Resolve and return
                             }
@@ -545,7 +558,6 @@ export class FileManager {
         // Ensure fiel exist or create new
         this.ensureFile(file);
         const valStr = val.toString();
-        console.log(file);
 
         const exists = await this.indexFind(file, valStr);
         if (exists) {
@@ -592,11 +604,11 @@ export class FileManager {
         */
 
     async addFileIdxOffset(fileName: string, value: string, ...dataBaseOffset: number[]) {
-
         const [v, relRead] = await this.getLock(fileName).read();
         const idxData = await this.indexFind(fileName, value);
         const fullPath = path.join(this.dataBasePath, fileName);
         relRead();
+
         if (!idxData) {
             const newEntry: Partial<IndexEntry> = {
                 [value]: dataBaseOffset,
@@ -604,43 +616,38 @@ export class FileManager {
             await this.appendIndexEntry(fileName, newEntry);
             return;
         }
-        const [_, rel] = await this.getLock(fileName).write();
 
+        const [_, rel] = await this.getLock(fileName).write();
         const fileHandle = await fsp.open(fullPath, 'r+');
 
-
-        idxData[value].push(...dataBaseOffset);
-        const newData: Record<string, any> = {};
-
-        newData[value] = idxData[value];
-        newData.offset = idxData.offset;
-
         try {
+            idxData[value].push(...dataBaseOffset);
+            const newData: Record<string, any> = {
+                [value]: idxData[value],
+                offset: idxData.offset,
+            };
+
             const encodeDoc = this.crypto.encrypt(JSON.stringify(newData));
 
             if (idxData.capacity < encodeDoc.readUInt32LE(1)) {
-                await fileHandle.close();
-                rel();
                 await this.makeAsDeleteAddNew(fileName, idxData.offset, newData);
-                return
+                return;
             }
 
             const capacityBuffer = Buffer.alloc(4);
             capacityBuffer.writeInt32LE(idxData.capacity);
-            // Old data capacity
             capacityBuffer.copy(encodeDoc, 5, 0, 4);
+
             await fileHandle.write(encodeDoc, 0, encodeDoc.length, idxData.offset);
             await fileHandle.sync();
-            await fileHandle.close();
-            rel();
         } catch (err) {
             console.error(err);
+        } finally {
             await fileHandle.close();
             rel();
         }
-
-
     }
+
 
     /**
    * Delete main database field indexs update index file
@@ -656,7 +663,7 @@ export class FileManager {
         const fullPath = path.join(this.dataBasePath, fileName);
         relRead();
         if (!idxData) {
-            console.error(`${value} not found in ${fullPath}`);
+            // console.error(`${value} not found in ${fullPath}`);
             return;
         }
 
@@ -695,6 +702,7 @@ export class FileManager {
             capacityBuffer.writeInt32LE(idxData.capacity);
             capacityBuffer.copy(encodeDoc, 5, 0, 4);
             await fileHandle.write(encodeDoc, 0, encodeDoc.length, idxData.offset);
+            await fileHandle.sync();
         } finally {
             await fileHandle.close();
             rel();
@@ -718,12 +726,11 @@ export class FileManager {
         const deletBufferMark = Buffer.alloc(1);
         deletBufferMark.writeUInt8(0xDE);
         await write.write(deletBufferMark, 0, 1, offset);
+        await write.sync();
         await write.close();
         rel();
         if (doc) {
             await this.dataBaseInsert(fileName, doc);
-
-        } else {
 
         }
     }
@@ -769,7 +776,8 @@ export class FileManager {
                             const data = buffer.slice(i, i + totalSize);
                             writeStream.write(data, (err) => {
                                 if (err) {
-                                    writeStream.end();
+                                    writeStream.destroy();
+                                    readStream.destroy();
                                     rel();
                                     return reject(err);
                                 }
@@ -791,7 +799,6 @@ export class FileManager {
             });
 
             readStream.on("end", async () => {
-                writeStream.end();
 
                 try {
                     // Delete main file 
@@ -802,12 +809,17 @@ export class FileManager {
                 } catch (err) {
                     console.error("Failed to replace main file:", err);
                 }
+                writeStream.destroy();
+
+                readStream.destroy();
                 rel();
                 resolve();
             });
 
             readStream.on("error", (err) => {
-                writeStream.end();
+                writeStream.destroy();
+
+                readStream.destroy();
                 rel();
                 reject(err);
 

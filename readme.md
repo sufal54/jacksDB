@@ -22,7 +22,7 @@ import { JacksDB, Schema } from "jacksdb";
 import assert from "node:assert";
 
 (async function testDB() {
-  // 🧩 1. Define the schema for the collection
+  // 1. Define the schema for the collection
   const userSchema = new Schema({
     id: Number,
     name: String,
@@ -34,13 +34,13 @@ import assert from "node:assert";
     },
   });
 
-  // 🔐 2. Create a new JacksDB instance with a secret encryption key
+  // 2. Create a new JacksDB instance with a secret encryption key
   const db = new JacksDB("secret-key");
 
-  // 📦 3. Access or create a collection with the defined schema
+  // 3. Access or create a collection with the defined schema
   const users = db.collection("users", userSchema);
 
-  // 📝 4. Prepare some user documents to insert
+  // 4. Prepare some user documents to insert
   const data = [
     {
       id: 1,
@@ -65,64 +65,64 @@ import assert from "node:assert";
     },
   ];
 
-  // ➕ 5. Insert multiple documents
+  // 5. Insert multiple documents
   await users.insertMany(data);
-  console.log("✅ Inserted users");
+  console.log("Inserted users");
 
-  // 🔍 6. Query users with age = 30
+  // 6. Query users with age = 30
   const age30 = await users.find({ age: 30 });
-  console.log("🔎 Query: { age: 30 } =>", age30);
+  console.log("Query: { age: 30 } =>", age30);
   console.assert(age30.length === 2);
-  console.log("✅ Found users with age 30");
+  console.log("Found users with age 30");
 
-  // 🔍 7. Query users who have the tag "blogger"
+  // 7. Query users who have the tag "blogger"
   const bloggers = await users.find({ tags: "blogger" });
-  console.log("🔎 Query: { tags: 'blogger' } =>", bloggers);
+  console.log("Query: { tags: 'blogger' } =>", bloggers);
   console.assert(bloggers.length === 2);
-  console.log("✅ Found users with tag 'blogger'");
+  console.log("Found users with tag 'blogger'");
 
-  // 🔍 8. Query users in the city "Delhi"
+  // 8. Query users in the city "Delhi"
   const delhiUsers = await users.find({ "meta.city": "Delhi" });
-  console.log("🔎 Query: { 'meta.city': 'Delhi' } =>", delhiUsers);
+  console.log("Query: { 'meta.city': 'Delhi' } =>", delhiUsers);
   console.assert(delhiUsers.length === 2);
-  console.log("✅ Found users in Delhi");
+  console.log("Found users in Delhi");
 
-  // 🛠️ 9. Update one user (id = 1) to name = Mona, age = 35
+  // 9. Update one user (id = 1) to name = Mona, age = 35
   await users.updateOne({ id: 1 }, { name: "Mona", age: 35 });
   const updatedMona = await users.find({ name: "Mona" });
   console.log(
-    "🔄 After updateOne({ id: 1 }, { name: 'Mona', age: 35 }) =>",
+    "After updateOne({ id: 1 }, { name: 'Mona', age: 35 }) =>",
     updatedMona
   );
   console.assert(updatedMona[0].age === 35);
   console.log("✅ Updated Alice to Mona and changed age");
 
-  // 🛠️ 10. Update all users with tag "blogger" to set meta.active = false
+  // 10. Update all users with tag "blogger" to set meta.active = false
   await users.updateMany({ tags: "blogger" }, { "meta.active": false });
   const allBloggers = await users.find({ tags: "blogger" });
-  console.log("🔄 Bloggers after updateMany =>", allBloggers);
+  console.log("Bloggers after updateMany =>", allBloggers);
   for (const u of allBloggers) {
     console.assert(u.meta.active === false);
   }
-  console.log("✅ All bloggers marked inactive");
+  console.log("All bloggers marked inactive");
 
-  // ❌ 11. Delete one user (Mona)
+  // 11. Delete one user (Mona)
   await users.deleteOne({ name: "Mona" });
   const afterDeleteOne = await users.find({});
-  console.log("🗑️ After deleteOne({ name: 'Mona' }) =>", afterDeleteOne);
+  console.log("After deleteOne({ name: 'Mona' }) =>", afterDeleteOne);
   console.assert(afterDeleteOne.length === 2);
-  console.log("✅ Deleted one user (Mona)");
+  console.log("Deleted one user (Mona)");
 
-  // ❌ 12. Delete all users from Delhi
+  // 12. Delete all users from Delhi
   await users.deleteMany({ "meta.city": "Delhi" });
   const remaining = await users.find({});
-  console.log("🗑️ Remaining users after deleteMany =>", remaining);
+  console.log("Remaining users after deleteMany =>", remaining);
   console.assert(remaining.length === 1);
   console.assert(remaining[0].name === "Bob");
-  console.log("✅ Deleted all users from Delhi");
+  console.log("Deleted all users from Delhi");
 
   // 🧪 Final assertion
-  console.log("🎉 All tests passed!");
+  console.log("All tests passed!");
 })();
 ```
 
