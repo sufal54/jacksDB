@@ -95,7 +95,7 @@ import assert from "node:assert";
     updatedMona
   );
   console.assert(updatedMona[0].age === 35);
-  console.log("✅ Updated Alice to Mona and changed age");
+  console.log("Updated Alice to Mona and changed age");
 
   // 10. Update all users with tag "blogger" to set meta.active = false
   await users.updateMany({ tags: "blogger" }, { "meta.active": false });
@@ -121,7 +121,7 @@ import assert from "node:assert";
   console.assert(remaining[0].name === "Bob");
   console.log("Deleted all users from Delhi");
 
-  // 🧪 Final assertion
+  // Final assertion
   console.log("All tests passed!");
 })();
 ```
