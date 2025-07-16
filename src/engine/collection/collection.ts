@@ -59,3 +59,13 @@ export class Collection {
                             if (typeof fieldVal !== "number" || typeof val !== "number" || !(fieldVal > val)) {
                                 return false;
                             }
+                            break;
+                        case "$gte":
+                            if (typeof fieldVal !== "number" || typeof val !== "number" || !(fieldVal >= val)) {
+                                return false;
+                            }
+                            break;
+                        case "$lt":
+                            if (typeof fieldVal !== "number" || typeof val !== "number" || !(fieldVal < val)) {
+                                return false;
+                            }
