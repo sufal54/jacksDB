@@ -219,3 +219,13 @@ export class Collection {
         }
         await this.fileManager.dataBaseInsert("main.db.bson", doc);
     }
+
+    /**
+     * time - O(1*f) = f for number of documet we are inserting
+     * insert many document at ones
+     * @param docs[] - array of document
+     * @returns 
+     */
+
+    async insertMany(docs: any[]): Promise<void> {
+        const validated = docs.map(d => this.schema.validate(d));
