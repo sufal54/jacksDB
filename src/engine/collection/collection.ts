@@ -399,3 +399,13 @@ export class Collection {
         for (const key of keys) {
             const val = query[key];
             const indexData = await this.fileManager.indexFind(`${key}.idx.bson`, val.toString());
+            if (!indexData) {
+                continue;
+            }
+            for (const offset of indexData[val.toString()]) {
+                matchedOffsets.add(offset);
+            }
+        }
+
+        for (const offset of matchedOffsets) {
+            try {
