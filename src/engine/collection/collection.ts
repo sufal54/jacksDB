@@ -212,23 +212,35 @@ export class Collection {
         // Apply skip and limit
         return results.slice(skip, skip + limit);
     }
-
+    /**
+     * We are using find whit limit 1 for now will optimazing later 
+     * @param query 
+     * @returns - returns single doc
+     */
     async findOne(query: Record<string, any> = {}): Promise<any | null> {
         const results = await this.find(query, { limit: 1 });
         return results.length > 0 ? results[0] : null;
     }
 
-
+    /**
+     * Takes query and update it or delete one and create new
+     * @param filter 
+     * @param update 
+     * @returns 
+     */
     async updateOne(filter: Record<string, any>, update: Partial<any>): Promise<void> {
         const found = await this.find(filter);
-        if (found.length === 0) return;
+        if (found.length === 0) {
+            return;
+        }
 
         const target = found[0];
+        // meta.city to meta{city}
         const updateParsed = this.dotPathToObject(update);
-
+        // JS function for deep clone to avoid mutaion on share value
         const deepCloned = structuredClone(target);
 
-
+        // It's overwrite update vallue into clone and return updated doc 
         const newDoc = this.deepMerge(deepCloned, updateParsed);
         // delete newDoc.offset;
         await this.fileManager.dataBaseUpdate(target.offset, newDoc);

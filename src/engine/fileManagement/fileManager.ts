@@ -1,4 +1,4 @@
-import fs, { write } from "node:fs";
+import fs from "node:fs";
 import fsp from "node:fs/promises";
 import path from "node:path";
 import RwLock from "@sufalctl/rwlock";
@@ -101,8 +101,8 @@ export class FileManager {
                     const capacity = buffer.readUInt32LE(offset + 5);
                     const totalSize = 1 + 4 + 4 + 16 + capacity;
 
+                    // Incomplete block
                     if (offset + totalSize > buffer.length) {
-                        // Incomplete block
                         break;
                     }
 
@@ -140,7 +140,13 @@ export class FileManager {
     }
 
 
-
+    /**
+     * Time O(1)
+     * It's takes offset and return single Doc
+     * Error if worng offset or Mark as deleted
+     * @param offset - Database offset
+     * @returns 
+     */
     async dataBaseFind(offset: number) {
         const [_, rel] = await this.getLock(this.mainDB).read();
         const fullPath = path.join(this.dataBasePath, this.mainDB);
@@ -151,7 +157,7 @@ export class FileManager {
             const headerBuffer = Buffer.alloc(25);
             await file.read(headerBuffer, 0, 25, offset);
 
-            // Validate tag
+            // Invalidate tag
             if (headerBuffer[0] !== 0xFD) {
                 // console.warn("Invalid Header: not a valid block")
                 return;
@@ -167,6 +173,7 @@ export class FileManager {
             const fullBuffer = Buffer.alloc(totalSize);
             await file.read(fullBuffer, 0, totalSize, offset);
             const jsonData = this.crypto.decrypt(fullBuffer);
+
             return JSON.parse(jsonData);
         } finally {
             await file.close().catch((e) => console.error(e));
@@ -174,6 +181,12 @@ export class FileManager {
         }
     }
 
+    /**
+     * Time O(1)
+     * It's takes Database offset and MArk it as deleted
+     * @param offset - Database offset
+     * @returns 
+     */
     async dataBaseDelete(offset: number): Promise<void> {
         const [_, rel] = await this.getLock(this.mainDB).write();
         const fullPath = path.join(this.dataBasePath, this.mainDB);
@@ -186,8 +199,8 @@ export class FileManager {
             await file.read(header, 0, 25, offset);
 
             if (header[0] !== 0xFD) {
-                file.close();
-                rel();
+                // await file.close();
+                // rel();
                 console.warn("Block already deleted or invalid");
                 return;
             }
@@ -204,7 +217,7 @@ export class FileManager {
             const markBuf = Buffer.alloc(1);
             markBuf.writeUInt8(0xDE);
             await file.write(markBuf, 0, 1, offset);
-            await file.sync();
+            await file.sync(); // Flush instant
         } finally {
             await file.close();
             rel();
@@ -218,16 +231,21 @@ export class FileManager {
             }
         }
     }
-
+    /**
+     * For deleteMany({})
+     * It's delete all the files have in our collection
+     * @returns 
+     */
     async deleteAllFiles(): Promise<void> {
         const dir = this.dataBasePath;
+        // All files inside of Dir
         const files = await fsp.readdir(dir);
         if (files.length === 0) {
             return;
         }
         for (const file of files) {
             const fileLock = this.fileLocks.get(file);
-
+            // If file lock have then lock the file and delete for safety else just delete the file
             if (fileLock) {
                 const [_, rel] = await fileLock.write();
                 await fsp.unlink(path.join(dir, file));
@@ -239,87 +257,118 @@ export class FileManager {
         }
     }
 
+    /**
+     * update database if new doc length is greater then its capacity then delete old doce append new also update indxes
+     * @param offset - offset of database
+     * @param newDoc - the doc we are going to insert
+     * @returns 
+     */
+
     async dataBaseUpdate(offset: number, newDoc: Partial<IndexEntry>) {
         const [_, rel] = await this.getLock(this.mainDB).read();
         const fullPath = path.join(this.dataBasePath, this.mainDB);
         const readFile = await fsp.open(fullPath, "r+");
 
         try {
-            const header = Buffer.alloc(25);
+            const header = Buffer.alloc(25); // For headers
             await readFile.read(header, 0, 25, offset);
-
+            // Invalid Block return
             if (header[0] !== 0xFD) {
                 await readFile.close();
                 rel();
                 throw new Error("Invalid block or already deleted");
             }
 
-            const oldCapacity = header.readUInt32LE(5);
-            const totalSize = 1 + 4 + 4 + 16 + oldCapacity;
+            const oldCapacity = header.readUInt32LE(5); // Read Capacity 
+            const totalSize = 1 + 4 + 4 + 16 + oldCapacity; // TotalSize
 
-            const oldBlockBuf = Buffer.alloc(totalSize);
-            await readFile.read(oldBlockBuf, 0, totalSize, offset);
-            const oldJson = JSON.parse(this.crypto.decrypt(oldBlockBuf)) as IndexEntry;
+            const oldBlockBuf = Buffer.alloc(totalSize); // Buffer for store the oldDoc
+            await readFile.read(oldBlockBuf, 0, totalSize, offset); // Get the Raw Data
+            const oldJson = JSON.parse(this.crypto.decrypt(oldBlockBuf)) as IndexEntry; // Parse into Object
 
-            const encoded = this.crypto.encrypt(JSON.stringify({ ...newDoc, offset }));
+            let encoded = this.crypto.encrypt(JSON.stringify({ ...newDoc, offset })); // NewDoc to Raw from
             const newLength = encoded.readUInt32LE(1);
             await readFile.sync();
             await readFile.close();
             rel();
 
+            await this.cleanupIndexesFromDoc(oldJson); // Clean old doc offset from index file
+            // Case when new Doc length is greater then old data's capacity
             if (newLength > oldCapacity) {
-                await this.cleanupIndexesFromDoc(oldJson);
-                await this.makeAsDeleteAddNew(this.mainDB, offset, newDoc);
+                await this.makeAsDeleteAddNew(this.mainDB, offset, newDoc); // Mark old Doc as deleted and append new Doc
                 return;
             }
 
-            // In-place update
-
-            await this.cleanupIndexesFromDoc(oldJson);
-
-            const indexFields = new Map<string, Map<string, number[]>>();
+            // Store all Index file and its Offsets
+            const indexFields = new Map<string, Map<string, number[]>>(); // strucher Map<filedName,Map<value,[indexs]>>
             for (const [key, val] of Object.entries(newDoc)) {
-                if (key === "offset") continue;
+                // If filed is offset then skip
+                if (key === "offset") {
+                    continue;
+                }
+                // Add all indexs inside indesFiels
                 this.indexAllFields(indexFields, val, offset, oldCapacity, key);
             }
+            // Writes all indexs in index file
             await this.writeIndexMap(indexFields);
 
+            // Copy Old doc capacity
             const capacityBuf = Buffer.alloc(4);
             capacityBuf.writeUInt32LE(oldCapacity);
+            // Overwrite oldcapacity in new Raw Doc
             capacityBuf.copy(encoded, 5);
+
+            // Cut extra buffer we adds +50 byte for future update
+            // Some case it will Overlap with next Doc
+            encoded = encoded.slice(0, 1 + 4 + 4 + 16 + newLength);
+
             const [_, writeRel] = await this.getLock(this.mainDB).write();
             const writeFile = await fsp.open(fullPath, "r+");
+            // Overwrite new Doc on old location
             await writeFile.write(encoded, 0, encoded.length, offset);
-            await writeFile.sync();
+            await writeFile.sync(); // Flush data into disk
             await writeFile.close();
             writeRel();
         } catch (err) {
             console.log(err);
-            await readFile.close();
-            rel();
-
         }
     }
 
+    /**
+     * Delete indexs from index file
+     * @param doc 
+     */
     private async cleanupIndexesFromDoc(doc: IndexEntry): Promise<void> {
         for (const [key, val] of Object.entries(doc)) {
+            // If offset field skip it
             if (key === "offset") {
                 continue;
             }
             await this.deleteFieldFromIndexes(key, val, doc.offset!);
         }
     }
+
+    /**
+     * 
+     * @param key 
+     * @param value 
+     * @param offset 
+     * @param pathPrefix - Object case for join prevous filed
+     */
     private async deleteFieldFromIndexes(key: string, value: any, offset: number, pathPrefix: string = ""): Promise<void> {
         const fullPath = [pathPrefix, key].filter(Boolean).join(".");
-
+        // Handle nested values usin g recurstion
+        // Case value array
         if (Array.isArray(value)) {
             for (const item of value) {
                 await this.deleteFieldFromIndexes("", item, offset, fullPath);
             }
+            // Case value Object
         } else if (typeof value === "object" && value !== null) {
             for (const [k, v] of Object.entries(value)) {
                 await this.deleteFieldFromIndexes(k, v, offset, fullPath);
             }
+            // Primitive Data
         } else if (["string", "number", "boolean"].includes(typeof value)) {
             const valStr = value.toString();
             const indexFile = `${fullPath}.idx.bson`;
@@ -348,8 +397,8 @@ export class FileManager {
         const fullPath = path.join(this.dataBasePath, fileName);
         const write = await fsp.open(fullPath, "a");
 
+        // Size of file is the offset of new Doc
         let offset = (await write.stat()).size;
-
 
         let encodeBufferDoc: Buffer[] = [];
 
@@ -368,8 +417,6 @@ export class FileManager {
                 encodeBufferDoc.push(encodeDoc);
                 const capacity = encodeDoc.readUInt32LE(5);
                 offset += 1 + 4 + 4 + 16 + capacity;
-
-
 
                 // Send all key value for nested value 
                 for (const [key, value] of Object.entries(doc)) {
@@ -393,13 +440,12 @@ export class FileManager {
         rel();
 
         await this.writeIndexMap(indexFields);
-
     }
 
     /**
      * For nested object or array recursive iteration each element
      * For better index file name
-     * 
+     * Arrange way store all Offsets inside map
      * @param {any} value - The value store in our data base field
      * @param {number} offset - Database offset of the data
      * @param {string} basePath - name of our index file 
