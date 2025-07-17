@@ -21,3 +21,4 @@ class Crypto {
      */
     encrypt(text: string): Buffer {
         // Remove all whitespace tap exclude from string
+        text = text.replace(/("[^"]*")|(\s+)/g, (match, quoted, space) => {
