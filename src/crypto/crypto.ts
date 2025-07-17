@@ -14,3 +14,4 @@ class Crypto {
     }
 
     /**
+     * parse jason data to encrypted buffer 
