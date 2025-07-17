@@ -54,3 +54,4 @@ class Crypto {
         }
         const len = encodeDoc.readUint32LE(1);
 
+        const iv = encodeDoc.slice(9, 25);
