@@ -11,3 +11,4 @@ class Crypto {
         const finalKey = secretKey || `${os.hostname()}-${os.platform()}`;
 
         this.key = crypto.createHash("sha256").update(finalKey).digest();
+    }
