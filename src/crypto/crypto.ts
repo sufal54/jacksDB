@@ -41,3 +41,4 @@ class Crypto {
         const newBuffer = Buffer.concat([header, iv, buffer, extraBytes]);
 
         return newBuffer;
+    }
