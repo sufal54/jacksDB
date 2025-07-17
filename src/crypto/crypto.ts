@@ -32,3 +32,4 @@ class Crypto {
         encodeDoc += cipher.final('hex');
         const buffer = Buffer.from(encodeDoc, "hex");
         const header = Buffer.alloc(9);
+        header.writeUint8(0xFD, 0); // 0xFD stand for valid data
