@@ -43,3 +43,4 @@ class Crypto {
         return newBuffer;
     }
 
+    /**
