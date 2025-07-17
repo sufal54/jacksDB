@@ -53,3 +53,4 @@ class Crypto {
             throw new Error("Invaild encodeDoc Data");
         }
         const len = encodeDoc.readUint32LE(1);
+
