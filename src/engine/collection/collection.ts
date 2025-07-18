@@ -340,3 +340,4 @@ export class Collection {
         const found = await this.find(filter);
         const updateParsed = this.dotPathToObject(update);
 
+        for (const doc of found) {
