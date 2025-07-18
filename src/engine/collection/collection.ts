@@ -38,3 +38,4 @@ export class Collection {
         }
 
 
+        for (const [key, value] of Object.entries(query)) {
