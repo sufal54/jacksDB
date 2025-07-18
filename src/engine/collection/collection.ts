@@ -26,3 +26,4 @@ export class Collection {
                 return false;
             }
             return orConditions.some((cond) => this.matches(doc, cond));
+        }
