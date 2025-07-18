@@ -141,3 +141,4 @@ export class Collection {
             // srcvalue not null and its a object and not array case 
             if (
                 srcVal &&
+                typeof srcVal === 'object' &&
