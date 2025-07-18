@@ -9,3 +9,4 @@ export class Collection {
         this.schema = schema;
         this.fileManager = new FileManager(collectionName, secret);
     }
+
