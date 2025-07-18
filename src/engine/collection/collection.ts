@@ -40,3 +40,4 @@ export class Collection {
 
         for (const [key, value] of Object.entries(query)) {
             // for nested object address.ip and so one
+            const fieldVal = this.deepGet(doc, key);
