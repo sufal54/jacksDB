@@ -325,3 +325,4 @@ export class Collection {
         const target = found[0];
         // meta.city to meta{city}
         const updateParsed = this.dotPathToObject(update);
+        // JS function for deep clone to avoid mutaion on share value
