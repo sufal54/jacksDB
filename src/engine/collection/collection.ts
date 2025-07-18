@@ -81,3 +81,4 @@ export class Collection {
                             }
                             break;
                         case "$nin":
+                            if (Array.isArray(val) && val.includes(fieldVal)) {
