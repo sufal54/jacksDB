@@ -333,3 +333,4 @@ export class Collection {
         // delete newDoc.offset;
         await this.fileManager.dataBaseUpdate(target.offset, newDoc);
 
+
