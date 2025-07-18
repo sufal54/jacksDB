@@ -283,3 +283,4 @@ export class Collection {
         }
 
         // Sort
+        if (Object.keys(sort).length > 0) {
