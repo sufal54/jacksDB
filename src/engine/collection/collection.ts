@@ -414,3 +414,4 @@ export class Collection {
                     await this.fileManager.dataBaseDelete(offset);
                 }
             } catch (err: any) {
+                if (err.message !== "Invalid tag: not a valid block") throw err;
