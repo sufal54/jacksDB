@@ -373,3 +373,4 @@ export class Collection {
             }
         }
 
+        for (const offset of matchedOffsets) {
