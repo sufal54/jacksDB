@@ -279,3 +279,4 @@ export class Collection {
                 if (this.matches(doc, query)) {
                     results.push(doc);
                 }
+            }
