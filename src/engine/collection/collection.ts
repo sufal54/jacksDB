@@ -260,3 +260,4 @@ export class Collection {
                 usedIndex = true;
                 break;
             }
+        }
