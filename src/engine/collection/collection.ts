@@ -6,3 +6,4 @@ export class Collection {
     private schema: Schema;
 
     constructor(collectionName: string, schema: Schema, secret?: string) {
+        this.schema = schema;
