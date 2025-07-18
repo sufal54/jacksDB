@@ -151,3 +151,4 @@ export class Collection {
                     tgtVal && typeof tgtVal === 'object' && !Array.isArray(tgtVal) ? tgtVal : {},
                     srcVal
                 );
+            } else {
