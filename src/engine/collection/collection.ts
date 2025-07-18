@@ -191,3 +191,4 @@ export class Collection {
                 // case last part then add it
                 if (i === parts.length - 1) {
                     curr[part] = value;
+                } else {
