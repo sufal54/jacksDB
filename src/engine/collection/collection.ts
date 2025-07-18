@@ -223,3 +223,4 @@ export class Collection {
     /**
      * time - O(1*f) = f for number of documet we are inserting
      * insert many document at ones
+     * @param docs[] - array of document
