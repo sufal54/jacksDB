@@ -351,3 +351,4 @@ export class Collection {
 
             // Clone updateParsed to avoid shared mutation across docs
             const mergedDoc = this.deepMerge(deepCloned, structuredClone(updateParsed));
+
