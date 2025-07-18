@@ -142,3 +142,4 @@ export class Collection {
             if (
                 srcVal &&
                 typeof srcVal === 'object' &&
+                !Array.isArray(srcVal)
