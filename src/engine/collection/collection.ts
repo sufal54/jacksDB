@@ -84,3 +84,4 @@ export class Collection {
                             if (Array.isArray(val) && val.includes(fieldVal)) {
                                 return false;
                             }
+                            break;
