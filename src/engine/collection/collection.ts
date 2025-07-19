@@ -56,3 +56,4 @@ export class Collection {
                             }
                             break;
                         case "$gt":
+                            if (typeof fieldVal !== "number" || typeof val !== "number" || !(fieldVal > val)) {
