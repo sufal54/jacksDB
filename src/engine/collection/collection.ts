@@ -29,3 +29,4 @@ export class Collection {
         }
 
         // Handle $and
+        if ("$and" in query) {
