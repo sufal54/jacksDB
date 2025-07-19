@@ -199,3 +199,4 @@ export class Collection {
                     curr = curr[part];
                 }
             }
+        }
