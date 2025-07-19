@@ -320,3 +320,4 @@ export class Collection {
         const found = await this.find(filter);
         if (found.length === 0) {
             return;
+        }
