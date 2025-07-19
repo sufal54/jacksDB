@@ -47,3 +47,4 @@ export class Collection {
                     switch (op) {
                         case "$eq":
                             if (fieldVal !== val) {
+                                return false;
