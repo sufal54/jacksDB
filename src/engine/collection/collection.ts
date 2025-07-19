@@ -243,3 +243,4 @@ export class Collection {
      * @param options - option like sort skip limit, default empty obj
      * @returns - array of object data
      */
+    async find(query: Record<string, any> = {}, options: { sort?: Record<string, 1 | -1>, skip?: number, limit?: number } = {}): Promise<any[]> {
