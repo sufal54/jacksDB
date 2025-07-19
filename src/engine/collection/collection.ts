@@ -171,3 +171,4 @@ export class Collection {
      * 
      * Output:
      * {
+     *   user: {
