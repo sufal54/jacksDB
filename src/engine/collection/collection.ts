@@ -205,3 +205,4 @@ export class Collection {
 
     /**
      * time - O(1)
+     * insert document in database
