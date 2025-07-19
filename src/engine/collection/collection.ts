@@ -88,3 +88,4 @@ export class Collection {
                         case "$exists":
                             if (typeof val !== "boolean") {
                                 return false;
+                            }
