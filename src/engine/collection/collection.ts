@@ -144,3 +144,4 @@ export class Collection {
                 typeof srcVal === 'object' &&
                 !Array.isArray(srcVal)
             ) {
+                // we pass if target not null and target is object and its not a array 
