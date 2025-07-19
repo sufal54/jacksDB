@@ -118,3 +118,4 @@ export class Collection {
         if (val === null || typeof val !== "object") {
             return true;
         }
+        return Object.keys(val).some(k => !operators.includes(k));
