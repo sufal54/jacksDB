@@ -346,3 +346,4 @@ export class Collection {
                 continue;
             }
 
+            const deepCloned = structuredClone(doc);
