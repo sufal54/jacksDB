@@ -278,3 +278,4 @@ export class Collection {
             for await (const doc of await this.fileManager.fullScan()) {
                 if (this.matches(doc, query)) {
                     results.push(doc);
+                }
