@@ -136,3 +136,4 @@ export class Collection {
 
     private deepMerge(target: any, source: any): any {
         for (const key in source) {
+            const srcVal = source[key];
