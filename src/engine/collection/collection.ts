@@ -181,3 +181,4 @@ export class Collection {
      * }
      */
 
+    private dotPathToObject(dotObj: Record<string, any>): any {
