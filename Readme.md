@@ -126,3 +126,4 @@ const user = await users.findOne({ name: "Alice" });
 await users.updateOne({ id: 1 }, { name: "Mona", age: 31 });
 ```
 
+- updateMany(filter, update)
