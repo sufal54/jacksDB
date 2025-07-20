@@ -129,3 +129,4 @@ await users.updateOne({ id: 1 }, { name: "Mona", age: 31 });
 - updateMany(filter, update)
 
 ```ts
+await users.updateMany({ tags: "blogger" }, { "meta.active": false });
