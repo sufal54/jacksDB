@@ -73,3 +73,4 @@ await users.insertOne({
 - insertMany(docs: object[])
 
 ```ts
+await users.insertMany([
