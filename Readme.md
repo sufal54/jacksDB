@@ -69,3 +69,4 @@ await users.insertOne({
   meta: { city: "Delhi", active: true },
 });
 ```
+
