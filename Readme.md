@@ -153,3 +153,4 @@ await users.deleteMany({ "meta.city": "Delhi" });
 | `$eq`     | `{ age: { $eq: 30 } }`                                        | Equal to              |
 | `$ne`     | `{ name: { $ne: "Bob" } }`                                    | Not equal to          |
 | `$gt`     | `{ age: { $gt: 25 } }`                                        | Greater than          |
+| `$gte`    | `{ age: { $gte: 30 } }`                                       | Greater than or equal |
