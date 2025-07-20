@@ -115,3 +115,4 @@ await users.find(
 - findOne(query)
 
 ```ts
+const user = await users.findOne({ name: "Alice" });
