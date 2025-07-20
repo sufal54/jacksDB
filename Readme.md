@@ -22,3 +22,4 @@
 - npm i jacksdb
 
 ```ts
+import jacksdb from "jacksdb"; // or from your relative path
