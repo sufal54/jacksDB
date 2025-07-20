@@ -38,3 +38,4 @@ const userSchema = new Schema({
   age: Number,
   tags: [String],
   meta: {
+    city: String,
