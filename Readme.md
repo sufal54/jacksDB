@@ -142,3 +142,4 @@ await users.deleteOne({ name: "Mona" });
 
 - deleteMany(query)
 
+```ts
