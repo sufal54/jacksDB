@@ -28,3 +28,4 @@ const { JacksDB, Schema } = jacksdb;
 ```
 
 ## Define a Schema
+
