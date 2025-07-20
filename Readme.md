@@ -89,3 +89,4 @@ await users.insertMany([
     meta: { city: "Delhi", active: true },
   },
 ]);
+```
