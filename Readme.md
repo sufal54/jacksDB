@@ -12,3 +12,4 @@
 - ⚡ Efficient in-place updates (if new data fits)
 - 🧼 Background-safe deletion with `removeGarbage()`
 - 📁 Fully file-based – no server required
+
