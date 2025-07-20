@@ -165,3 +165,4 @@ await users.deleteMany({ "meta.city": "Delhi" });
 ## Time Complexity
 
 | Operation         | Time Complexity                 | Description                     |
+| ----------------- | ------------------------------- | ------------------------------- |
