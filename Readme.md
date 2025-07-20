@@ -171,3 +171,4 @@ await users.deleteMany({ "meta.city": "Delhi" });
 | `updateOne()`     | O(f)                            | Clean + reindex affected fields |
 | `deleteOne()`     | O(f)                            | Clean index entries             |
 | `insertMany()`    | O(k × f)                        | `k` = number of documents       |
+| `updateMany()`    | O(n × f)                        | For each matched document       |
