@@ -18,21 +18,109 @@ export class Collection {
      */
 
     private matches(doc: any, query: Record<string, any>): boolean {
+
+        // Handle $or
+        if ("$or" in query) {
+            const orConditions = query["$or"];
+            if (!Array.isArray(orConditions)) {
+                return false;
+            }
+            return orConditions.some((cond) => this.matches(doc, cond));
+        }
+
+        // Handle $and
+        if ("$and" in query) {
+            const andConditions = query["$and"];
+            if (!Array.isArray(andConditions)) {
+                return false;
+            }
+            return andConditions.every((cond) => this.matches(doc, cond)); // Match all element saticfied
+        }
+
+
         for (const [key, value] of Object.entries(query)) {
             // for nested object address.ip and so one
             const fieldVal = this.deepGet(doc, key);
 
-            if (Array.isArray(fieldVal)) {
-                // return false if value is not have in array
-                if (!fieldVal.includes(value)) {
+            if (value && typeof value === "object" && !Array.isArray(value) && !this.isPlainValue(value)) {
+                for (const [op, val] of Object.entries(value)) {
+                    switch (op) {
+                        case "$eq":
+                            if (fieldVal !== val) {
+                                return false;
+                            }
+                            break;
+                        case "$ne":
+                            if (fieldVal === val) {
+                                return false;
+                            }
+                            break;
+                        case "$gt":
+                            if (typeof fieldVal !== "number" || typeof val !== "number" || !(fieldVal > val)) {
+                                return false;
+                            }
+                            break;
+                        case "$gte":
+                            if (typeof fieldVal !== "number" || typeof val !== "number" || !(fieldVal >= val)) {
+                                return false;
+                            }
+                            break;
+                        case "$lt":
+                            if (typeof fieldVal !== "number" || typeof val !== "number" || !(fieldVal < val)) {
+                                return false;
+                            }
+                            break;
+                        case "$lte":
+                            if (typeof fieldVal !== "number" || typeof val !== "number" || !(fieldVal <= val)) {
+                                return false;
+                            }
+                            break;
+                        case "$in":
+                            if (!Array.isArray(val) || !val.includes(fieldVal)) {
+                                return false;
+                            }
+                            break;
+                        case "$nin":
+                            if (Array.isArray(val) && val.includes(fieldVal)) {
+                                return false;
+                            }
+                            break;
+                        case "$exists":
+                            if (typeof val !== "boolean") {
+                                return false;
+                            }
+                            const exists = fieldVal !== undefined;
+                            if (val !== exists) {
+                                return false;
+                            }
+                            break;
+                        default:
+                            console.warn(`Unsupported operator: ${op}`);
+                            return false;
+                    }
+                }
+            } else {
+                if (Array.isArray(fieldVal)) {
+                    // return false if value is not have in array
+                    if (!fieldVal.includes(value)) {
+                        return false;
+                    }
+                } else if (fieldVal !== value) { //case primitive type and not equal to the value return false
                     return false;
                 }
-            } else if (fieldVal !== value) { //case primitive type and not equal to the value return false
-                return false;
             }
         }
         return true;
     }
+
+    private isPlainValue(val: any): boolean {
+        const operators = ["$eq", "$ne", "$gt", "$gte", "$lt", "$lte", "$in", "$nin", "$exists", "$regex"];
+        if (val === null || typeof val !== "object") {
+            return true;
+        }
+        return Object.keys(val).some(k => !operators.includes(k));
+    }
+
 
     private deepGet(obj: any, path: string): any {
         return path.split(".").reduce((acc, key) => acc?.[key], obj);

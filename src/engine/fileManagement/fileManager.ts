@@ -478,16 +478,21 @@ export class FileManager {
         }
     }
 
+    /**
+     * Write Doc fields value on index file
+     * @param indexMap - Map of <field,Map<value,[offsets]>>
+     */
     private async writeIndexMap(indexMap: Map<string, Map<string, number[]>>): Promise<void> {
 
         for (const [key, valMap] of indexMap.entries()) {
-            const file = `${key}.idx.bson`;
-            this.ensureFile(file);
+            const file = `${key}.idx.bson`; // Key to file name
+            this.ensureFile(file); // Make file if it first time
 
             for (const [valStr, offsets] of valMap.entries()) {
-                const existing = await this.indexFind(file, valStr);
+                const existing = await this.indexFind(file, valStr); // Find is the value already exists
+                // Case exists then add another offset else append
                 if (existing) {
-                    await this.addFileIdxOffset(file, valStr, ...offsets); // handles merge
+                    await this.addFileIdxOffset(file, valStr, existing, ...offsets); // handles merge
                 } else {
                     const doc: Partial<IndexEntry> = {
                         [valStr]: offsets,
@@ -501,7 +506,7 @@ export class FileManager {
 
     /**
     For Index files
-    Reads a binary file and extracts valid blocks (tagged with 0xFD).
+    Reads a binary file and extracts valid index blocks (tagged with 0xFD).
     Skips deleted blocks (tagged with 0xDE).
     
     * @param {string} fileName - Name of the file to read.
@@ -533,7 +538,7 @@ export class FileManager {
                             break;
                         }
 
-                        const capacity = buffer.readUInt32LE(i + 5); // Data's capacity
+                        const capacity = buffer.readUInt32LE(i + 5); // Datas capacity
                         const totalSize = 1 + 4 + 4 + 16 + capacity; // Entire Data
 
                         if (i + totalSize > buffer.length) {// Incomplete block body
@@ -599,7 +604,7 @@ export class FileManager {
    * @param {string | number | boolean} val - The actual value to index.
    * @param {number} offset - The byte offset of the corresponding record in the data file.
    */
-    async indexField(key: string, val: string | number | boolean, offset: number) {
+    private async indexField(key: string, val: string | number | boolean, offset: number) {
         const file = `${key}.idx.bson`;
         // Ensure fiel exist or create new
         this.ensureFile(file);
@@ -649,9 +654,9 @@ export class FileManager {
         * @returns - void promise
         */
 
-    async addFileIdxOffset(fileName: string, value: string, ...dataBaseOffset: number[]) {
+    private async addFileIdxOffset(fileName: string, value: string, doc: any, ...dataBaseOffset: number[]) {
         const [v, relRead] = await this.getLock(fileName).read();
-        const idxData = await this.indexFind(fileName, value);
+        const idxData = doc
         const fullPath = path.join(this.dataBasePath, fileName);
         relRead();
 
@@ -703,7 +708,7 @@ export class FileManager {
    * @returns - void promise
    */
 
-    async deleteFileIdxOffset(fileName: string, value: string, dataBaseOffset: number) {
+    private async deleteFileIdxOffset(fileName: string, value: string, dataBaseOffset: number) {
         const [v, relRead] = await this.getLock(fileName).read();
         const idxData = await this.indexFind(fileName, value);
         const fullPath = path.join(this.dataBasePath, fileName);
