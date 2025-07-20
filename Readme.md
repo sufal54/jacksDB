@@ -122,3 +122,4 @@ const user = await users.findOne({ name: "Alice" });
 
 - updateOne(filter, update)
 
+```ts
