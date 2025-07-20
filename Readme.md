@@ -64,3 +64,4 @@ const users = db.collection("users", userSchema); // Collection name and schema
 await users.insertOne({
   id: 1,
   name: "Alice",
+  age: 30,
