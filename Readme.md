@@ -105,3 +105,4 @@ Optional query options:
 await users.find(
   {},
   {
+    sort: { age: -1 },
