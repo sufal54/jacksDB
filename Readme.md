@@ -136,3 +136,4 @@ await users.updateMany({ tags: "blogger" }, { "meta.active": false });
 
 - deleteOne(query)
 
+```ts
