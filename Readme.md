@@ -44,3 +44,4 @@ const userSchema = new Schema({
 });
 ```
 
+## Initialize JacksDB
