@@ -29,3 +29,4 @@ const { JacksDB, Schema } = jacksdb;
 
 ## Define a Schema
 
+You must define a schema using Schema before using a collection:
