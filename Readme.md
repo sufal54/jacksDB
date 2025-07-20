@@ -68,3 +68,4 @@ await users.insertOne({
   tags: ["engineer", "blogger"],
   meta: { city: "Delhi", active: true },
 });
+```
