@@ -67,3 +67,4 @@ await users.insertOne({
   age: 30,
   tags: ["engineer", "blogger"],
   meta: { city: "Delhi", active: true },
+});
