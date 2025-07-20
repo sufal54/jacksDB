@@ -76,3 +76,4 @@ await users.insertOne({
 await users.insertMany([
   {
     id: 2,
+    name: "Bob",
