@@ -135,3 +135,4 @@ await users.updateMany({ tags: "blogger" }, { "meta.active": false });
 ## Delete Documents
 
 - deleteOne(query)
+
