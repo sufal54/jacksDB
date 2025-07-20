@@ -41,3 +41,4 @@ const userSchema = new Schema({
     city: String,
     active: Boolean,
   },
+});
