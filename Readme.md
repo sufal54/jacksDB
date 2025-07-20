@@ -82,3 +82,4 @@ await users.insertMany([
     meta: { city: "Mumbai", active: false },
   },
   {
+    id: 3,
