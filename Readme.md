@@ -61,3 +61,4 @@ const users = db.collection("users", userSchema); // Collection name and schema
 - insertOne(doc: object)
 
 ```ts
+await users.insertOne({
