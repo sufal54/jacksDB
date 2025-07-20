@@ -168,3 +168,4 @@ await users.deleteMany({ "meta.city": "Delhi" });
 | ----------------- | ------------------------------- | ------------------------------- |
 | `insertOne()`     | O(1 + f)                        | `f` = number of indexed fields  |
 | `find()`          | O(1) with index, O(n) full scan | Uses indexes if available       |
+| `updateOne()`     | O(f)                            | Clean + reindex affected fields |
