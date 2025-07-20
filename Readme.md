@@ -75,3 +75,4 @@ await users.insertOne({
 ```ts
 await users.insertMany([
   {
+    id: 2,
