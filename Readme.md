@@ -155,3 +155,4 @@ await users.deleteMany({ "meta.city": "Delhi" });
 | `$gt`     | `{ age: { $gt: 25 } }`                                        | Greater than          |
 | `$gte`    | `{ age: { $gte: 30 } }`                                       | Greater than or equal |
 | `$lt`     | `{ age: { $lt: 40 } }`                                        | Less than             |
+| `$lte`    | `{ age: { $lte: 35 } }`                                       | Less than or equal    |
