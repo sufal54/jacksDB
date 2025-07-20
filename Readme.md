@@ -13,3 +13,4 @@
 - 🧼 Background-safe deletion with `removeGarbage()`
 - 📁 Fully file-based – no server required
 
+---
