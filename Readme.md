@@ -139,3 +139,4 @@ await users.updateMany({ tags: "blogger" }, { "meta.active": false });
 ```ts
 await users.deleteOne({ name: "Mona" });
 ```
+
