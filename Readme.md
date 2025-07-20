@@ -101,3 +101,4 @@ const result = await users.find({ age: 30 });
 
 Optional query options:
 
+```ts
