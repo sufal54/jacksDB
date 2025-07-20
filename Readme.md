@@ -95,3 +95,4 @@ await users.insertMany([
 
 - find(query, options?)
 
+```ts
