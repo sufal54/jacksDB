@@ -173,3 +173,4 @@ await users.deleteMany({ "meta.city": "Delhi" });
 | `insertMany()`    | O(k × f)                        | `k` = number of documents       |
 | `updateMany()`    | O(n × f)                        | For each matched document       |
 | `deleteMany()`    | O(n × f)                        | Same as updateMany              |
+| `fullScan()`      | O(n)                            | Streamed read of all documents  |
