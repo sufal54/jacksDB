@@ -19,3 +19,4 @@
 
 ## Installation
 
+- npm i jacksdb
