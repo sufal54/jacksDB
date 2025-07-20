@@ -140,3 +140,4 @@ await users.updateMany({ tags: "blogger" }, { "meta.active": false });
 await users.deleteOne({ name: "Mona" });
 ```
 
+- deleteMany(query)
