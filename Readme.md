@@ -80,3 +80,4 @@ await users.insertMany([
     age: 25,
     tags: ["coder"],
     meta: { city: "Mumbai", active: false },
+  },
