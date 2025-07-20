@@ -151,7 +151,6 @@ await users.deleteMany({ "meta.city": "Delhi" });
 | `$in`     | `{ "meta.city": { $in: ["Delhi", "Pune"] } }`                 | In array              |
 | `$nin`    | `{ "meta.city": { $nin: ["Mumbai"] } }`                       | Not in array          |
 | `$exists` | `{ "meta.city": { $exists: true } }`                          | Field exists          |
-| `$regex`  | `{ name: { $regex: "^A" } }`                                  | Match RegExp          |
 | `$and`    | `{ $and: [ { age: { $gt: 30 } }, { "meta.active": true } ] }` | Logical AND           |
 | `$or`     | `{ $or: [ { name: "Alice" }, { age: { $lt: 25 } } ] }`        | Logical OR            |
 
