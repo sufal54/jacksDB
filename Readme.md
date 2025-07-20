@@ -7,3 +7,4 @@
 ## 📦 Features
 
 - 🧩 MongoDB-style API (`insertOne`, `insertMany`, `find`, `updateOne`, `deleteOne`, etc.)
+- 🔐 AES-256 encrypted storage
