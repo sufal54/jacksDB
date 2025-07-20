@@ -157,3 +157,4 @@ await users.deleteMany({ "meta.city": "Delhi" });
 | `$lt`     | `{ age: { $lt: 40 } }`                                        | Less than             |
 | `$lte`    | `{ age: { $lte: 35 } }`                                       | Less than or equal    |
 | `$in`     | `{ "meta.city": { $in: ["Delhi", "Pune"] } }`                 | In array              |
+| `$nin`    | `{ "meta.city": { $nin: ["Mumbai"] } }`                       | Not in array          |
