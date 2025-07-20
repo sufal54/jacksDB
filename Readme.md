@@ -70,3 +70,4 @@ await users.insertOne({
 });
 ```
 
+- insertMany(docs: object[])
