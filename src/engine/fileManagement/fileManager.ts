@@ -641,3 +641,4 @@ export class FileManager {
             console.error("appendIndexEntry error:", err);
         } finally {
             await write.close();
+            rel();
