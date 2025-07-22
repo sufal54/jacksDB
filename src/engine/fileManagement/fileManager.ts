@@ -633,3 +633,4 @@ export class FileManager {
         const fullPath = path.join(this.dataBasePath, fileName);
         const write = await fsp.open(fullPath, "a");
         try {
+            doc.offset = (await write.stat()).size;
