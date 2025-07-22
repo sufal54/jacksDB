@@ -217,3 +217,4 @@ export class FileManager {
             const markBuf = Buffer.alloc(1);
             markBuf.writeUInt8(0xDE);
             await file.write(markBuf, 0, 1, offset);
+            await file.sync(); // Flush instant
