@@ -741,3 +741,4 @@ export class FileManager {
             return;
         }
 
+        // Update block with remaining offsets
