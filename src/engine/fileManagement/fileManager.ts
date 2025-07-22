@@ -685,3 +685,4 @@ export class FileManager {
                 return;
             }
 
+            const capacityBuffer = Buffer.alloc(4);
