@@ -713,3 +713,4 @@ export class FileManager {
         const idxData = await this.indexFind(fileName, value);
         const fullPath = path.join(this.dataBasePath, fileName);
         relRead();
+        if (!idxData) {
