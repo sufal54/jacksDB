@@ -318,3 +318,4 @@ export class FileManager {
             // Overwrite oldcapacity in new Raw Doc
             capacityBuf.copy(encoded, 5);
 
+            // Cut extra buffer we adds +50 byte for future update
