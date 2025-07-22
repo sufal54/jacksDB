@@ -693,3 +693,4 @@ export class FileManager {
             await fileHandle.sync();
         } catch (err) {
             console.error(err);
+        } finally {
