@@ -385,3 +385,4 @@ export class FileManager {
     * 
     * @param {string} fileName - Name of the file to write with extenstion.
     * @return {Promise<void>}  
+    * @param {IndexEntry} doc - Object data we are going to insert
