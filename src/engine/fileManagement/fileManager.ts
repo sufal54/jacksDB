@@ -679,3 +679,4 @@ export class FileManager {
             };
 
             const encodeDoc = this.crypto.encrypt(JSON.stringify(newData));
+
