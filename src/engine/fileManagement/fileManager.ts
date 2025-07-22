@@ -92,3 +92,4 @@ export class FileManager {
                 while (offset < buffer.length) {
                     const remaining = buffer.length - offset;
 
+                    if (remaining < 25) { // Not enough for even the header
