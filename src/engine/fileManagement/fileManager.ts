@@ -403,3 +403,4 @@ export class FileManager {
         let encodeBufferDoc: Buffer[] = [];
 
         const indexFields = new Map<string, Map<string, number[]>>();
+
