@@ -178,3 +178,4 @@ export class FileManager {
         } finally {
             await file.close().catch((e) => console.error(e));
             rel();
+        }
