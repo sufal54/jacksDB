@@ -281,3 +281,4 @@ export class FileManager {
 
             const oldCapacity = header.readUInt32LE(5); // Read Capacity 
             const totalSize = 1 + 4 + 4 + 16 + oldCapacity; // TotalSize
+
