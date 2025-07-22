@@ -790,3 +790,4 @@ export class FileManager {
     /**
         * @param {string} fileName - name of file path with extension
     */
+    async removeGarbage(fileName: string): Promise<void> {
