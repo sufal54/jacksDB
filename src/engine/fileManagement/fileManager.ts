@@ -419,3 +419,4 @@ export class FileManager {
                 offset += 1 + 4 + 4 + 16 + capacity;
 
                 // Send all key value for nested value 
+                for (const [key, value] of Object.entries(doc)) {
