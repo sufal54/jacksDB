@@ -524,3 +524,4 @@ export class FileManager {
 
             readStream.on("data", (chunk) => {
 
+                // Marge prevouse data and curren chunk data
