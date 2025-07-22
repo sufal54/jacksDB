@@ -828,3 +828,4 @@ export class FileManager {
                             writeStream.write(data, (err) => {
                                 if (err) {
                                     writeStream.destroy();
+                                    readStream.destroy();
