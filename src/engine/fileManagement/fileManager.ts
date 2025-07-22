@@ -677,3 +677,4 @@ export class FileManager {
                 [value]: idxData[value],
                 offset: idxData.offset,
             };
+
