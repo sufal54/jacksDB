@@ -240,3 +240,4 @@ export class FileManager {
         const dir = this.dataBasePath;
         // All files inside of Dir
         const files = await fsp.readdir(dir);
+        if (files.length === 0) {
