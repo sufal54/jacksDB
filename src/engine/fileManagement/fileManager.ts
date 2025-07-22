@@ -634,3 +634,4 @@ export class FileManager {
         const write = await fsp.open(fullPath, "a");
         try {
             doc.offset = (await write.stat()).size;
+            const encodeDoc = this.crypto.encrypt(JSON.stringify(doc));
