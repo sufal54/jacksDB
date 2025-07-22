@@ -838,3 +838,4 @@ export class FileManager {
                         i += totalSize; // Skip either block type
                     } else {
                         // Not part of a block, just skip or optionally handle
+                        i++;
