@@ -105,3 +105,4 @@ export class FileManager {
                     if (offset + totalSize > buffer.length) {
                         break;
                     }
+
