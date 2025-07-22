@@ -478,3 +478,4 @@ export class FileManager {
         }
     }
 
+    /**
