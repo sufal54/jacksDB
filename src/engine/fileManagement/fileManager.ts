@@ -676,3 +676,4 @@ export class FileManager {
             const newData: Record<string, any> = {
                 [value]: idxData[value],
                 offset: idxData.offset,
+            };
