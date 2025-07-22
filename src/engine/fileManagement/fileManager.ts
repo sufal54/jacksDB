@@ -193,3 +193,4 @@ export class FileManager {
         const file = await fsp.open(fullPath, "r+");
 
         let jsonData: IndexEntry | null = null;
+
