@@ -830,3 +830,4 @@ export class FileManager {
                                     writeStream.destroy();
                                     readStream.destroy();
                                     rel();
+                                    return reject(err);
