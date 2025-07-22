@@ -608,3 +608,4 @@ export class FileManager {
         const file = `${key}.idx.bson`;
         // Ensure fiel exist or create new
         this.ensureFile(file);
+        const valStr = val.toString();
