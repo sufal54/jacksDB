@@ -188,3 +188,4 @@ export class FileManager {
      * @returns 
      */
     async dataBaseDelete(offset: number): Promise<void> {
+        const [_, rel] = await this.getLock(this.mainDB).write();
