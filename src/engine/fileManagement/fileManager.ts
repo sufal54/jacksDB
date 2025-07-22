@@ -7,3 +7,4 @@ import { IndexEntry, IndexOut, FindOptions } from "./types";
 
 export class FileManager {
     private dataBasePath = "JacksDB";
+    private mainDB: string = "main.db.bson";
