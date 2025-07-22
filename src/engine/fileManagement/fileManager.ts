@@ -466,3 +466,4 @@ export class FileManager {
 
             // For Primitive data
         } else if (["string", "number", "boolean"].includes(typeof value)) {
+            const valStr = value.toString();
