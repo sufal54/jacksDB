@@ -542,3 +542,4 @@ export class FileManager {
                         const totalSize = 1 + 4 + 4 + 16 + capacity; // Entire Data
 
                         if (i + totalSize > buffer.length) {// Incomplete block body
+                            isBroke = true;
