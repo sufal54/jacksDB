@@ -612,3 +612,4 @@ export class FileManager {
 
         const exists = await this.indexFind(file, valStr);
         if (exists) {
+            // Append anothe offset
