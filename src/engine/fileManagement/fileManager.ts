@@ -214,3 +214,4 @@ export class FileManager {
             jsonData = JSON.parse(decrypted) as IndexEntry;
 
             // Mark as deleted
+            const markBuf = Buffer.alloc(1);
