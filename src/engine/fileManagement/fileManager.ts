@@ -778,3 +778,4 @@ export class FileManager {
         deletBufferMark.writeUInt8(0xDE);
         await write.write(deletBufferMark, 0, 1, offset);
         await write.sync();
+        await write.close();
