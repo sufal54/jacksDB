@@ -298,3 +298,4 @@ export class FileManager {
                 await this.makeAsDeleteAddNew(this.mainDB, offset, newDoc); // Mark old Doc as deleted and append new Doc
                 return;
             }
+
