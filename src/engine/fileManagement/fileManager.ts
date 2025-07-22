@@ -157,3 +157,4 @@ export class FileManager {
             const headerBuffer = Buffer.alloc(25);
             await file.read(headerBuffer, 0, 25, offset);
 
+            // Invalidate tag
