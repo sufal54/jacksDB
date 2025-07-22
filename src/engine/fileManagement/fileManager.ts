@@ -287,3 +287,4 @@ export class FileManager {
             const oldJson = JSON.parse(this.crypto.decrypt(oldBlockBuf)) as IndexEntry; // Parse into Object
 
             let encoded = this.crypto.encrypt(JSON.stringify({ ...newDoc, offset })); // NewDoc to Raw from
+            const newLength = encoded.readUInt32LE(1);
