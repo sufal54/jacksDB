@@ -615,3 +615,4 @@ export class FileManager {
             // Append anothe offset
             await this.addFileIdxOffset(file, valStr, offset);
         } else {
+            // Create new index object
