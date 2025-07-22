@@ -742,3 +742,4 @@ export class FileManager {
         }
 
         // Update block with remaining offsets
+        idxData[value] = newOffsetArray;
