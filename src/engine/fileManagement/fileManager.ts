@@ -423,3 +423,4 @@ export class FileManager {
                     if (key === "offset") {
                         continue;
                     }
+                    this.indexAllFields(indexFields, value, currOffset, capacity, key);
