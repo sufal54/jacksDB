@@ -639,3 +639,4 @@ export class FileManager {
             await write.sync();
         } catch (err) {
             console.error("appendIndexEntry error:", err);
+        } finally {
