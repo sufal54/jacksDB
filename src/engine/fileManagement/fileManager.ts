@@ -340,3 +340,4 @@ export class FileManager {
      */
     private async cleanupIndexesFromDoc(doc: IndexEntry): Promise<void> {
         for (const [key, val] of Object.entries(doc)) {
+            // If offset field skip it
