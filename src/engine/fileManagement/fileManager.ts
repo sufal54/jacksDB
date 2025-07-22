@@ -417,3 +417,4 @@ export class FileManager {
                 encodeBufferDoc.push(encodeDoc);
                 const capacity = encodeDoc.readUInt32LE(5);
                 offset += 1 + 4 + 4 + 16 + capacity;
+
