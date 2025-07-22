@@ -654,3 +654,4 @@ export class FileManager {
         * @returns - void promise
         */
 
+    private async addFileIdxOffset(fileName: string, value: string, doc: any, ...dataBaseOffset: number[]) {
