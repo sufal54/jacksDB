@@ -605,3 +605,4 @@ export class FileManager {
    * @param {number} offset - The byte offset of the corresponding record in the data file.
    */
     private async indexField(key: string, val: string | number | boolean, offset: number) {
+        const file = `${key}.idx.bson`;
