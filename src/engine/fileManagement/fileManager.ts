@@ -121,3 +121,4 @@ export class FileManager {
                     // Skip both deleted (0xDE) and valid (0xFD) blocks
                     offset += totalSize;
                 }
+
