@@ -573,3 +573,4 @@ export class FileManager {
                 } else {
                     leftover = Buffer.alloc(0); // Clean it — nothing to carry over
                 }
+            });
