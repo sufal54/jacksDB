@@ -451,3 +451,4 @@ export class FileManager {
      * @param {string} basePath - name of our index file 
      */
 
+    private indexAllFields(map: Map<string, Map<string, number[]>>, value: any, offset: number, capacity: number, basePath: string): void {
