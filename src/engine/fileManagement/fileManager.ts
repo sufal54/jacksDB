@@ -523,3 +523,4 @@ export class FileManager {
             let isBroke = false; // check is leftover store data or clean
 
             readStream.on("data", (chunk) => {
+
