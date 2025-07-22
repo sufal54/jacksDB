@@ -586,3 +586,4 @@ export class FileManager {
                 readStream.destroy();
                 rel();
                 console.error(err);
+                reject(null);
