@@ -559,3 +559,4 @@ export class FileManager {
                                 rel(); // Release lock
                                 return resolve(jsonData); // Resolve and return
                             }
+                        }
