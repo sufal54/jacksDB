@@ -389,3 +389,4 @@ export class FileManager {
      */
 
 
+    async dataBaseInsert(fileName: string, ...docs: Partial<IndexEntry>[]): Promise<void> {
