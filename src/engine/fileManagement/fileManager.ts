@@ -205,3 +205,4 @@ export class FileManager {
                 return;
             }
 
+            const capacity = header.readUInt32LE(5);
