@@ -565,3 +565,4 @@ export class FileManager {
                     } else {
                         // Not part of a block, just skip or optionally handle
                         i++;
+                    }
