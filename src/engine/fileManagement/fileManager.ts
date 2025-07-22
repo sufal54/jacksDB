@@ -115,3 +115,4 @@ export class FileManager {
                             results.push(json);
                         } catch (err) {
                             console.warn(`Error decrypting block at ${offset}:`, err);
+                        }
