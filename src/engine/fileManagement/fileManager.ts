@@ -48,3 +48,4 @@ export class FileManager {
             }
             if (!this.fileLocks.has(fileName)) {
                 this.fileLocks.set(fileName, new RwLock<void>(undefined));
+            }
