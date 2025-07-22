@@ -415,3 +415,4 @@ export class FileManager {
                 doc.offset = currOffset;
                 const encodeDoc = this.crypto.encrypt(JSON.stringify(doc));
                 encodeBufferDoc.push(encodeDoc);
+                const capacity = encodeDoc.readUInt32LE(5);
