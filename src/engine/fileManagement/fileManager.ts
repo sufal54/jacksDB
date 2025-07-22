@@ -489,3 +489,4 @@ export class FileManager {
             this.ensureFile(file); // Make file if it first time
 
             for (const [valStr, offsets] of valMap.entries()) {
+                const existing = await this.indexFind(file, valStr); // Find is the value already exists
