@@ -743,3 +743,4 @@ export class FileManager {
 
         // Update block with remaining offsets
         idxData[value] = newOffsetArray;
+        const newData: Record<string, any> = {};
