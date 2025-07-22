@@ -440,3 +440,4 @@ export class FileManager {
         rel();
 
         await this.writeIndexMap(indexFields);
+    }
