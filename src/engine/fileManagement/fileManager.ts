@@ -730,3 +730,4 @@ export class FileManager {
             return;
         }
 
+        if (newOffsetArray.length === 0) {
