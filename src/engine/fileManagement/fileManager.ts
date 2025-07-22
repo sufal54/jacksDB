@@ -601,3 +601,4 @@ export class FileManager {
    * If not, a new index entry is created and stored.
    * 
    * @param {string} key - The field name to index (e.g. "name", "age").
+   * @param {string | number | boolean} val - The actual value to index.
