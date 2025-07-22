@@ -723,3 +723,4 @@ export class FileManager {
 
         const offsetArray = idxData[value];
         const newOffsetArray = offsetArray.filter((item) => item !== dataBaseOffset);
+
