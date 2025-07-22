@@ -753,3 +753,4 @@ export class FileManager {
             capacityBuffer.writeInt32LE(idxData.capacity);
             capacityBuffer.copy(encodeDoc, 5, 0, 4);
             await fileHandle.write(encodeDoc, 0, encodeDoc.length, idxData.offset);
+            await fileHandle.sync();
