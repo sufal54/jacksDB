@@ -481,3 +481,4 @@ export class FileManager {
     /**
      * Write Doc fields value on index file
      * @param indexMap - Map of <field,Map<value,[offsets]>>
+     */
