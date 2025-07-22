@@ -513,3 +513,4 @@ export class FileManager {
     * @return {Promise<IndexEntry | null>} - A fields indexs or null if not found
   */
 
+    async indexFind(fileName: string, value: string): Promise<IndexOut | null> {
