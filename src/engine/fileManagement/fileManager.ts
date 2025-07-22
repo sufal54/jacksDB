@@ -726,3 +726,4 @@ export class FileManager {
 
         if (offsetArray.length === newOffsetArray.length) {
             await fileHandle.close();
+            rel();
