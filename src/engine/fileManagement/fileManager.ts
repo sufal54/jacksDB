@@ -774,3 +774,4 @@ export class FileManager {
         const write = await fsp.open(filePath, "r+");
 
 
+        const deletBufferMark = Buffer.alloc(1);
