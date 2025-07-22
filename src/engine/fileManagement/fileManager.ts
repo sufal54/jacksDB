@@ -490,3 +490,4 @@ export class FileManager {
 
             for (const [valStr, offsets] of valMap.entries()) {
                 const existing = await this.indexFind(file, valStr); // Find is the value already exists
+                // Case exists then add another offset else append
