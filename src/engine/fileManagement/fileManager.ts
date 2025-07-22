@@ -128,3 +128,4 @@ export class FileManager {
             readStream.on("end", () => {
                 readStream.destroy();
                 rel();
+                resolve(results);
