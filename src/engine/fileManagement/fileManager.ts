@@ -233,3 +233,4 @@ export class FileManager {
     }
     /**
      * For deleteMany({})
+     * It's delete all the files have in our collection
