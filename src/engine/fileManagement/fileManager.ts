@@ -851,3 +851,4 @@ export class FileManager {
 
             readStream.on("end", async () => {
 
+                try {
