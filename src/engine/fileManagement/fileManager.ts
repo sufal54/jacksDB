@@ -468,3 +468,4 @@ export class FileManager {
         } else if (["string", "number", "boolean"].includes(typeof value)) {
             const valStr = value.toString();
             if (!map.has(basePath)) {
+                map.set(basePath, new Map());
