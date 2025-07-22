@@ -629,3 +629,4 @@ export class FileManager {
      * @param {Partial<IndexEntry>} doc - The document to store (value-to-offset mapping).
      */
     private async appendIndexEntry(fileName: string, doc: Partial<IndexEntry>): Promise<void> {
+        const [_, rel] = await this.getLock(fileName).write();
