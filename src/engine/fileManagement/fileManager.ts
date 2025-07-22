@@ -215,3 +215,4 @@ export class FileManager {
 
             // Mark as deleted
             const markBuf = Buffer.alloc(1);
+            markBuf.writeUInt8(0xDE);
