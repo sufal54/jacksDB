@@ -116,3 +116,4 @@ export class FileManager {
                         } catch (err) {
                             console.warn(`Error decrypting block at ${offset}:`, err);
                         }
+                    }
