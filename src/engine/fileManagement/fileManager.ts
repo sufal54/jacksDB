@@ -236,3 +236,4 @@ export class FileManager {
      * It's delete all the files have in our collection
      * @returns 
      */
+    async deleteAllFiles(): Promise<void> {
