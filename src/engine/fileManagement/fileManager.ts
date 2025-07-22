@@ -9,3 +9,4 @@ export class FileManager {
     private dataBasePath = "JacksDB";
     private mainDB: string = "main.db.bson";
     private fileLocks: Map<string, RwLock<void>> = new Map();
+    private crypto: Crypto;
