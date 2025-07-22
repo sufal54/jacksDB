@@ -506,3 +506,4 @@ export class FileManager {
 
     /**
     For Index files
+    Reads a binary file and extracts valid index blocks (tagged with 0xFD).
