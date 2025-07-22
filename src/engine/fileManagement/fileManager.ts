@@ -238,3 +238,4 @@ export class FileManager {
      */
     async deleteAllFiles(): Promise<void> {
         const dir = this.dataBasePath;
+        // All files inside of Dir
