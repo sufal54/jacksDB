@@ -22,3 +22,4 @@ export class FileManager {
     * @return {this} 
   */
     constructor(
+        name: string,
