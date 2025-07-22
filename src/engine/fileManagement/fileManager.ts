@@ -664,3 +664,4 @@ export class FileManager {
             const newEntry: Partial<IndexEntry> = {
                 [value]: dataBaseOffset,
             };
+            await this.appendIndexEntry(fileName, newEntry);
