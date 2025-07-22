@@ -432,3 +432,4 @@ export class FileManager {
         } catch (err) {
             console.error("appendInFile error:", err);
             await write.close();
+            rel();
