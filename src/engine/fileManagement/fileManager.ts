@@ -495,3 +495,4 @@ export class FileManager {
                     await this.addFileIdxOffset(file, valStr, existing, ...offsets); // handles merge
                 } else {
                     const doc: Partial<IndexEntry> = {
+                        [valStr]: offsets,
