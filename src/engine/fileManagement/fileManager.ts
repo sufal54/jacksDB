@@ -453,3 +453,4 @@ export class FileManager {
 
     private indexAllFields(map: Map<string, Map<string, number[]>>, value: any, offset: number, capacity: number, basePath: string): void {
         // Array Case
+        if (Array.isArray(value)) {
