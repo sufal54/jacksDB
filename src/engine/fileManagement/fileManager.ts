@@ -447,3 +447,4 @@ export class FileManager {
      * For better index file name
      * Arrange way store all Offsets inside map
      * @param {any} value - The value store in our data base field
+     * @param {number} offset - Database offset of the data
