@@ -23,3 +23,4 @@ export class FileManager {
   */
     constructor(
         name: string,
+        secret?: string
