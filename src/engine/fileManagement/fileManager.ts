@@ -736,3 +736,4 @@ export class FileManager {
             markBuf.writeUInt8(0xDE);
             await fileHandle.write(markBuf, 0, 1, idxData.offset);
             await fileHandle.sync();
+            await fileHandle.close();
