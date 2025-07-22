@@ -76,3 +76,4 @@ export class FileManager {
      * scan entire database O(n) time
      * @returns {any[]} - array of json data
      */
+    async fullScan(): Promise<any[]> {
