@@ -131,3 +131,4 @@ export class FileManager {
                 resolve(results);
             });
 
+            readStream.on("error", (err) => {
