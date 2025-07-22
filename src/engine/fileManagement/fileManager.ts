@@ -820,3 +820,4 @@ export class FileManager {
                         const totalSize = 1 + 4 + 4 + 16 + length;
 
                         if (i + totalSize > buffer.length) {// Incomplete block body
+                            isBroke = true;
