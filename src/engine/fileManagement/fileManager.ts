@@ -552,3 +552,4 @@ export class FileManager {
                             const jsonData = JSON.parse(decryptData) as IndexOut; // Json Parse
                             if (Object.keys(jsonData)[0] == value) { // Check is current data is targeted data
                                 jsonData.length = bufferData.readInt32LE(1); // Inside object add data length
+                                jsonData.capacity = bufferData.readInt32LE(5); // Inside object add data capacity
