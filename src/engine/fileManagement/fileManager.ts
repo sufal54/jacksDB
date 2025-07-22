@@ -244,3 +244,4 @@ export class FileManager {
             return;
         }
         for (const file of files) {
+            const fileLock = this.fileLocks.get(file);
