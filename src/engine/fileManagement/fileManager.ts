@@ -294,3 +294,4 @@ export class FileManager {
 
             await this.cleanupIndexesFromDoc(oldJson); // Clean old doc offset from index file
             // Case when new Doc length is greater then old data's capacity
+            if (newLength > oldCapacity) {
