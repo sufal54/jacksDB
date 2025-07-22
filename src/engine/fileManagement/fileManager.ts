@@ -264,3 +264,4 @@ export class FileManager {
      * @returns 
      */
 
+    async dataBaseUpdate(offset: number, newDoc: Partial<IndexEntry>) {
