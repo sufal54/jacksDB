@@ -17,3 +17,4 @@ export class FileManager {
 
     /**
     Initialize FileManager of a collection
+    * @param {string} name - name of collection
