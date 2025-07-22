@@ -399,3 +399,4 @@ export class FileManager {
 
         // Size of file is the offset of new Doc
         let offset = (await write.stat()).size;
+
