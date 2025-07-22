@@ -46,3 +46,4 @@ export class FileManager {
             if (!fs.existsSync(fullPath)) {
                 fs.writeFileSync(fullPath, "");
             }
+            if (!this.fileLocks.has(fileName)) {
