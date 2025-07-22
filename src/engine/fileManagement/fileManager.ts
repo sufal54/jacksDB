@@ -124,3 +124,4 @@ export class FileManager {
 
                 leftover = buffer.slice(offset); // Store leftover for next chunk
             });
+
