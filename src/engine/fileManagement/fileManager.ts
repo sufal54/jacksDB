@@ -526,3 +526,4 @@ export class FileManager {
 
                 // Marge prevouse data and curren chunk data
                 const buffer = Buffer.concat([leftover, Buffer.from(chunk)]);
+                let i = 0;
