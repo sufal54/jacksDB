@@ -780,3 +780,4 @@ export class FileManager {
         await write.sync();
         await write.close();
         rel();
+        if (doc) {
