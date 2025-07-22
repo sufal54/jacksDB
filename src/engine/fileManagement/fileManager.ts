@@ -548,3 +548,4 @@ export class FileManager {
                         // If it Mark as Vaild Data
                         if (tag === 0xFD) {
                             const bufferData = buffer.slice(i, i + totalSize); // Slice block of data
+                            const decryptData = this.crypto.decrypt(bufferData); // Encrypt the data
