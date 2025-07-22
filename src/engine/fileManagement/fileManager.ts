@@ -589,3 +589,4 @@ export class FileManager {
                 reject(null);
 
             });
+        })
