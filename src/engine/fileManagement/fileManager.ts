@@ -87,3 +87,4 @@ export class FileManager {
 
             readStream.on("data", (chunk) => {
                 const buffer = Buffer.concat([leftover, Buffer.from(chunk)]);
+                let offset = 0;
