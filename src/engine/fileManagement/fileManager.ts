@@ -692,3 +692,4 @@ export class FileManager {
             await fileHandle.write(encodeDoc, 0, encodeDoc.length, idxData.offset);
             await fileHandle.sync();
         } catch (err) {
+            console.error(err);
