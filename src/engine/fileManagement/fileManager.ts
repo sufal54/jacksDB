@@ -496,3 +496,4 @@ export class FileManager {
                 } else {
                     const doc: Partial<IndexEntry> = {
                         [valStr]: offsets,
+                        offset: undefined // will be added by appendIndexEntry
