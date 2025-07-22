@@ -660,3 +660,4 @@ export class FileManager {
         const fullPath = path.join(this.dataBasePath, fileName);
         relRead();
 
+        if (!idxData) {
