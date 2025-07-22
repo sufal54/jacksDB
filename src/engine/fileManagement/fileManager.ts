@@ -146,3 +146,4 @@ export class FileManager {
      * Error if worng offset or Mark as deleted
      * @param offset - Database offset
      * @returns 
+     */
