@@ -279,3 +279,4 @@ export class FileManager {
                 throw new Error("Invalid block or already deleted");
             }
 
+            const oldCapacity = header.readUInt32LE(5); // Read Capacity 
