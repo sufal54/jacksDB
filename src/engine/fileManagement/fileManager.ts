@@ -148,3 +148,4 @@ export class FileManager {
      * @returns 
      */
     async dataBaseFind(offset: number) {
+        const [_, rel] = await this.getLock(this.mainDB).read();
