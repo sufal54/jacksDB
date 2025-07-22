@@ -412,3 +412,4 @@ export class FileManager {
 
                 const currOffset = offset;
 
+                doc.offset = currOffset;
