@@ -227,3 +227,4 @@ export class FileManager {
             try {
                 await this.cleanupIndexesFromDoc(jsonData);
             } catch (err) {
+                console.error("Failed to clean up index:", err);
