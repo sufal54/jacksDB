@@ -283,3 +283,4 @@ export class FileManager {
             const totalSize = 1 + 4 + 4 + 16 + oldCapacity; // TotalSize
 
             const oldBlockBuf = Buffer.alloc(totalSize); // Buffer for store the oldDoc
+            await readFile.read(oldBlockBuf, 0, totalSize, offset); // Get the Raw Data
