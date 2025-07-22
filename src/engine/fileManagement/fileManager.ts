@@ -606,3 +606,4 @@ export class FileManager {
    */
     private async indexField(key: string, val: string | number | boolean, offset: number) {
         const file = `${key}.idx.bson`;
+        // Ensure fiel exist or create new
