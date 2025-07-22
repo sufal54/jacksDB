@@ -777,3 +777,4 @@ export class FileManager {
         const deletBufferMark = Buffer.alloc(1);
         deletBufferMark.writeUInt8(0xDE);
         await write.write(deletBufferMark, 0, 1, offset);
+        await write.sync();
