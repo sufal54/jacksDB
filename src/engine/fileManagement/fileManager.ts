@@ -711,3 +711,4 @@ export class FileManager {
     private async deleteFileIdxOffset(fileName: string, value: string, dataBaseOffset: number) {
         const [v, relRead] = await this.getLock(fileName).read();
         const idxData = await this.indexFind(fileName, value);
+        const fullPath = path.join(this.dataBasePath, fileName);
