@@ -687,3 +687,4 @@ export class FileManager {
 
             const capacityBuffer = Buffer.alloc(4);
             capacityBuffer.writeInt32LE(idxData.capacity);
+            capacityBuffer.copy(encodeDoc, 5, 0, 4);
