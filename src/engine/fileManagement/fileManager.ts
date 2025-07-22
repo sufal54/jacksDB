@@ -470,3 +470,4 @@ export class FileManager {
             if (!map.has(basePath)) {
                 map.set(basePath, new Map());
             }
+            const pathMap = map.get(basePath)!;
