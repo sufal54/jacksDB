@@ -371,3 +371,4 @@ export class FileManager {
             // Primitive Data
         } else if (["string", "number", "boolean"].includes(typeof value)) {
             const valStr = value.toString();
+            const indexFile = `${fullPath}.idx.bson`;
