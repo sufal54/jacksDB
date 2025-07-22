@@ -367,3 +367,4 @@ export class FileManager {
         } else if (typeof value === "object" && value !== null) {
             for (const [k, v] of Object.entries(value)) {
                 await this.deleteFieldFromIndexes(k, v, offset, fullPath);
+            }
