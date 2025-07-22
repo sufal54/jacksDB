@@ -857,3 +857,4 @@ export class FileManager {
 
                     // Rename temp.bson to the file
                     await fsp.rename(tempFilePath, realFilePath);
+                } catch (err) {
