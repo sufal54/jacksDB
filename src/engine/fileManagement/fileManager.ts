@@ -194,3 +194,4 @@ export class FileManager {
 
         let jsonData: IndexEntry | null = null;
 
+        try {
