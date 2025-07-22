@@ -725,3 +725,4 @@ export class FileManager {
         const newOffsetArray = offsetArray.filter((item) => item !== dataBaseOffset);
 
         if (offsetArray.length === newOffsetArray.length) {
+            await fileHandle.close();
