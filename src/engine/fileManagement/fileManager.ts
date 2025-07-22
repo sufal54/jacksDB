@@ -532,3 +532,4 @@ export class FileManager {
                     // Check current index
                     const tag = buffer[i];
 
+                    if (tag === 0xFD || tag === 0xDE) {
