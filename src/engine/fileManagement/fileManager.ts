@@ -475,3 +475,4 @@ export class FileManager {
                 pathMap.set(valStr, []);
             }
             pathMap.get(valStr)!.push(offset);
+        }
