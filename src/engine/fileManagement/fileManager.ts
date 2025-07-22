@@ -334,3 +334,4 @@ export class FileManager {
         }
     }
 
+    /**
