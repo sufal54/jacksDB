@@ -748,3 +748,4 @@ export class FileManager {
         newData.offset = idxData.offset;
 
         try {
+            const encodeDoc = this.crypto.encrypt(JSON.stringify(newData));
