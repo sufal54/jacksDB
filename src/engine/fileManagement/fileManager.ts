@@ -575,3 +575,4 @@ export class FileManager {
                 }
             });
             // End of readStream
+            readStream.on("end", () => {
