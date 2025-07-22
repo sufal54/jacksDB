@@ -538,3 +538,4 @@ export class FileManager {
                             break;
                         }
 
+                        const capacity = buffer.readUInt32LE(i + 5); // Datas capacity
