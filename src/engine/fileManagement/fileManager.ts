@@ -464,3 +464,4 @@ export class FileManager {
                 this.indexAllFields(map, val, offset, capacity, fullPath);
             }
 
+            // For Primitive data
