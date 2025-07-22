@@ -867,3 +867,4 @@ export class FileManager {
                 resolve();
             });
 
+            readStream.on("error", (err) => {
