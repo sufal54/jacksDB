@@ -844,3 +844,4 @@ export class FileManager {
 
                 if (isBroke) {
                     leftover = buffer.slice(i); // Save only the unprocessed part
+                } else {
