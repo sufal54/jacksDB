@@ -189,3 +189,13 @@ export class Collection {
             for (let i = 0; i < parts.length; i++) {
                 const part = parts[i];
                 // case last part then add it
+                if (i === parts.length - 1) {
+                    curr[part] = value;
+                } else {
+                    // case we have not this object in our object create empty object
+                    if (!curr[part]) {
+                        curr[part] = {};
+                    }
+                    curr = curr[part];
+                }
+            }
