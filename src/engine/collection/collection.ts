@@ -109,3 +109,13 @@ export class Collection {
                     return false;
                 }
             }
+        }
+        return true;
+    }
+
+    private isPlainValue(val: any): boolean {
+        const operators = ["$eq", "$ne", "$gt", "$gte", "$lt", "$lte", "$in", "$nin", "$exists", "$regex"];
+        if (val === null || typeof val !== "object") {
+            return true;
+        }
+        return Object.keys(val).some(k => !operators.includes(k));
