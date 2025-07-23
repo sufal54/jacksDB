@@ -249,3 +249,13 @@ export class Collection {
         const keys = Object.keys(query);
         let matchedOffsets = new Set<number>();
 
+        let usedIndex = false;
+        for (const key of keys) {
+            const val = query[key];
+            const indexData = await this.fileManager.indexFind(`${key}.idx.bson`, val.toString());
+            if (indexData && indexData[val.toString()]) {
+                for (const offset of indexData[val.toString()]) {
+                    matchedOffsets.add(offset);
+                }
+                usedIndex = true;
+                break;
