@@ -299,3 +299,13 @@ export class Collection {
 
         // Apply skip and limit
         return results.slice(skip, skip + limit);
+    }
+    /**
+     * We are using find whit limit 1 for now will optimazing later 
+     * @param query 
+     * @returns - returns single doc
+     */
+    async findOne(query: Record<string, any> = {}): Promise<any | null> {
+        const results = await this.find(query, { limit: 1 });
+        return results.length > 0 ? results[0] : null;
+    }
