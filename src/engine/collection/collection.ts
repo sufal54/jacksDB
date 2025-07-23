@@ -239,3 +239,13 @@ export class Collection {
     /** 
      * time - O(v*l+m) where v = number of query, l = number of list length, m = unique match index/offset 
      * find targeted object from DB
+     * @param query - query for search
+     * @param options - option like sort skip limit, default empty obj
+     * @returns - array of object data
+     */
+    async find(query: Record<string, any> = {}, options: { sort?: Record<string, 1 | -1>, skip?: number, limit?: number } = {}): Promise<any[]> {
+        const { sort = {}, skip = 0, limit = 20 } = options;
+
+        const keys = Object.keys(query);
+        let matchedOffsets = new Set<number>();
+
