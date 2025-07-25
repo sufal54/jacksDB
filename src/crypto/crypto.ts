@@ -52,3 +52,4 @@ class Crypto {
         if (encodeDoc[0] !== 0xFD) { // Invaild data case
             throw new Error("Invaild encodeDoc Data");
         }
+        const len = encodeDoc.readUint32LE(1);
