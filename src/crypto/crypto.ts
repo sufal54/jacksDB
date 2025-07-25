@@ -86,3 +86,4 @@ class Crypto {
         // Copy new encrypted data
         newDoc.copy(oldDoc, 25, 25, 25 + newDataLen);
         return oldDoc;
+    }
