@@ -49,3 +49,4 @@ class Crypto {
      * @returns - json string
      */
     decrypt(encodeDoc: Buffer): string {
+        if (encodeDoc[0] !== 0xFD) { // Invaild data case
