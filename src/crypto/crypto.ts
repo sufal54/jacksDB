@@ -26,3 +26,4 @@ class Crypto {
         });
         // 16 byte Iv
         const iv = crypto.randomBytes(16);
+        const cipher = crypto.createCipheriv(this.algorithm, this.key, iv);
