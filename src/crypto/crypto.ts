@@ -39,3 +39,13 @@ class Crypto {
         const extraBytes = Buffer.alloc(50);
 
         const newBuffer = Buffer.concat([header, iv, buffer, extraBytes]);
+
+        return newBuffer;
+    }
+
+    /**
+     * takes encrypted buffer and decrypte it and return the value
+     * @param encodeDoc - encrypted buffer
+     * @returns - json string
+     */
+    decrypt(encodeDoc: Buffer): string {
