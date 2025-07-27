@@ -388,3 +388,4 @@ export class Collection {
 
 
 
+    async deleteMany(query: Record<string, any>): Promise<void> {
