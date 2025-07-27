@@ -379,3 +379,4 @@ export class Collection {
                 if (this.matches(doc, query)) {
                     await this.fileManager.dataBaseDelete(offset);
                     return;
+                }
