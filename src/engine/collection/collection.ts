@@ -361,3 +361,4 @@ export class Collection {
     async deleteOne(query: Record<string, any>): Promise<void> {
         const keys = Object.keys(query);
         const matchedOffsets = new Set<number>();
+
