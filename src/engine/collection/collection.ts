@@ -332,3 +332,4 @@ export class Collection {
         const newDoc = this.deepMerge(deepCloned, updateParsed);
         // delete newDoc.offset;
         await this.fileManager.dataBaseUpdate(target.offset, newDoc);
+
