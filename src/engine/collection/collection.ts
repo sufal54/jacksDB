@@ -276,3 +276,4 @@ export class Collection {
             }
         } else {
             for await (const doc of await this.fileManager.fullScan()) {
+                if (this.matches(doc, query)) {
