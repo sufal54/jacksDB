@@ -14,3 +14,4 @@ export class Collection {
      * it's match is the query value is have in our documet
      * @param doc - document
      * @param query - query
+     * @returns - if query condition is in our doc so return true else false
