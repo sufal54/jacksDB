@@ -270,3 +270,4 @@ export class Collection {
                     if (this.matches(data, query)) {
                         results.push(data);
                     }
+                } catch (err: any) {
