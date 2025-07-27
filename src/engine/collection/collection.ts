@@ -331,3 +331,4 @@ export class Collection {
         // It's overwrite update vallue into clone and return updated doc 
         const newDoc = this.deepMerge(deepCloned, updateParsed);
         // delete newDoc.offset;
+        await this.fileManager.dataBaseUpdate(target.offset, newDoc);
