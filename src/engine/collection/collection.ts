@@ -156,3 +156,4 @@ export class Collection {
             }
         }
         return target;
+    }
