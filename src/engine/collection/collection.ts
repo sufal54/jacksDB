@@ -354,3 +354,4 @@ export class Collection {
 
             await this.fileManager.dataBaseUpdate(doc.offset, mergedDoc);
 
+        }
