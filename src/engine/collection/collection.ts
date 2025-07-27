@@ -391,3 +391,4 @@ export class Collection {
     async deleteMany(query: Record<string, any>): Promise<void> {
         if (Object.keys(query).length === 0) {
             await this.fileManager.deleteAllFiles();
+            return;
