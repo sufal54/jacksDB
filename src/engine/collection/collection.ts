@@ -110,3 +110,4 @@ export class Collection {
                 }
             }
         }
+        return true;
