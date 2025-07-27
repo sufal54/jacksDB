@@ -291,3 +291,4 @@ export class Collection {
                     const bVal = this.deepGet(b, key);
 
                     if (aVal < bVal) return -1 * dir;
+                    if (aVal > bVal) return 1 * dir;
