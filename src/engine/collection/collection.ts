@@ -119,3 +119,13 @@ export class Collection {
             return true;
         }
         return Object.keys(val).some(k => !operators.includes(k));
+    }
+
+
+    private deepGet(obj: any, path: string): any {
+        return path.split(".").reduce((acc, key) => acc?.[key], obj);
+    }
+
+    /**
+     * it tooks two object and marge it source to target
+     * support nester objec
