@@ -6,3 +6,4 @@ class Crypto {
     private readonly key: Buffer;
 
 
+    constructor(secretKey?: string) {
