@@ -25,3 +25,4 @@ class Crypto {
             return quoted ? quoted : "";
         });
         // 16 byte Iv
+        const iv = crypto.randomBytes(16);
