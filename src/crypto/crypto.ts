@@ -62,3 +62,4 @@ class Crypto {
         decodeDoc += decipher.final();
         return decodeDoc;
     }
+    /**
