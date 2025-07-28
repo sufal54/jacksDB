@@ -51,3 +51,4 @@ class Crypto {
     decrypt(encodeDoc: Buffer): string {
         if (encodeDoc[0] !== 0xFD) { // Invaild data case
             throw new Error("Invaild encodeDoc Data");
+        }
