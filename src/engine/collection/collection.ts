@@ -129,3 +129,13 @@ export class Collection {
     /**
      * it tooks two object and marge it source to target
      * support nester objec
+     * @param target - tagert object i want to overwrite
+     * @param source - source all key and value
+     * @returns 
+     */
+
+    private deepMerge(target: any, source: any): any {
+        for (const key in source) {
+            const srcVal = source[key];
+            const tgtVal = target[key];
+            // srcvalue not null and its a object and not array case 
