@@ -209,3 +209,13 @@ export class Collection {
      * @param doc - document for insert
      * @returns 
      */
+    async insertOne(doc: any): Promise<void> {
+        // validate all field is valid field and types
+        const validated = this.schema.validate(doc);
+        // if fasle donot insert return
+        if (!validated) {
+            console.error("Document does not macth with schema!");
+            return;
+        }
+        await this.fileManager.dataBaseInsert("main.db.bson", doc);
+    }
