@@ -169,3 +169,13 @@ export class Collection {
      *   "meta.city": "Delhi"
      * }
      * 
+     * Output:
+     * {
+     *   user: {
+     *     name: "Alice",
+     *     age: 25
+     *   },
+     *   meta: {
+     *     city: "Delhi"
+     *   }
+     * }
