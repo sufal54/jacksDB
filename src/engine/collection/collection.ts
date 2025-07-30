@@ -99,3 +99,13 @@ export class Collection {
                             return false;
                     }
                 }
+            } else {
+                if (Array.isArray(fieldVal)) {
+                    // return false if value is not have in array
+                    if (!fieldVal.includes(value)) {
+                        return false;
+                    }
+                } else if (fieldVal !== value) { //case primitive type and not equal to the value return false
+                    return false;
+                }
+            }
