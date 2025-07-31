@@ -25,3 +25,4 @@ export class Collection {
             if (!Array.isArray(orConditions)) {
                 return false;
             }
+            return orConditions.some((cond) => this.matches(doc, cond));
