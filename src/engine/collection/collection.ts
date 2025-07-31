@@ -87,3 +87,4 @@ export class Collection {
                             break;
                         case "$exists":
                             if (typeof val !== "boolean") {
+                                return false;
