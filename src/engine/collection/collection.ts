@@ -403,3 +403,4 @@ export class Collection {
                 continue;
             }
             for (const offset of indexData[val.toString()]) {
+                matchedOffsets.add(offset);
