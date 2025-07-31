@@ -172,3 +172,4 @@ export class Collection {
      * Output:
      * {
      *   user: {
+     *     name: "Alice",
