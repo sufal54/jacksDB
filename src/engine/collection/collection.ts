@@ -318,3 +318,4 @@ export class Collection {
      */
     async updateOne(filter: Record<string, any>, update: Partial<any>): Promise<void> {
         const found = await this.find(filter);
+        if (found.length === 0) {
