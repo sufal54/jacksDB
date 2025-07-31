@@ -89,3 +89,4 @@ export class Collection {
                             if (typeof val !== "boolean") {
                                 return false;
                             }
+                            const exists = fieldVal !== undefined;
