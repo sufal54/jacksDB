@@ -308,3 +308,4 @@ export class Collection {
     async findOne(query: Record<string, any> = {}): Promise<any | null> {
         const results = await this.find(query, { limit: 1 });
         return results.length > 0 ? results[0] : null;
+    }
