@@ -246,3 +246,4 @@ export class Collection {
     async find(query: Record<string, any> = {}, options: { sort?: Record<string, 1 | -1>, skip?: number, limit?: number } = {}): Promise<any[]> {
         const { sort = {}, skip = 0, limit = 20 } = options;
 
+        const keys = Object.keys(query);
