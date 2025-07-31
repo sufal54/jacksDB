@@ -397,3 +397,4 @@ export class Collection {
         const matchedOffsets = new Set<number>();
 
         for (const key of keys) {
+            const val = query[key];
