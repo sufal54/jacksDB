@@ -100,3 +100,4 @@ export class Collection {
                     }
                 }
             } else {
+                if (Array.isArray(fieldVal)) {
