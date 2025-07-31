@@ -192,3 +192,4 @@ export class Collection {
                 if (i === parts.length - 1) {
                     curr[part] = value;
                 } else {
+                    // case we have not this object in our object create empty object
