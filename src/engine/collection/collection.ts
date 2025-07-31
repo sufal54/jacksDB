@@ -49,3 +49,4 @@ export class Collection {
                             if (fieldVal !== val) {
                                 return false;
                             }
+                            break;
