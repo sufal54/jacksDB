@@ -169,3 +169,4 @@ export class Collection {
      *   "meta.city": "Delhi"
      * }
      * 
+     * Output:
