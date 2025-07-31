@@ -256,3 +256,4 @@ export class Collection {
             if (indexData && indexData[val.toString()]) {
                 for (const offset of indexData[val.toString()]) {
                     matchedOffsets.add(offset);
+                }
