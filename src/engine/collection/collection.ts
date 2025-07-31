@@ -63,3 +63,4 @@ export class Collection {
                         case "$gte":
                             if (typeof fieldVal !== "number" || typeof val !== "number" || !(fieldVal >= val)) {
                                 return false;
+                            }
