@@ -210,3 +210,4 @@ export class Collection {
      * @returns 
      */
     async insertOne(doc: any): Promise<void> {
+        // validate all field is valid field and types
