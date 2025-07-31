@@ -5,3 +5,4 @@ export class Collection {
     private fileManager: FileManager;
     private schema: Schema;
 
+    constructor(collectionName: string, schema: Schema, secret?: string) {
