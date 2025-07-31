@@ -247,3 +247,4 @@ export class Collection {
         const { sort = {}, skip = 0, limit = 20 } = options;
 
         const keys = Object.keys(query);
+        let matchedOffsets = new Set<number>();
