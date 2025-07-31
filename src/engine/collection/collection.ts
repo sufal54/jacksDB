@@ -28,3 +28,4 @@ export class Collection {
             return orConditions.some((cond) => this.matches(doc, cond));
         }
 
+        // Handle $and
