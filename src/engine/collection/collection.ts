@@ -393,3 +393,4 @@ export class Collection {
             await this.fileManager.deleteAllFiles();
             return;
         }
+        const keys = Object.keys(query);
