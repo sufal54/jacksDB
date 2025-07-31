@@ -190,3 +190,4 @@ export class Collection {
                 const part = parts[i];
                 // case last part then add it
                 if (i === parts.length - 1) {
+                    curr[part] = value;
