@@ -173,3 +173,4 @@ export class Collection {
      * {
      *   user: {
      *     name: "Alice",
+     *     age: 25
