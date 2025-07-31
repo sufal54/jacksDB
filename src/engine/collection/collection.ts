@@ -411,3 +411,4 @@ export class Collection {
             try {
                 const doc = await this.fileManager.dataBaseFind(offset);
                 if (this.matches(doc, query)) {
+                    await this.fileManager.dataBaseDelete(offset);
