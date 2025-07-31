@@ -185,3 +185,4 @@ export class Collection {
         const result: any = {};
         for (const [key, value] of Object.entries(dotObj)) {
             const parts = key.split(".");
+            let curr = result;
