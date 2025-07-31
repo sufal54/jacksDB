@@ -249,3 +249,4 @@ export class Collection {
         const keys = Object.keys(query);
         let matchedOffsets = new Set<number>();
 
+        let usedIndex = false;
