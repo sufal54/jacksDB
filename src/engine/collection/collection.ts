@@ -113,3 +113,4 @@ export class Collection {
         return true;
     }
 
+    private isPlainValue(val: any): boolean {
