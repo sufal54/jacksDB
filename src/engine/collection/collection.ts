@@ -109,3 +109,4 @@ export class Collection {
                     return false;
                 }
             }
+        }
