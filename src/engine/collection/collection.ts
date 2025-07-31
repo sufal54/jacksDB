@@ -242,3 +242,4 @@ export class Collection {
      * @param query - query for search
      * @param options - option like sort skip limit, default empty obj
      * @returns - array of object data
+     */
