@@ -395,3 +395,4 @@ export class Collection {
         }
         const keys = Object.keys(query);
         const matchedOffsets = new Set<number>();
+
