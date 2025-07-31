@@ -301,3 +301,4 @@ export class Collection {
         return results.slice(skip, skip + limit);
     }
     /**
+     * We are using find whit limit 1 for now will optimazing later 
