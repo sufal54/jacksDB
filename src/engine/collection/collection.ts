@@ -347,3 +347,4 @@ export class Collection {
             }
 
             const deepCloned = structuredClone(doc);
+            delete deepCloned.offset;
