@@ -285,3 +285,4 @@ export class Collection {
         // Sort
         if (Object.keys(sort).length > 0) {
             results.sort((a, b) => {
+                for (const key in sort) {
