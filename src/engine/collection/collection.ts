@@ -298,3 +298,4 @@ export class Collection {
         }
 
         // Apply skip and limit
+        return results.slice(skip, skip + limit);
