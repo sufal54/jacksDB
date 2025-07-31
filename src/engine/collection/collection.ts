@@ -206,3 +206,4 @@ export class Collection {
     /**
      * time - O(1)
      * insert document in database
+     * @param doc - document for insert
