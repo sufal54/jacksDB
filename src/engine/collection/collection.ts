@@ -263,3 +263,4 @@ export class Collection {
         }
 
         const results: any[] = [];
+        if (usedIndex) {
