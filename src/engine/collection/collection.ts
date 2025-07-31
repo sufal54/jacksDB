@@ -406,3 +406,4 @@ export class Collection {
                 matchedOffsets.add(offset);
             }
         }
+
