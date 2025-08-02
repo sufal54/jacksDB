@@ -159,3 +159,13 @@ await users.deleteMany({ "meta.city": "Delhi" });
 | `$in`     | `{ "meta.city": { $in: ["Delhi", "Pune"] } }`                 | In array              |
 | `$nin`    | `{ "meta.city": { $nin: ["Mumbai"] } }`                       | Not in array          |
 | `$exists` | `{ "meta.city": { $exists: true } }`                          | Field exists          |
+| `$and`    | `{ $and: [ { age: { $gt: 30 } }, { "meta.active": true } ] }` | Logical AND           |
+| `$or`     | `{ $or: [ { name: "Alice" }, { age: { $lt: 25 } } ] }`        | Logical OR            |
+
+## Time Complexity
+
+| Operation         | Time Complexity                 | Description                     |
+| ----------------- | ------------------------------- | ------------------------------- |
+| `insertOne()`     | O(1 + f)                        | `f` = number of indexed fields  |
+| `find()`          | O(1) with index, O(n) full scan | Uses indexes if available       |
+| `updateOne()`     | O(f)                            | Clean + reindex affected fields |
