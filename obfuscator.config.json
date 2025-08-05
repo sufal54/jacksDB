@@ -13,3 +13,4 @@
   "renameGlobals": false,
   "transformObjectKeys": false,
   "identifierNamesGenerator": "mangled",  
+
