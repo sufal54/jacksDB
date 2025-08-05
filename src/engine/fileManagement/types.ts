@@ -3,3 +3,4 @@ export type IndexEntry = {
     [key: string]: any;
 };
 
+export type IndexOut = {
