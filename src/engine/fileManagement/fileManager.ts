@@ -169,3 +169,13 @@ export class FileManager {
             // Total block size
             const totalSize = 1 + 4 + 4 + 16 + capacity;
 
+            // Read the full block
+            const fullBuffer = Buffer.alloc(totalSize);
+            await file.read(fullBuffer, 0, totalSize, offset);
+            const jsonData = this.crypto.decrypt(fullBuffer);
+
+            return JSON.parse(jsonData);
+        } finally {
+            await file.close().catch((e) => console.error(e));
+            rel();
+        }
