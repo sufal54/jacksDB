@@ -419,3 +419,13 @@ export class FileManager {
                 offset += 1 + 4 + 4 + 16 + capacity;
 
                 // Send all key value for nested value 
+                for (const [key, value] of Object.entries(doc)) {
+                    if (key === "offset") {
+                        continue;
+                    }
+                    this.indexAllFields(indexFields, value, currOffset, capacity, key);
+                }
+            }
+
+            await write.write(Buffer.concat(encodeBufferDoc));
+            await write.sync();
