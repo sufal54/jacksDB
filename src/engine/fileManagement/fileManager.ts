@@ -559,3 +559,13 @@ export class FileManager {
                                 rel(); // Release lock
                                 return resolve(jsonData); // Resolve and return
                             }
+                        }
+
+                        i += totalSize; // Skip either block type
+                    } else {
+                        // Not part of a block, just skip or optionally handle
+                        i++;
+                    }
+                }
+
+                if (isBroke) {
