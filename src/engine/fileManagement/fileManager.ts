@@ -499,3 +499,13 @@ export class FileManager {
                         offset: undefined // will be added by appendIndexEntry
                     };
                     await this.appendIndexEntry(file, doc);
+                }
+            }
+        }
+    }
+
+    /**
+    For Index files
+    Reads a binary file and extracts valid index blocks (tagged with 0xFD).
+    Skips deleted blocks (tagged with 0xDE).
+    
