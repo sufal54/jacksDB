@@ -449,3 +449,13 @@ export class FileManager {
      * @param {any} value - The value store in our data base field
      * @param {number} offset - Database offset of the data
      * @param {string} basePath - name of our index file 
+     */
+
+    private indexAllFields(map: Map<string, Map<string, number[]>>, value: any, offset: number, capacity: number, basePath: string): void {
+        // Array Case
+        if (Array.isArray(value)) {
+            for (const item of value) {
+                this.indexAllFields(map, item, offset, capacity, basePath); // Keep path as field name for array 
+            }
+            // Object case
+        } else if (typeof value === "object" && value !== null) {
