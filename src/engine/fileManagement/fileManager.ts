@@ -659,3 +659,13 @@ export class FileManager {
         const idxData = doc
         const fullPath = path.join(this.dataBasePath, fileName);
         relRead();
+
+        if (!idxData) {
+            const newEntry: Partial<IndexEntry> = {
+                [value]: dataBaseOffset,
+            };
+            await this.appendIndexEntry(fileName, newEntry);
+            return;
+        }
+
+        const [_, rel] = await this.getLock(fileName).write();
