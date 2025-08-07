@@ -729,3 +729,13 @@ export class FileManager {
             rel();
             return;
         }
+
+        if (newOffsetArray.length === 0) {
+            // Delete the entire block
+            const markBuf = Buffer.alloc(1);
+            markBuf.writeUInt8(0xDE);
+            await fileHandle.write(markBuf, 0, 1, idxData.offset);
+            await fileHandle.sync();
+            await fileHandle.close();
+            rel();
+            return;
