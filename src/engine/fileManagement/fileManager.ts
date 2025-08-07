@@ -429,3 +429,13 @@ export class FileManager {
 
             await write.write(Buffer.concat(encodeBufferDoc));
             await write.sync();
+        } catch (err) {
+            console.error("appendInFile error:", err);
+            await write.close();
+            rel();
+            return;
+        }
+
+        await write.close();
+        rel();
+
