@@ -529,3 +529,13 @@ export class FileManager {
                 let i = 0;
 
                 while (i < buffer.length) {
+                    // Check current index
+                    const tag = buffer[i];
+
+                    if (tag === 0xFD || tag === 0xDE) {
+                        if (i + 9 > buffer.length) {// Incomplete block header
+                            isBroke = true;
+                            break;
+                        }
+
+                        const capacity = buffer.readUInt32LE(i + 5); // Datas capacity
