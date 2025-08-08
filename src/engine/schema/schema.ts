@@ -101,3 +101,4 @@ class Schema {
 
     private getTypeName(type: Function): string {
         switch (type) {
+            case String: return "string";
