@@ -99,3 +99,4 @@ class Schema {
         return true;
     }
 
+    private getTypeName(type: Function): string {
