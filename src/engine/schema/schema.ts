@@ -32,3 +32,4 @@ class Schema {
                 this.definition[key] = value;
             }
         }
+    }
