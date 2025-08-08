@@ -39,3 +39,4 @@ class Schema {
         return typeof obj === "object" && obj !== null && !Array.isArray(obj) && !(obj instanceof Schema);
     }
 
+    validate(doc: any): boolean {
