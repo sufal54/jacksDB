@@ -5,3 +5,4 @@ export type SchemaDefinition = {
     | BooleanConstructor
     | SchemaDefinition
     | [StringConstructor | NumberConstructor | BooleanConstructor | SchemaDefinition];
+};
