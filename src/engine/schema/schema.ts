@@ -35,3 +35,4 @@ class Schema {
     }
 
 
+    private isPlainObject(obj: any) {
