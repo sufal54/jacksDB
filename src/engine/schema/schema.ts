@@ -97,3 +97,4 @@ class Schema {
         }
 
         return true;
+    }
