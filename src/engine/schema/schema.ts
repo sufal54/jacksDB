@@ -21,3 +21,4 @@ class Schema {
                     // Array of nested schemas
                     this.definition[key] = [new Schema(item as SchemaDefinition)];
                 } else {
+                    // Array of primitives
