@@ -5,3 +5,4 @@ export class JacksDB {
     private collections: Map<string, Collection> = new Map();
     private secret?: string;
 
+    constructor(secret?: string) {
