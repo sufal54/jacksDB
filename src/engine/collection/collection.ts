@@ -72,3 +72,4 @@ export class Collection {
                             break;
                         case "$lte":
                             if (typeof fieldVal !== "number" || typeof val !== "number" || !(fieldVal <= val)) {
+                                return false;
