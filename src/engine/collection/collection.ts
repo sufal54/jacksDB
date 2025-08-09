@@ -204,3 +204,4 @@ export class Collection {
     }
 
     /**
+     * time - O(1)
