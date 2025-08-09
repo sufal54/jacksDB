@@ -303,3 +303,4 @@ export class Collection {
     /**
      * We are using find whit limit 1 for now will optimazing later 
      * @param query 
+     * @returns - returns single doc
