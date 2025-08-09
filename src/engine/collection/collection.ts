@@ -262,3 +262,4 @@ export class Collection {
             }
         }
 
+        const results: any[] = [];
