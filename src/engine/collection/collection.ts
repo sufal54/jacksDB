@@ -196,3 +196,4 @@ export class Collection {
                     if (!curr[part]) {
                         curr[part] = {};
                     }
+                    curr = curr[part];
