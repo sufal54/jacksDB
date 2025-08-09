@@ -250,3 +250,4 @@ export class Collection {
         let matchedOffsets = new Set<number>();
 
         let usedIndex = false;
+        for (const key of keys) {
