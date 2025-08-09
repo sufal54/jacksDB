@@ -353,3 +353,4 @@ export class Collection {
             const mergedDoc = this.deepMerge(deepCloned, structuredClone(updateParsed));
 
             await this.fileManager.dataBaseUpdate(doc.offset, mergedDoc);
+
