@@ -252,3 +252,4 @@ export class Collection {
         let usedIndex = false;
         for (const key of keys) {
             const val = query[key];
+            const indexData = await this.fileManager.indexFind(`${key}.idx.bson`, val.toString());
