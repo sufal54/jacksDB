@@ -213,3 +213,4 @@ export class Collection {
         // validate all field is valid field and types
         const validated = this.schema.validate(doc);
         // if fasle donot insert return
+        if (!validated) {
