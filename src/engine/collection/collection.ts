@@ -122,3 +122,4 @@ export class Collection {
     }
 
 
+    private deepGet(obj: any, path: string): any {
