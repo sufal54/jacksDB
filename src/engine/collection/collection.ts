@@ -297,3 +297,4 @@ export class Collection {
             });
         }
 
+        // Apply skip and limit
