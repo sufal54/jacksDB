@@ -105,3 +105,4 @@ export class Collection {
                     if (!fieldVal.includes(value)) {
                         return false;
                     }
+                } else if (fieldVal !== value) { //case primitive type and not equal to the value return false
