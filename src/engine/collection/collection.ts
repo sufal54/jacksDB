@@ -18,3 +18,4 @@ export class Collection {
      */
 
     private matches(doc: any, query: Record<string, any>): boolean {
+
