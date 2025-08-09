@@ -33,3 +33,4 @@ export class Collection {
             const andConditions = query["$and"];
             if (!Array.isArray(andConditions)) {
                 return false;
+            }
