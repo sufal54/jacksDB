@@ -184,3 +184,4 @@ export class Collection {
     private dotPathToObject(dotObj: Record<string, any>): any {
         const result: any = {};
         for (const [key, value] of Object.entries(dotObj)) {
+            const parts = key.split(".");
