@@ -150,3 +150,4 @@ export class Collection {
                 target[key] = this.deepMerge(
                     tgtVal && typeof tgtVal === 'object' && !Array.isArray(tgtVal) ? tgtVal : {},
                     srcVal
+                );
