@@ -43,3 +43,4 @@ export class Collection {
             const fieldVal = this.deepGet(doc, key);
 
             if (value && typeof value === "object" && !Array.isArray(value) && !this.isPlainValue(value)) {
+                for (const [op, val] of Object.entries(value)) {
