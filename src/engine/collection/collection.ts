@@ -98,3 +98,4 @@ export class Collection {
                             console.warn(`Unsupported operator: ${op}`);
                             return false;
                     }
+                }
