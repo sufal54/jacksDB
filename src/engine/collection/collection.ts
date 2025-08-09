@@ -125,3 +125,4 @@ export class Collection {
     private deepGet(obj: any, path: string): any {
         return path.split(".").reduce((acc, key) => acc?.[key], obj);
     }
+
