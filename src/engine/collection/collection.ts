@@ -116,3 +116,4 @@ export class Collection {
     private isPlainValue(val: any): boolean {
         const operators = ["$eq", "$ne", "$gt", "$gte", "$lt", "$lte", "$in", "$nin", "$exists", "$regex"];
         if (val === null || typeof val !== "object") {
+            return true;
