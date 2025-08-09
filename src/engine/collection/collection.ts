@@ -316,3 +316,4 @@ export class Collection {
      * @param update 
      * @returns 
      */
+    async updateOne(filter: Record<string, any>, update: Partial<any>): Promise<void> {
