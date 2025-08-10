@@ -85,3 +85,4 @@ class Schema {
                     throw new Error(`Field "${key}" must be a nested object`);
                 }
                 expected.validate(actual);
+
