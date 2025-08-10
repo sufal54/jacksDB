@@ -80,3 +80,4 @@ class Schema {
                 }
 
                 // Handle nested object
+            } else if (expected instanceof Schema) {
