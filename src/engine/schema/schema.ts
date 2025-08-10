@@ -13,3 +13,4 @@ class Schema {
 
     constructor(definition: SchemaDefinition) {
         for (const key in definition) {
+            const value = definition[key];
