@@ -16,3 +16,4 @@ class Schema {
             const value = definition[key];
 
             if (Array.isArray(value)) {
+                const item = value[0];
