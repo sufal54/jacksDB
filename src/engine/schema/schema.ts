@@ -108,3 +108,4 @@ class Schema {
                 throw new Error(`Unsupported type in schema: ${type}`);
         }
     }
+}
