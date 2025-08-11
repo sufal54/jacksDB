@@ -149,3 +149,13 @@ await users.deleteMany({ "meta.city": "Delhi" });
 ## Supported Query Operators
 
 | Operator  | Usage Example                                                 | Description           |
+| --------- | ------------------------------------------------------------- | --------------------- |
+| `$eq`     | `{ age: { $eq: 30 } }`                                        | Equal to              |
+| `$ne`     | `{ name: { $ne: "Bob" } }`                                    | Not equal to          |
+| `$gt`     | `{ age: { $gt: 25 } }`                                        | Greater than          |
+| `$gte`    | `{ age: { $gte: 30 } }`                                       | Greater than or equal |
+| `$lt`     | `{ age: { $lt: 40 } }`                                        | Less than             |
+| `$lte`    | `{ age: { $lte: 35 } }`                                       | Less than or equal    |
+| `$in`     | `{ "meta.city": { $in: ["Delhi", "Pune"] } }`                 | In array              |
+| `$nin`    | `{ "meta.city": { $nin: ["Mumbai"] } }`                       | Not in array          |
+| `$exists` | `{ "meta.city": { $exists: true } }`                          | Field exists          |
