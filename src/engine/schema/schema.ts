@@ -59,3 +59,13 @@ class Schema {
             // Handle array types
             if (Array.isArray(expected)) {
                 if (!Array.isArray(actual)) {
+                    throw new Error(`Field "${key}" must be an array`);
+                }
+
+                const itemType = expected[0];
+                for (let i = 0; i < actual.length; i++) {
+                    const item = actual[i];
+                    if (itemType instanceof Schema) {
+                        if (!this.isPlainObject(item)) {
+                            throw new Error(`Field "${key}[${i}]" must be a nested object`);
+                        }
