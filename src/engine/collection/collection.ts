@@ -8,3 +8,4 @@ export class Collection {
     constructor(collectionName: string, schema: Schema, secret?: string) {
         this.schema = schema;
         this.fileManager = new FileManager(collectionName, secret);
+    }
