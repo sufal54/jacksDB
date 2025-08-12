@@ -380,3 +380,4 @@ export class Collection {
                     await this.fileManager.dataBaseDelete(offset);
                     return;
                 }
+            } catch (err: any) {
