@@ -219,3 +219,4 @@ export class Collection {
         }
         await this.fileManager.dataBaseInsert("main.db.bson", doc);
     }
+
