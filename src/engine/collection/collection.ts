@@ -23,3 +23,4 @@ export class Collection {
         if ("$or" in query) {
             const orConditions = query["$or"];
             if (!Array.isArray(orConditions)) {
+                return false;
