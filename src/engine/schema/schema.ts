@@ -71,3 +71,4 @@ class Schema {
                         }
                         itemType.validate(item);
                     } else {
+                        const expectedTypeName = this.getTypeName(itemType);
