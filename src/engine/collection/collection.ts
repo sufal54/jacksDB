@@ -69,3 +69,4 @@ export class Collection {
                             if (typeof fieldVal !== "number" || typeof val !== "number" || !(fieldVal < val)) {
                                 return false;
                             }
+                            break;
