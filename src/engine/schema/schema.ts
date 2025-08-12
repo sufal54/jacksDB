@@ -77,3 +77,4 @@ class Schema {
                             throw new Error(`Field "${key}[${i}]" must be ${expectedTypeName}, got ${actualItemType}`);
                         }
                     }
+                }
