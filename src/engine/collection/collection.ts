@@ -312,3 +312,4 @@ export class Collection {
 
     /**
      * Takes query and update it or delete one and create new
+     * @param filter 
