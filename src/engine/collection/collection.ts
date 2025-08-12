@@ -126,3 +126,4 @@ export class Collection {
         return path.split(".").reduce((acc, key) => acc?.[key], obj);
     }
 
+    /**
