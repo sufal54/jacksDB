@@ -254,3 +254,4 @@ export class Collection {
             const val = query[key];
             const indexData = await this.fileManager.indexFind(`${key}.idx.bson`, val.toString());
             if (indexData && indexData[val.toString()]) {
+                for (const offset of indexData[val.toString()]) {
