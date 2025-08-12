@@ -208,3 +208,4 @@ export class Collection {
      * insert document in database
      * @param doc - document for insert
      * @returns 
+     */
