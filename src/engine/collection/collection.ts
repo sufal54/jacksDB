@@ -392,3 +392,4 @@ export class Collection {
         if (Object.keys(query).length === 0) {
             await this.fileManager.deleteAllFiles();
             return;
+        }
