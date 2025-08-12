@@ -120,3 +120,4 @@ export class Collection {
         }
         return Object.keys(val).some(k => !operators.includes(k));
     }
+
