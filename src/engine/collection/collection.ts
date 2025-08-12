@@ -306,3 +306,4 @@ export class Collection {
      * @returns - returns single doc
      */
     async findOne(query: Record<string, any> = {}): Promise<any | null> {
+        const results = await this.find(query, { limit: 1 });
