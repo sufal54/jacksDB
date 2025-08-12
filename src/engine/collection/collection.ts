@@ -341,3 +341,4 @@ export class Collection {
         const updateParsed = this.dotPathToObject(update);
 
         for (const doc of found) {
+            if (doc.offset == null) {
