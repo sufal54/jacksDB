@@ -231,3 +231,4 @@ export class Collection {
         const validated = docs.map(d => this.schema.validate(d));
         if (!validated) {
             console.error("Document does not macth with schema!");
+            return;
