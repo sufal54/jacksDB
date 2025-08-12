@@ -17,3 +17,4 @@ export class Collection {
      * @returns - if query condition is in our doc so return true else false
      */
 
+    private matches(doc: any, query: Record<string, any>): boolean {
