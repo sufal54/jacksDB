@@ -149,3 +149,4 @@ export class Collection {
                 // and srcvalue as target for marge
                 target[key] = this.deepMerge(
                     tgtVal && typeof tgtVal === 'object' && !Array.isArray(tgtVal) ? tgtVal : {},
+                    srcVal
