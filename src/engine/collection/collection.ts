@@ -309,3 +309,4 @@ export class Collection {
         const results = await this.find(query, { limit: 1 });
         return results.length > 0 ? results[0] : null;
     }
+
