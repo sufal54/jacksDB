@@ -105,3 +105,4 @@ class Schema {
             case Number: return "number";
             case Boolean: return "boolean";
             default:
+                throw new Error(`Unsupported type in schema: ${type}`);
