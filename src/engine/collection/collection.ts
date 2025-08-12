@@ -271,3 +271,4 @@ export class Collection {
                         results.push(data);
                     }
                 } catch (err: any) {
+                    if (err.message !== "Invalid tag: not a valid block") throw err;
