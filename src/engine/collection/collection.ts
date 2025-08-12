@@ -94,3 +94,4 @@ export class Collection {
                                 return false;
                             }
                             break;
+                        default:
