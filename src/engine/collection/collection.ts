@@ -216,3 +216,4 @@ export class Collection {
         if (!validated) {
             console.error("Document does not macth with schema!");
             return;
+        }
