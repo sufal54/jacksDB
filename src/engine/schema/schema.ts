@@ -12,3 +12,4 @@ class Schema {
     definition: Record<string, any> = {};
 
     constructor(definition: SchemaDefinition) {
+        for (const key in definition) {
