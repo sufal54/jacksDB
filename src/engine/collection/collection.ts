@@ -265,3 +265,4 @@ export class Collection {
         const results: any[] = [];
         if (usedIndex) {
             for (const offset of matchedOffsets) {
+                try {
