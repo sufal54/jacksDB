@@ -3,3 +3,4 @@ import Schema from "../schema/schema";
 
 export class Collection {
     private fileManager: FileManager;
+    private schema: Schema;
