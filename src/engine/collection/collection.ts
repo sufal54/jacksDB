@@ -37,3 +37,4 @@ export class Collection {
             return andConditions.every((cond) => this.matches(doc, cond)); // Match all element saticfied
         }
 
+
