@@ -337,3 +337,4 @@ export class Collection {
     }
 
     async updateMany(filter: Record<string, any>, update: Partial<any>): Promise<void> {
+        const found = await this.find(filter);
