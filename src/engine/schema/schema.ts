@@ -104,3 +104,4 @@ class Schema {
             case String: return "string";
             case Number: return "number";
             case Boolean: return "boolean";
+            default:
