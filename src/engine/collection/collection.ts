@@ -97,3 +97,4 @@ export class Collection {
                         default:
                             console.warn(`Unsupported operator: ${op}`);
                             return false;
+                    }
