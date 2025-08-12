@@ -175,3 +175,4 @@ export class Collection {
      *     name: "Alice",
      *     age: 25
      *   },
+     *   meta: {
