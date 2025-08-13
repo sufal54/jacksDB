@@ -369,3 +369,13 @@ export class Collection {
                 continue;
             }
             for (const offset of indexData[val.toString()]) {
+                matchedOffsets.add(offset);
+            }
+        }
+
+        for (const offset of matchedOffsets) {
+            try {
+                const doc = await this.fileManager.dataBaseFind(offset);
+                if (this.matches(doc, query)) {
+                    await this.fileManager.dataBaseDelete(offset);
+                    return;
