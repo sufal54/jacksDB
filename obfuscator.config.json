@@ -6,3 +6,4 @@
   "deadCodeInjectionThreshold": 1,
   "stringArray": true,
   "stringArrayEncoding": ["base64"],
+  "stringArrayThreshold": 1,
