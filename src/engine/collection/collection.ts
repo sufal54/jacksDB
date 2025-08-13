@@ -39,3 +39,13 @@ export class Collection {
 
 
         for (const [key, value] of Object.entries(query)) {
+            // for nested object address.ip and so one
+            const fieldVal = this.deepGet(doc, key);
+
+            if (value && typeof value === "object" && !Array.isArray(value) && !this.isPlainValue(value)) {
+                for (const [op, val] of Object.entries(value)) {
+                    switch (op) {
+                        case "$eq":
+                            if (fieldVal !== val) {
+                                return false;
+                            }
