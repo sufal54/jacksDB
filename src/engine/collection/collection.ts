@@ -409,3 +409,13 @@ export class Collection {
 
         for (const offset of matchedOffsets) {
             try {
+                const doc = await this.fileManager.dataBaseFind(offset);
+                if (this.matches(doc, query)) {
+                    await this.fileManager.dataBaseDelete(offset);
+                }
+            } catch (err: any) {
+                if (err.message !== "Invalid tag: not a valid block") throw err;
+            }
+        }
+    }
+
