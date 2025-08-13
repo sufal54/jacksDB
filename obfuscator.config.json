@@ -10,3 +10,4 @@
   "rotateStringArray": true,
   "selfDefending": true,
   "disableConsoleOutput": false,
+  "renameGlobals": false,
