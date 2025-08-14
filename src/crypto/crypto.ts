@@ -56,3 +56,4 @@ class Crypto {
 
         const iv = encodeDoc.slice(9, 25);
         const encodeDocText = encodeDoc.slice(25, 25 + len).toString("hex");
+
