@@ -29,3 +29,4 @@ class Crypto {
         const cipher = crypto.createCipheriv(this.algorithm, this.key, iv);
 
         let encodeDoc = cipher.update(text, 'utf8', 'hex');
+        encodeDoc += cipher.final('hex');
