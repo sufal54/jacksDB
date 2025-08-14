@@ -63,3 +63,4 @@ class Crypto {
         return decodeDoc;
     }
     /**
+     * if new data is less then or equal of old data capacity 
