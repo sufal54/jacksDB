@@ -77,3 +77,4 @@ class Crypto {
             return null;
         }
 
+        // Update header with new data length
