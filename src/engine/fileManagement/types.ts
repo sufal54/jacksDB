@@ -7,3 +7,4 @@ export type IndexOut = {
     offset: number;
     length: number;
     capacity: number;
+} & Record<string, number[]>;
