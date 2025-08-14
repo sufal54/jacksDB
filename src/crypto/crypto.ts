@@ -84,3 +84,4 @@ class Crypto {
         newDoc.copy(oldDoc, 9, 9, 25);                  // IV (16 bytes)
 
         // Copy new encrypted data
+        newDoc.copy(oldDoc, 25, 25, 25 + newDataLen);
