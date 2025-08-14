@@ -60,3 +60,4 @@ class Crypto {
         const decipher = crypto.createDecipheriv(this.algorithm, this.key, iv);
         let decodeDoc = decipher.update(encodeDocText, 'hex', 'utf8');
         decodeDoc += decipher.final();
+        return decodeDoc;
