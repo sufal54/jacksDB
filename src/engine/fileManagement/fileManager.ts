@@ -49,3 +49,13 @@ export class FileManager {
             if (!this.fileLocks.has(fileName)) {
                 this.fileLocks.set(fileName, new RwLock<void>(undefined));
             }
+        } catch (err) {
+            console.log(err);
+            throw new Error(`Error Occurs when try to ensure file ${fileName}`)
+        }
+    }
+
+
+    /**
+     * Get the file lock for safe read and write
+     * @param {string} fileName - name of file path with extension
