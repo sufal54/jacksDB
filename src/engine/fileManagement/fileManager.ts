@@ -849,3 +849,13 @@ export class FileManager {
                 }
             });
 
+            readStream.on("end", async () => {
+
+                try {
+                    // Delete main file 
+                    await fsp.rm(realFilePath, { force: true });
+
+                    // Rename temp.bson to the file
+                    await fsp.rename(tempFilePath, realFilePath);
+                } catch (err) {
+                    console.error("Failed to replace main file:", err);
