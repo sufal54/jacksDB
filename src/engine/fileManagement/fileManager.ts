@@ -229,3 +229,13 @@ export class FileManager {
             } catch (err) {
                 console.error("Failed to clean up index:", err);
             }
+        }
+    }
+    /**
+     * For deleteMany({})
+     * It's delete all the files have in our collection
+     * @returns 
+     */
+    async deleteAllFiles(): Promise<void> {
+        const dir = this.dataBasePath;
+        // All files inside of Dir
