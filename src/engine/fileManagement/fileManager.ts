@@ -219,3 +219,13 @@ export class FileManager {
             await file.write(markBuf, 0, 1, offset);
             await file.sync(); // Flush instant
         } finally {
+            await file.close();
+            rel();
+        }
+
+        if (jsonData) {
+            try {
+                await this.cleanupIndexesFromDoc(jsonData);
+            } catch (err) {
+                console.error("Failed to clean up index:", err);
+            }
