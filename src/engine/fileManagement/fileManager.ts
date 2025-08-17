@@ -479,3 +479,13 @@ export class FileManager {
     }
 
     /**
+     * Write Doc fields value on index file
+     * @param indexMap - Map of <field,Map<value,[offsets]>>
+     */
+    private async writeIndexMap(indexMap: Map<string, Map<string, number[]>>): Promise<void> {
+
+        for (const [key, valMap] of indexMap.entries()) {
+            const file = `${key}.idx.bson`; // Key to file name
+            this.ensureFile(file); // Make file if it first time
+
+            for (const [valStr, offsets] of valMap.entries()) {
