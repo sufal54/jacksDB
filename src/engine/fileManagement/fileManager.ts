@@ -329,3 +329,13 @@ export class FileManager {
             await writeFile.sync(); // Flush data into disk
             await writeFile.close();
             writeRel();
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    /**
+     * Delete indexs from index file
+     * @param doc 
+     */
+    private async cleanupIndexesFromDoc(doc: IndexEntry): Promise<void> {
