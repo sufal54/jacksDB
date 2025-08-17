@@ -489,3 +489,13 @@ export class FileManager {
             this.ensureFile(file); // Make file if it first time
 
             for (const [valStr, offsets] of valMap.entries()) {
+                const existing = await this.indexFind(file, valStr); // Find is the value already exists
+                // Case exists then add another offset else append
+                if (existing) {
+                    await this.addFileIdxOffset(file, valStr, existing, ...offsets); // handles merge
+                } else {
+                    const doc: Partial<IndexEntry> = {
+                        [valStr]: offsets,
+                        offset: undefined // will be added by appendIndexEntry
+                    };
+                    await this.appendIndexEntry(file, doc);
