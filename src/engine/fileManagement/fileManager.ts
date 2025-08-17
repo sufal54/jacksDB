@@ -359,3 +359,13 @@ export class FileManager {
         const fullPath = [pathPrefix, key].filter(Boolean).join(".");
         // Handle nested values usin g recurstion
         // Case value array
+        if (Array.isArray(value)) {
+            for (const item of value) {
+                await this.deleteFieldFromIndexes("", item, offset, fullPath);
+            }
+            // Case value Object
+        } else if (typeof value === "object" && value !== null) {
+            for (const [k, v] of Object.entries(value)) {
+                await this.deleteFieldFromIndexes(k, v, offset, fullPath);
+            }
+            // Primitive Data
