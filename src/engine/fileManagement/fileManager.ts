@@ -549,3 +549,13 @@ export class FileManager {
                         if (tag === 0xFD) {
                             const bufferData = buffer.slice(i, i + totalSize); // Slice block of data
                             const decryptData = this.crypto.decrypt(bufferData); // Encrypt the data
+                            const jsonData = JSON.parse(decryptData) as IndexOut; // Json Parse
+                            if (Object.keys(jsonData)[0] == value) { // Check is current data is targeted data
+                                jsonData.length = bufferData.readInt32LE(1); // Inside object add data length
+                                jsonData.capacity = bufferData.readInt32LE(5); // Inside object add data capacity
+
+
+                                readStream.destroy() // Close readStream
+                                rel(); // Release lock
+                                return resolve(jsonData); // Resolve and return
+                            }
