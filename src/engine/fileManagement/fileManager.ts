@@ -189,3 +189,13 @@ export class FileManager {
      */
     async dataBaseDelete(offset: number): Promise<void> {
         const [_, rel] = await this.getLock(this.mainDB).write();
+        const fullPath = path.join(this.dataBasePath, this.mainDB);
+        const file = await fsp.open(fullPath, "r+");
+
+        let jsonData: IndexEntry | null = null;
+
+        try {
+            const header = Buffer.alloc(25);
+            await file.read(header, 0, 25, offset);
+
+            if (header[0] !== 0xFD) {
