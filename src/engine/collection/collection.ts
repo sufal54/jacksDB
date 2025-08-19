@@ -49,3 +49,13 @@ export class Collection {
                             if (fieldVal !== val) {
                                 return false;
                             }
+                            break;
+                        case "$ne":
+                            if (fieldVal === val) {
+                                return false;
+                            }
+                            break;
+                        case "$gt":
+                            if (typeof fieldVal !== "number" || typeof val !== "number" || !(fieldVal > val)) {
+                                return false;
+                            }
