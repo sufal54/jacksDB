@@ -139,3 +139,13 @@ export class Collection {
             const srcVal = source[key];
             const tgtVal = target[key];
             // srcvalue not null and its a object and not array case 
+            if (
+                srcVal &&
+                typeof srcVal === 'object' &&
+                !Array.isArray(srcVal)
+            ) {
+                // we pass if target not null and target is object and its not a array 
+                // so pass object for marge else empty object as sourse for overwrite
+                // and srcvalue as target for marge
+                target[key] = this.deepMerge(
+                    tgtVal && typeof tgtVal === 'object' && !Array.isArray(tgtVal) ? tgtVal : {},
