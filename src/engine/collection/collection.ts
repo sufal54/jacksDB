@@ -289,3 +289,13 @@ export class Collection {
                     const dir = sort[key];
                     const aVal = this.deepGet(a, key);
                     const bVal = this.deepGet(b, key);
+
+                    if (aVal < bVal) return -1 * dir;
+                    if (aVal > bVal) return 1 * dir;
+                }
+                return 0;
+            });
+        }
+
+        // Apply skip and limit
+        return results.slice(skip, skip + limit);
