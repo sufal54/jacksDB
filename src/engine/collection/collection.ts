@@ -359,3 +359,13 @@ export class Collection {
 
 
     async deleteOne(query: Record<string, any>): Promise<void> {
+        const keys = Object.keys(query);
+        const matchedOffsets = new Set<number>();
+
+        for (const key of keys) {
+            const val = query[key];
+            const indexData = await this.fileManager.indexFind(`${key}.idx.bson`, val.toString());
+            if (!indexData) {
+                continue;
+            }
+            for (const offset of indexData[val.toString()]) {
