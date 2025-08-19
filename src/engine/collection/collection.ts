@@ -229,3 +229,13 @@ export class Collection {
 
     async insertMany(docs: any[]): Promise<void> {
         const validated = docs.map(d => this.schema.validate(d));
+        if (!validated) {
+            console.error("Document does not macth with schema!");
+            return;
+        }
+        await this.fileManager.dataBaseInsert("main.db.bson", ...docs);
+    }
+
+    /** 
+     * time - O(v*l+m) where v = number of query, l = number of list length, m = unique match index/offset 
+     * find targeted object from DB
