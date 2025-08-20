@@ -31,3 +31,4 @@ export class Collection {
         // Handle $and
         if ("$and" in query) {
             const andConditions = query["$and"];
+            if (!Array.isArray(andConditions)) {
