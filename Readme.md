@@ -146,3 +146,4 @@ await users.deleteOne({ name: "Mona" });
 await users.deleteMany({ "meta.city": "Delhi" });
 ```
 
+## Supported Query Operators
