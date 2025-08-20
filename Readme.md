@@ -176,3 +176,4 @@ await users.deleteMany({ "meta.city": "Delhi" });
 | `fullScan()`      | O(n)                            | Streamed read of all documents  |
 | `removeGarbage()` | O(n)                            | Rewrites only valid blocks      |
 
+
