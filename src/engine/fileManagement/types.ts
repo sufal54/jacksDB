@@ -5,3 +5,4 @@ export type IndexEntry = {
 
 export type IndexOut = {
     offset: number;
+    length: number;
