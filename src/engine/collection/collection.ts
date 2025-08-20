@@ -290,3 +290,4 @@ export class Collection {
                     const aVal = this.deepGet(a, key);
                     const bVal = this.deepGet(b, key);
 
+                    if (aVal < bVal) return -1 * dir;
