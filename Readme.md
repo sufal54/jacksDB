@@ -143,3 +143,4 @@ await users.deleteOne({ name: "Mona" });
 - deleteMany(query)
 
 ```ts
+await users.deleteMany({ "meta.city": "Delhi" });
