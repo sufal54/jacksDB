@@ -50,3 +50,4 @@ export class Collection {
                                 return false;
                             }
                             break;
+                        case "$ne":
