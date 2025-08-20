@@ -42,3 +42,4 @@ const userSchema = new Schema({
     active: Boolean,
   },
 });
+```
