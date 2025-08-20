@@ -86,3 +86,4 @@ await users.insertMany([
     name: "Charlie",
     age: 35,
     tags: ["dev"],
+    meta: { city: "Delhi", active: true },
