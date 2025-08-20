@@ -117,3 +117,4 @@ await users.find(
 ```ts
 const user = await users.findOne({ name: "Alice" });
 ```
+
