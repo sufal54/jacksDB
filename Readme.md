@@ -83,3 +83,4 @@ await users.insertMany([
   },
   {
     id: 3,
+    name: "Charlie",
