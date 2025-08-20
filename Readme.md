@@ -120,3 +120,4 @@ const user = await users.findOne({ name: "Alice" });
 
 ## Update Documents
 
+- updateOne(filter, update)
