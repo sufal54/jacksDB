@@ -69,3 +69,13 @@ class Crypto {
      * @param newDoc - new doc in buffer
      * @returns buffer
      */
+    isWithinCapacity(oldDoc: Buffer, newDoc: Buffer): Buffer | null {
+        const oldCapacity = oldDoc.readUint32LE(5);
+        const newDataLen = newDoc.readUInt32LE(1);
+
+        if (oldCapacity < newDataLen) {
+            return null;
+        }
+
+        // Update header with new data length
+        oldDoc.writeUInt32LE(newDataLen, 1);            // Set new length in old header
