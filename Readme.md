@@ -112,3 +112,4 @@ await users.find(
 );
 ```
 
+- findOne(query)
