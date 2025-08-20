@@ -225,3 +225,4 @@ export class Collection {
      * insert many document at ones
      * @param docs[] - array of document
      * @returns 
+     */
