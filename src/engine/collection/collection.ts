@@ -45,3 +45,4 @@ export class Collection {
             if (value && typeof value === "object" && !Array.isArray(value) && !this.isPlainValue(value)) {
                 for (const [op, val] of Object.entries(value)) {
                     switch (op) {
+                        case "$eq":
