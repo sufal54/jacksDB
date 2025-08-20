@@ -286,3 +286,4 @@ export class Collection {
         if (Object.keys(sort).length > 0) {
             results.sort((a, b) => {
                 for (const key in sort) {
+                    const dir = sort[key];
