@@ -266,3 +266,4 @@ export class Collection {
         if (usedIndex) {
             for (const offset of matchedOffsets) {
                 try {
+                    const data = await this.fileManager.dataBaseFind(offset);
