@@ -177,3 +177,4 @@ export class Collection {
      *   },
      *   meta: {
      *     city: "Delhi"
+     *   }
