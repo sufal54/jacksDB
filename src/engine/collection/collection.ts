@@ -258,3 +258,4 @@ export class Collection {
                     matchedOffsets.add(offset);
                 }
                 usedIndex = true;
+                break;
