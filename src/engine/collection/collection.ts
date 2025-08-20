@@ -227,3 +227,4 @@ export class Collection {
      * @returns 
      */
 
+    async insertMany(docs: any[]): Promise<void> {
