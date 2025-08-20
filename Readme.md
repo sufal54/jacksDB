@@ -94,3 +94,4 @@ await users.insertMany([
 ## Find Documents
 
 - find(query, options?)
+
