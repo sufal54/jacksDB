@@ -36,3 +36,4 @@ const userSchema = new Schema({
   id: Number,
   name: String,
   age: Number,
+  tags: [String],
