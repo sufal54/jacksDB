@@ -160,3 +160,4 @@ await users.deleteMany({ "meta.city": "Delhi" });
 | `$nin`    | `{ "meta.city": { $nin: ["Mumbai"] } }`                       | Not in array          |
 | `$exists` | `{ "meta.city": { $exists: true } }`                          | Field exists          |
 | `$and`    | `{ $and: [ { age: { $gt: 30 } }, { "meta.active": true } ] }` | Logical AND           |
+| `$or`     | `{ $or: [ { name: "Alice" }, { age: { $lt: 25 } } ] }`        | Logical OR            |
