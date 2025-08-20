@@ -108,3 +108,4 @@ export class Collection {
                 } else if (fieldVal !== value) { //case primitive type and not equal to the value return false
                     return false;
                 }
+            }
