@@ -60,3 +60,4 @@ export class Collection {
                                 return false;
                             }
                             break;
+                        case "$gte":
