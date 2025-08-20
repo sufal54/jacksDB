@@ -166,3 +166,4 @@ await users.deleteMany({ "meta.city": "Delhi" });
 
 | Operation         | Time Complexity                 | Description                     |
 | ----------------- | ------------------------------- | ------------------------------- |
+| `insertOne()`     | O(1 + f)                        | `f` = number of indexed fields  |
