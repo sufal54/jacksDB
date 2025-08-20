@@ -103,3 +103,4 @@ Optional query options:
 
 ```ts
 await users.find(
+  {},
