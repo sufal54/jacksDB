@@ -39,3 +39,4 @@ const userSchema = new Schema({
   tags: [String],
   meta: {
     city: String,
+    active: Boolean,
