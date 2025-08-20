@@ -326,3 +326,4 @@ export class Collection {
         // meta.city to meta{city}
         const updateParsed = this.dotPathToObject(update);
         // JS function for deep clone to avoid mutaion on share value
+        const deepCloned = structuredClone(target);
