@@ -21,3 +21,4 @@ export class Collection {
 
         // Handle $or
         if ("$or" in query) {
+            const orConditions = query["$or"];
