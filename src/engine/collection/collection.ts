@@ -42,3 +42,4 @@ export class Collection {
             // for nested object address.ip and so one
             const fieldVal = this.deepGet(doc, key);
 
+            if (value && typeof value === "object" && !Array.isArray(value) && !this.isPlainValue(value)) {
