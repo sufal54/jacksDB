@@ -229,3 +229,4 @@ export class Collection {
 
     async insertMany(docs: any[]): Promise<void> {
         const validated = docs.map(d => this.schema.validate(d));
+        if (!validated) {
