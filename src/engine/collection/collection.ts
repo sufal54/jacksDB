@@ -272,3 +272,4 @@ export class Collection {
                     }
                 } catch (err: any) {
                     if (err.message !== "Invalid tag: not a valid block") throw err;
+                }
