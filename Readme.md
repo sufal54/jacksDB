@@ -49,3 +49,4 @@ const userSchema = new Schema({
 ```ts
 const db = new JacksDB("your-secret-key"); // secret-key optional
 ```
+
