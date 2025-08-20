@@ -46,3 +46,4 @@ export class Collection {
                 for (const [op, val] of Object.entries(value)) {
                     switch (op) {
                         case "$eq":
+                            if (fieldVal !== val) {
