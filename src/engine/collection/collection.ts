@@ -145,3 +145,4 @@ export class Collection {
                 !Array.isArray(srcVal)
             ) {
                 // we pass if target not null and target is object and its not a array 
+                // so pass object for marge else empty object as sourse for overwrite
