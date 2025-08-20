@@ -19,3 +19,13 @@ class Crypto {
      * @param text - json string
      * @returns - encrypted buffer
      */
+    encrypt(text: string): Buffer {
+        // Remove all whitespace tap exclude from string
+        text = text.replace(/("[^"]*")|(\s+)/g, (match, quoted, space) => {
+            return quoted ? quoted : "";
+        });
+        // 16 byte Iv
+        const iv = crypto.randomBytes(16);
+        const cipher = crypto.createCipheriv(this.algorithm, this.key, iv);
+
+        let encodeDoc = cipher.update(text, 'utf8', 'hex');
