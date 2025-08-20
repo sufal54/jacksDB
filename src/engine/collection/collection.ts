@@ -239,3 +239,4 @@ export class Collection {
     /** 
      * time - O(v*l+m) where v = number of query, l = number of list length, m = unique match index/offset 
      * find targeted object from DB
+     * @param query - query for search
