@@ -305,3 +305,4 @@ export class Collection {
      * @param query 
      * @returns - returns single doc
      */
+    async findOne(query: Record<string, any> = {}): Promise<any | null> {
