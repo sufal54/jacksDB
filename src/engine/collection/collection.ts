@@ -165,3 +165,4 @@ export class Collection {
      * Input:
      * {
      *   "user.name": "Alice",
+     *   "user.age": 25,
