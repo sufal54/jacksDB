@@ -96,3 +96,4 @@ await users.insertMany([
 - find(query, options?)
 
 ```ts
+const result = await users.find({ age: 30 });
