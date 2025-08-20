@@ -193,3 +193,4 @@ export class Collection {
                     curr[part] = value;
                 } else {
                     // case we have not this object in our object create empty object
+                    if (!curr[part]) {
