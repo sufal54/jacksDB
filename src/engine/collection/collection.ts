@@ -269,3 +269,4 @@ export class Collection {
                     const data = await this.fileManager.dataBaseFind(offset);
                     if (this.matches(data, query)) {
                         results.push(data);
+                    }
