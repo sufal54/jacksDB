@@ -214,3 +214,4 @@ export class Collection {
         const validated = this.schema.validate(doc);
         // if fasle donot insert return
         if (!validated) {
+            console.error("Document does not macth with schema!");
