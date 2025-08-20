@@ -35,3 +35,4 @@ You must define a schema using Schema before using a collection:
 const userSchema = new Schema({
   id: Number,
   name: String,
+  age: Number,
