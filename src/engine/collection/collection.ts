@@ -168,3 +168,4 @@ export class Collection {
      *   "user.age": 25,
      *   "meta.city": "Delhi"
      * }
+     * 
