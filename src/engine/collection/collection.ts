@@ -66,3 +66,4 @@ export class Collection {
                             }
                             break;
                         case "$lt":
+                            if (typeof fieldVal !== "number" || typeof val !== "number" || !(fieldVal < val)) {
