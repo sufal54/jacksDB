@@ -47,3 +47,4 @@ const userSchema = new Schema({
 ## Initialize JacksDB
 
 ```ts
+const db = new JacksDB("your-secret-key"); // secret-key optional
