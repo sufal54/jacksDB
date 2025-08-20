@@ -176,3 +176,4 @@ export class Collection {
      *     age: 25
      *   },
      *   meta: {
+     *     city: "Delhi"
