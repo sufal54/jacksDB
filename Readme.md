@@ -78,3 +78,4 @@ await users.insertMany([
     id: 2,
     name: "Bob",
     age: 25,
+    tags: ["coder"],
