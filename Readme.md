@@ -151,3 +151,4 @@ await users.deleteMany({ "meta.city": "Delhi" });
 | Operator  | Usage Example                                                 | Description           |
 | --------- | ------------------------------------------------------------- | --------------------- |
 | `$eq`     | `{ age: { $eq: 30 } }`                                        | Equal to              |
+| `$ne`     | `{ name: { $ne: "Bob" } }`                                    | Not equal to          |
