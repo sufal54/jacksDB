@@ -10,3 +10,4 @@
 - 🔐 AES-256 encrypted storage
 - 🗂️ Per-field and nested key indexing
 - ⚡ Efficient in-place updates (if new data fits)
+- 🧼 Background-safe deletion with `removeGarbage()`
