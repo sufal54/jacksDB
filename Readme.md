@@ -158,3 +158,4 @@ await users.deleteMany({ "meta.city": "Delhi" });
 | `$lte`    | `{ age: { $lte: 35 } }`                                       | Less than or equal    |
 | `$in`     | `{ "meta.city": { $in: ["Delhi", "Pune"] } }`                 | In array              |
 | `$nin`    | `{ "meta.city": { $nin: ["Mumbai"] } }`                       | Not in array          |
+| `$exists` | `{ "meta.city": { $exists: true } }`                          | Field exists          |
