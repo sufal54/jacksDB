@@ -12,3 +12,4 @@ export class Collection {
 
     /**
      * it's match is the query value is have in our documet
+     * @param doc - document
