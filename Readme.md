@@ -162,3 +162,4 @@ await users.deleteMany({ "meta.city": "Delhi" });
 | `$and`    | `{ $and: [ { age: { $gt: 30 } }, { "meta.active": true } ] }` | Logical AND           |
 | `$or`     | `{ $or: [ { name: "Alice" }, { age: { $lt: 25 } } ] }`        | Logical OR            |
 
+## Time Complexity
