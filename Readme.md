@@ -107,3 +107,4 @@ await users.find(
   {
     sort: { age: -1 },
     skip: 10,
+    limit: 5,
