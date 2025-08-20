@@ -148,3 +148,4 @@ await users.deleteMany({ "meta.city": "Delhi" });
 
 ## Supported Query Operators
 
+| Operator  | Usage Example                                                 | Description           |
