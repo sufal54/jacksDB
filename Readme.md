@@ -97,3 +97,4 @@ await users.insertMany([
 
 ```ts
 const result = await users.find({ age: 30 });
+```
