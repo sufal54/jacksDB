@@ -822,3 +822,4 @@ export class FileManager {
                         if (i + totalSize > buffer.length) {// Incomplete block body
                             isBroke = true;
                             break;
+                        }
