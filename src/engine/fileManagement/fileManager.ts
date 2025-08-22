@@ -627,3 +627,4 @@ export class FileManager {
      * 
      * @param {string} fileName - Name of the index file to write to.
      * @param {Partial<IndexEntry>} doc - The document to store (value-to-offset mapping).
+     */
