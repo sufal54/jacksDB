@@ -190,3 +190,4 @@ export class FileManager {
     async dataBaseDelete(offset: number): Promise<void> {
         const [_, rel] = await this.getLock(this.mainDB).write();
         const fullPath = path.join(this.dataBasePath, this.mainDB);
+        const file = await fsp.open(fullPath, "r+");
