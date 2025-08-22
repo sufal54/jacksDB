@@ -642,3 +642,4 @@ export class FileManager {
         } finally {
             await write.close();
             rel();
+        }
