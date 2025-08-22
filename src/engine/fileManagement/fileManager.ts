@@ -15,3 +15,4 @@ export class FileManager {
     private _index: Map<string, Map<string, Set<number>>> = new Map(); // test no use
     private _fieldIndexes: Record<string, Map<string, number | number[]>> = {}; // test no use
 
+    /**
