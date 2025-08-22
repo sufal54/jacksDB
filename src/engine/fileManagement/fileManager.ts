@@ -397,3 +397,4 @@ export class FileManager {
         const fullPath = path.join(this.dataBasePath, fileName);
         const write = await fsp.open(fullPath, "a");
 
+        // Size of file is the offset of new Doc
