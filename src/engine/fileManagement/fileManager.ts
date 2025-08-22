@@ -331,3 +331,4 @@ export class FileManager {
             writeRel();
         } catch (err) {
             console.log(err);
+        }
