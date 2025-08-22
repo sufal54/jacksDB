@@ -290,3 +290,4 @@ export class FileManager {
             const newLength = encoded.readUInt32LE(1);
             await readFile.sync();
             await readFile.close();
+            rel();
