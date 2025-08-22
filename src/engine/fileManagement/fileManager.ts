@@ -684,3 +684,4 @@ export class FileManager {
                 await this.makeAsDeleteAddNew(fileName, idxData.offset, newData);
                 return;
             }
+
