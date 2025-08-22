@@ -288,3 +288,4 @@ export class FileManager {
 
             let encoded = this.crypto.encrypt(JSON.stringify({ ...newDoc, offset })); // NewDoc to Raw from
             const newLength = encoded.readUInt32LE(1);
+            await readFile.sync();
