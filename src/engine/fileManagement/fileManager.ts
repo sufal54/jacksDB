@@ -512,3 +512,4 @@ export class FileManager {
     * @param {string} fileName - Name of the file to read.
     * @return {Promise<IndexEntry | null>} - A fields indexs or null if not found
   */
+
