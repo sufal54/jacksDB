@@ -297,3 +297,4 @@ export class FileManager {
             if (newLength > oldCapacity) {
                 await this.makeAsDeleteAddNew(this.mainDB, offset, newDoc); // Mark old Doc as deleted and append new Doc
                 return;
+            }
