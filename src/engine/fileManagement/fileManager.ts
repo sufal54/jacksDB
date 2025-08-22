@@ -550,3 +550,4 @@ export class FileManager {
                             const bufferData = buffer.slice(i, i + totalSize); // Slice block of data
                             const decryptData = this.crypto.decrypt(bufferData); // Encrypt the data
                             const jsonData = JSON.parse(decryptData) as IndexOut; // Json Parse
+                            if (Object.keys(jsonData)[0] == value) { // Check is current data is targeted data
