@@ -520,3 +520,4 @@ export class FileManager {
             const readStream = fs.createReadStream(path.join(this.dataBasePath, fileName));
             let leftover = Buffer.alloc(0); // Store half or incomplete previous chunk data
 
+            let isBroke = false; // check is leftover store data or clean
