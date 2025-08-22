@@ -842,3 +842,4 @@ export class FileManager {
                     }
                 }
 
+                if (isBroke) {
