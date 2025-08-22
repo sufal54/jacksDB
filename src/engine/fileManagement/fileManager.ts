@@ -248,3 +248,4 @@ export class FileManager {
             // If file lock have then lock the file and delete for safety else just delete the file
             if (fileLock) {
                 const [_, rel] = await fileLock.write();
+                await fsp.unlink(path.join(dir, file));
