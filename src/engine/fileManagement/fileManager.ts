@@ -25,3 +25,4 @@ export class FileManager {
         name: string,
         secret?: string
     ) {
+        this.dataBasePath = path.join(this.dataBasePath, name); // Path of collection in database
