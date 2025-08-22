@@ -427,3 +427,4 @@ export class FileManager {
                 }
             }
 
+            await write.write(Buffer.concat(encodeBufferDoc));
