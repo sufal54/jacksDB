@@ -313,3 +313,4 @@ export class FileManager {
             await this.writeIndexMap(indexFields);
 
             // Copy Old doc capacity
+            const capacityBuf = Buffer.alloc(4);
