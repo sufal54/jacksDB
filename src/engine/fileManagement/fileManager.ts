@@ -65,3 +65,4 @@ export class FileManager {
         if (!this.fileLocks.has(fileName)) {
             this.ensureFile(fileName);
         }
+
