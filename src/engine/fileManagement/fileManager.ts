@@ -665,3 +665,4 @@ export class FileManager {
                 [value]: dataBaseOffset,
             };
             await this.appendIndexEntry(fileName, newEntry);
+            return;
