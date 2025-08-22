@@ -353,3 +353,4 @@ export class FileManager {
      * @param key 
      * @param value 
      * @param offset 
+     * @param pathPrefix - Object case for join prevous filed
