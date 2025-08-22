@@ -338,3 +338,4 @@ export class FileManager {
      * Delete indexs from index file
      * @param doc 
      */
+    private async cleanupIndexesFromDoc(doc: IndexEntry): Promise<void> {
