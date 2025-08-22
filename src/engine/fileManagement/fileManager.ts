@@ -28,3 +28,4 @@ export class FileManager {
         this.dataBasePath = path.join(this.dataBasePath, name); // Path of collection in database
         this.crypto = new Crypto(secret);
 
+        // Make path if does not exist
