@@ -476,3 +476,4 @@ export class FileManager {
             }
             pathMap.get(valStr)!.push(offset);
         }
+    }
