@@ -259,3 +259,4 @@ export class FileManager {
 
     /**
      * update database if new doc length is greater then its capacity then delete old doce append new also update indxes
+     * @param offset - offset of database
