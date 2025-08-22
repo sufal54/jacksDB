@@ -436,3 +436,4 @@ export class FileManager {
             return;
         }
 
+        await write.close();
