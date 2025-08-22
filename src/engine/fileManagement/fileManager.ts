@@ -50,3 +50,4 @@ export class FileManager {
                 this.fileLocks.set(fileName, new RwLock<void>(undefined));
             }
         } catch (err) {
+            console.log(err);
