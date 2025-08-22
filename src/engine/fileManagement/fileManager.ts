@@ -344,3 +344,4 @@ export class FileManager {
             if (key === "offset") {
                 continue;
             }
+            await this.deleteFieldFromIndexes(key, val, doc.offset!);
