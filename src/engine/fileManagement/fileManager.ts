@@ -823,3 +823,4 @@ export class FileManager {
                             isBroke = true;
                             break;
                         }
+                        if (tag === 0xFD) {
