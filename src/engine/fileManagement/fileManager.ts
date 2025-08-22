@@ -661,3 +661,4 @@ export class FileManager {
         relRead();
 
         if (!idxData) {
+            const newEntry: Partial<IndexEntry> = {
