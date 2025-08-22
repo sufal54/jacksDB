@@ -622,3 +622,4 @@ export class FileManager {
     }
 
     /**
+     * Appends a new index entry to the end of an index file.
