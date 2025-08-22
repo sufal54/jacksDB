@@ -184,3 +184,4 @@ export class FileManager {
     /**
      * Time O(1)
      * It's takes Database offset and MArk it as deleted
+     * @param offset - Database offset
