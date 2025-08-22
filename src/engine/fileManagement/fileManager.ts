@@ -557,3 +557,4 @@ export class FileManager {
 
                                 readStream.destroy() // Close readStream
                                 rel(); // Release lock
+                                return resolve(jsonData); // Resolve and return
