@@ -463,3 +463,4 @@ export class FileManager {
                 const fullPath = `${basePath}.${key}`;
                 this.indexAllFields(map, val, offset, capacity, fullPath);
             }
+
