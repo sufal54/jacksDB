@@ -219,3 +219,4 @@ export class FileManager {
             await file.write(markBuf, 0, 1, offset);
             await file.sync(); // Flush instant
         } finally {
+            await file.close();
