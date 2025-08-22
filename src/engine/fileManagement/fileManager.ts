@@ -616,3 +616,4 @@ export class FileManager {
             await this.addFileIdxOffset(file, valStr, offset);
         } else {
             // Create new index object
+            const idxDoc = { [valStr]: [offset], offset };
