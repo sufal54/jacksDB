@@ -72,3 +72,4 @@ export class FileManager {
         }
         return lock;
     }
+    /**
