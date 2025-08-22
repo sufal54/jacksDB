@@ -10,3 +10,4 @@ export class FileManager {
     private mainDB: string = "main.db.bson";
     private fileLocks: Map<string, RwLock<void>> = new Map();
     private crypto: Crypto;
+
