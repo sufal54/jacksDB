@@ -109,3 +109,4 @@ export class FileManager {
                     const block = buffer.slice(offset, offset + totalSize);
 
                     if (currByte === 0xFD) {
+                        try {
