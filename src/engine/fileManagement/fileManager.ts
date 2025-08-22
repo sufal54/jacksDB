@@ -173,3 +173,4 @@ export class FileManager {
             const fullBuffer = Buffer.alloc(totalSize);
             await file.read(fullBuffer, 0, totalSize, offset);
             const jsonData = this.crypto.decrypt(fullBuffer);
+
