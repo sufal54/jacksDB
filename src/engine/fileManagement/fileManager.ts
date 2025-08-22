@@ -779,3 +779,4 @@ export class FileManager {
         await write.write(deletBufferMark, 0, 1, offset);
         await write.sync();
         await write.close();
+        rel();
