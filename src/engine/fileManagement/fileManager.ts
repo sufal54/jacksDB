@@ -695,3 +695,4 @@ export class FileManager {
             console.error(err);
         } finally {
             await fileHandle.close();
+            rel();
