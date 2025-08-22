@@ -630,3 +630,4 @@ export class FileManager {
      */
     private async appendIndexEntry(fileName: string, doc: Partial<IndexEntry>): Promise<void> {
         const [_, rel] = await this.getLock(fileName).write();
+        const fullPath = path.join(this.dataBasePath, fileName);
