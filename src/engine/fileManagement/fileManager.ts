@@ -122,3 +122,4 @@ export class FileManager {
                     offset += totalSize;
                 }
 
+                leftover = buffer.slice(offset); // Store leftover for next chunk
