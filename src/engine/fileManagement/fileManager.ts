@@ -875,3 +875,4 @@ export class FileManager {
                 reject(err);
 
             });
+        });
