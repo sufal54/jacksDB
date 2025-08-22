@@ -319,3 +319,4 @@ export class FileManager {
             capacityBuf.copy(encoded, 5);
 
             // Cut extra buffer we adds +50 byte for future update
+            // Some case it will Overlap with next Doc
