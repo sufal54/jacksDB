@@ -826,3 +826,4 @@ export class FileManager {
                         if (tag === 0xFD) {
                             const data = buffer.slice(i, i + totalSize);
                             writeStream.write(data, (err) => {
+                                if (err) {
