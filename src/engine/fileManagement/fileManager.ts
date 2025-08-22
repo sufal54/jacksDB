@@ -167,3 +167,4 @@ export class FileManager {
             const capacity = headerBuffer.readUInt32LE(5);
 
             // Total block size
+            const totalSize = 1 + 4 + 4 + 16 + capacity;
