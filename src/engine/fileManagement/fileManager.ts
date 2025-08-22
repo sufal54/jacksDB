@@ -357,3 +357,4 @@ export class FileManager {
      */
     private async deleteFieldFromIndexes(key: string, value: any, offset: number, pathPrefix: string = ""): Promise<void> {
         const fullPath = [pathPrefix, key].filter(Boolean).join(".");
+        // Handle nested values usin g recurstion
