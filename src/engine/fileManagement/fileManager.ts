@@ -158,3 +158,4 @@ export class FileManager {
             await file.read(headerBuffer, 0, 25, offset);
 
             // Invalidate tag
+            if (headerBuffer[0] !== 0xFD) {
