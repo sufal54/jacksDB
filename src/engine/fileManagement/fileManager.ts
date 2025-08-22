@@ -810,3 +810,4 @@ export class FileManager {
                 while (i < buffer.length) {
                     const tag = buffer[i];
 
+                    if (tag === 0xFD || tag === 0xDE) {
