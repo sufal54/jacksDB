@@ -241,3 +241,4 @@ export class FileManager {
         // All files inside of Dir
         const files = await fsp.readdir(dir);
         if (files.length === 0) {
+            return;
