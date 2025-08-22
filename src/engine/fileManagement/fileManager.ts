@@ -147,3 +147,4 @@ export class FileManager {
      * @param offset - Database offset
      * @returns 
      */
+    async dataBaseFind(offset: number) {
