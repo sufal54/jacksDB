@@ -531,3 +531,4 @@ export class FileManager {
                 while (i < buffer.length) {
                     // Check current index
                     const tag = buffer[i];
+
