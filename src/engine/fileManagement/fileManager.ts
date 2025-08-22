@@ -156,3 +156,4 @@ export class FileManager {
             // Read the header first: 1 + 4 + 4 + 16 = 25 bytes
             const headerBuffer = Buffer.alloc(25);
             await file.read(headerBuffer, 0, 25, offset);
+
