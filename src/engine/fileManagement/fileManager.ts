@@ -551,3 +551,4 @@ export class FileManager {
                             const decryptData = this.crypto.decrypt(bufferData); // Encrypt the data
                             const jsonData = JSON.parse(decryptData) as IndexOut; // Json Parse
                             if (Object.keys(jsonData)[0] == value) { // Check is current data is targeted data
+                                jsonData.length = bufferData.readInt32LE(1); // Inside object add data length
