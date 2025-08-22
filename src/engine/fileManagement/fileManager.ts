@@ -132,3 +132,4 @@ export class FileManager {
             });
 
             readStream.on("error", (err) => {
+                readStream.destroy();
