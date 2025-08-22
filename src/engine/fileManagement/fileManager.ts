@@ -220,3 +220,4 @@ export class FileManager {
             await file.sync(); // Flush instant
         } finally {
             await file.close();
+            rel();
