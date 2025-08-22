@@ -329,3 +329,4 @@ export class FileManager {
             await writeFile.sync(); // Flush data into disk
             await writeFile.close();
             writeRel();
+        } catch (err) {
