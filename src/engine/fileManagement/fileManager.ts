@@ -541,3 +541,4 @@ export class FileManager {
                         const capacity = buffer.readUInt32LE(i + 5); // Datas capacity
                         const totalSize = 1 + 4 + 4 + 16 + capacity; // Entire Data
 
+                        if (i + totalSize > buffer.length) {// Incomplete block body
