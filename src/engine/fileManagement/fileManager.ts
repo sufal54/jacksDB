@@ -164,3 +164,4 @@ export class FileManager {
             }
 
             // const length = headerBuffer.readUInt32LE(1);
+            const capacity = headerBuffer.readUInt32LE(5);
