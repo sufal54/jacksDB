@@ -77,3 +77,4 @@ export class FileManager {
      * @returns {any[]} - array of json data
      */
     async fullScan(): Promise<any[]> {
+        const results: any[] = [];
