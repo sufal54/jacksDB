@@ -860,3 +860,4 @@ export class FileManager {
                 } catch (err) {
                     console.error("Failed to replace main file:", err);
                 }
+                writeStream.destroy();
