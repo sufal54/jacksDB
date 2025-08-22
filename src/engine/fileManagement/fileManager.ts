@@ -380,3 +380,4 @@ export class FileManager {
 
 
     /**
+    * Append document to the Database
