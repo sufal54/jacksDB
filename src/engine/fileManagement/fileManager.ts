@@ -103,3 +103,4 @@ export class FileManager {
 
                     // Incomplete block
                     if (offset + totalSize > buffer.length) {
+                        break;
