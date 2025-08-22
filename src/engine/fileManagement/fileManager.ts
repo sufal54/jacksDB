@@ -94,3 +94,4 @@ export class FileManager {
 
                     if (remaining < 25) { // Not enough for even the header
                         break;
+                    }
