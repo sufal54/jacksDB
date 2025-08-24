@@ -8,3 +8,4 @@ export type IndexOut = {
     length: number;
     capacity: number;
 } & Record<string, number[]>;
+
