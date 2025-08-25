@@ -29,3 +29,13 @@ class Crypto {
         const cipher = crypto.createCipheriv(this.algorithm, this.key, iv);
 
         let encodeDoc = cipher.update(text, 'utf8', 'hex');
+        encodeDoc += cipher.final('hex');
+        const buffer = Buffer.from(encodeDoc, "hex");
+        const header = Buffer.alloc(9);
+        header.writeUint8(0xFD, 0); // 0xFD stand for valid data
+        header.writeUint32LE(buffer.length, 1); // length of data
+        header.writeUint32LE(buffer.length + 50, 5); // capacity extra 50 bytes
+
+        const extraBytes = Buffer.alloc(50);
+
+        const newBuffer = Buffer.concat([header, iv, buffer, extraBytes]);
