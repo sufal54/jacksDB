@@ -47,3 +47,4 @@ class Schema {
             }
         }
 
+        for (const key in this.definition) {
