@@ -6,3 +6,4 @@ export type SchemaDefinition = {
     | SchemaDefinition
     | [StringConstructor | NumberConstructor | BooleanConstructor | SchemaDefinition];
 };
+
