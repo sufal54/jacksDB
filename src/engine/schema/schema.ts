@@ -24,3 +24,4 @@ class Schema {
                     // Array of primitives
                     this.definition[key] = value;
                 }
+            } else if (this.isPlainObject(value)) {
