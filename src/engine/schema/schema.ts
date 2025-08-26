@@ -10,3 +10,4 @@ export type SchemaDefinition = {
 
 class Schema {
     definition: Record<string, any> = {};
+
