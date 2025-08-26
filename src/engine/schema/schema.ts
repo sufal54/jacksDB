@@ -79,3 +79,4 @@ class Schema {
                     }
                 }
 
+                // Handle nested object
