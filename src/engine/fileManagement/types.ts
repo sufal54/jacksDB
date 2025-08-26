@@ -10,3 +10,4 @@ export type IndexOut = {
 } & Record<string, number[]>;
 
 export type FindOptions = {
+    sort?: Record<string, 1 | -1>;
