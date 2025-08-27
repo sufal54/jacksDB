@@ -79,3 +79,13 @@ await users.insertMany([
     name: "Bob",
     age: 25,
     tags: ["coder"],
+    meta: { city: "Mumbai", active: false },
+  },
+  {
+    id: 3,
+    name: "Charlie",
+    age: 35,
+    tags: ["dev"],
+    meta: { city: "Delhi", active: true },
+  },
+]);
