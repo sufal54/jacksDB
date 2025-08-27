@@ -199,3 +199,13 @@ export class Collection {
                     curr = curr[part];
                 }
             }
+        }
+        return result;
+    }
+
+    /**
+     * time - O(1)
+     * insert document in database
+     * @param doc - document for insert
+     * @returns 
+     */
