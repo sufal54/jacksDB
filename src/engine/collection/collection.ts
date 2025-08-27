@@ -309,3 +309,13 @@ export class Collection {
         const results = await this.find(query, { limit: 1 });
         return results.length > 0 ? results[0] : null;
     }
+
+    /**
+     * Takes query and update it or delete one and create new
+     * @param filter 
+     * @param update 
+     * @returns 
+     */
+    async updateOne(filter: Record<string, any>, update: Partial<any>): Promise<void> {
+        const found = await this.find(filter);
+        if (found.length === 0) {
