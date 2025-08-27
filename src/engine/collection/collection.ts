@@ -159,3 +159,13 @@ export class Collection {
     }
 
     /**
+     * converts an object with dot-path keys into a fully nested object.
+     * 
+     * Example:
+     * Input:
+     * {
+     *   "user.name": "Alice",
+     *   "user.age": 25,
+     *   "meta.city": "Delhi"
+     * }
+     * 
