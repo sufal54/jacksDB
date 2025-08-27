@@ -69,3 +69,13 @@ export class Collection {
                             if (typeof fieldVal !== "number" || typeof val !== "number" || !(fieldVal < val)) {
                                 return false;
                             }
+                            break;
+                        case "$lte":
+                            if (typeof fieldVal !== "number" || typeof val !== "number" || !(fieldVal <= val)) {
+                                return false;
+                            }
+                            break;
+                        case "$in":
+                            if (!Array.isArray(val) || !val.includes(fieldVal)) {
+                                return false;
+                            }
