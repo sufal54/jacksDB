@@ -19,3 +19,13 @@ export class Collection {
 
     private matches(doc: any, query: Record<string, any>): boolean {
 
+        // Handle $or
+        if ("$or" in query) {
+            const orConditions = query["$or"];
+            if (!Array.isArray(orConditions)) {
+                return false;
+            }
+            return orConditions.some((cond) => this.matches(doc, cond));
+        }
+
+        // Handle $and
