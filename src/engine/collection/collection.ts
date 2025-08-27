@@ -269,3 +269,13 @@ export class Collection {
                     const data = await this.fileManager.dataBaseFind(offset);
                     if (this.matches(data, query)) {
                         results.push(data);
+                    }
+                } catch (err: any) {
+                    if (err.message !== "Invalid tag: not a valid block") throw err;
+                }
+            }
+        } else {
+            for await (const doc of await this.fileManager.fullScan()) {
+                if (this.matches(doc, query)) {
+                    results.push(doc);
+                }
