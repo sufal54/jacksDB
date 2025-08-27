@@ -349,3 +349,13 @@ export class Collection {
             const deepCloned = structuredClone(doc);
             delete deepCloned.offset;
 
+            // Clone updateParsed to avoid shared mutation across docs
+            const mergedDoc = this.deepMerge(deepCloned, structuredClone(updateParsed));
+
+            await this.fileManager.dataBaseUpdate(doc.offset, mergedDoc);
+
+        }
+    }
+
+
+    async deleteOne(query: Record<string, any>): Promise<void> {
