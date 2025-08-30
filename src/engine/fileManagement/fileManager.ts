@@ -39,3 +39,13 @@ export class FileManager {
      * Ensure file and lock file exists if not it will create in sync mananer
      * @param {string} fileName - name of file path with extension
      */
+    private ensureFile(fileName: string): void {
+        const fullPath = path.join(this.dataBasePath, fileName);
+
+        try {
+            if (!fs.existsSync(fullPath)) {
+                fs.writeFileSync(fullPath, "");
+            }
+            if (!this.fileLocks.has(fileName)) {
+                this.fileLocks.set(fileName, new RwLock<void>(undefined));
+            }
