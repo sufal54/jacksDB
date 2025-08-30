@@ -789,3 +789,13 @@ export class FileManager {
     // Remove those data are marked as delete or grabage
     /**
         * @param {string} fileName - name of file path with extension
+    */
+    async removeGarbage(fileName: string): Promise<void> {
+        return new Promise(async (resolve, reject) => {
+
+            const realFilePath = path.join(this.dataBasePath, fileName);
+            const tempFilePath = path.join(this.dataBasePath, "temp.bson");
+            const [_, rel] = await this.getLock(fileName).write();
+            const readStream = fs.createReadStream(realFilePath);
+            const writeStream = fs.createWriteStream(tempFilePath, { flags: "a" });
+
