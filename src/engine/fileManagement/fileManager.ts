@@ -779,3 +779,13 @@ export class FileManager {
         await write.write(deletBufferMark, 0, 1, offset);
         await write.sync();
         await write.close();
+        rel();
+        if (doc) {
+            await this.dataBaseInsert(fileName, doc);
+
+        }
+    }
+
+    // Remove those data are marked as delete or grabage
+    /**
+        * @param {string} fileName - name of file path with extension
