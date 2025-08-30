@@ -209,3 +209,13 @@ export class FileManager {
             const totalSize = 25 + capacity;
             const fullBuf = Buffer.alloc(totalSize);
             await file.read(fullBuf, 0, totalSize, offset);
+
+            const decrypted = this.crypto.decrypt(fullBuf);
+            jsonData = JSON.parse(decrypted) as IndexEntry;
+
+            // Mark as deleted
+            const markBuf = Buffer.alloc(1);
+            markBuf.writeUInt8(0xDE);
+            await file.write(markBuf, 0, 1, offset);
+            await file.sync(); // Flush instant
+        } finally {
