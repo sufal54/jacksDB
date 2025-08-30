@@ -269,3 +269,13 @@ export class FileManager {
         const fullPath = path.join(this.dataBasePath, this.mainDB);
         const readFile = await fsp.open(fullPath, "r+");
 
+        try {
+            const header = Buffer.alloc(25); // For headers
+            await readFile.read(header, 0, 25, offset);
+            // Invalid Block return
+            if (header[0] !== 0xFD) {
+                await readFile.close();
+                rel();
+                throw new Error("Invalid block or already deleted");
+            }
+
