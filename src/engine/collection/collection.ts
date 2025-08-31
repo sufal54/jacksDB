@@ -79,3 +79,13 @@ export class Collection {
                             if (!Array.isArray(val) || !val.includes(fieldVal)) {
                                 return false;
                             }
+                            break;
+                        case "$nin":
+                            if (Array.isArray(val) && val.includes(fieldVal)) {
+                                return false;
+                            }
+                            break;
+                        case "$exists":
+                            if (typeof val !== "boolean") {
+                                return false;
+                            }
