@@ -179,3 +179,13 @@ export class Collection {
      *     city: "Delhi"
      *   }
      * }
+     */
+
+    private dotPathToObject(dotObj: Record<string, any>): any {
+        const result: any = {};
+        for (const [key, value] of Object.entries(dotObj)) {
+            const parts = key.split(".");
+            let curr = result;
+            for (let i = 0; i < parts.length; i++) {
+                const part = parts[i];
+                // case last part then add it
