@@ -379,3 +379,13 @@ export class Collection {
                 if (this.matches(doc, query)) {
                     await this.fileManager.dataBaseDelete(offset);
                     return;
+                }
+            } catch (err: any) {
+                if (err.message !== "Invalid tag: not a valid block") throw err;
+            }
+        }
+    }
+
+
+
+    async deleteMany(query: Record<string, any>): Promise<void> {
