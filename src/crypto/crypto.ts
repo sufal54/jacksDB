@@ -20,3 +20,4 @@ class Crypto {
      * @returns - encrypted buffer
      */
     encrypt(text: string): Buffer {
+        // Remove all whitespace tap exclude from string
