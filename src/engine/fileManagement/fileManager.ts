@@ -474,3 +474,4 @@ export class FileManager {
             if (!pathMap.has(valStr)) {
                 pathMap.set(valStr, []);
             }
+            pathMap.get(valStr)!.push(offset);
