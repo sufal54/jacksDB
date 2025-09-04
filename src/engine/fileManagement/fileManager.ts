@@ -32,3 +32,4 @@ export class FileManager {
         fs.mkdirSync(this.dataBasePath, { recursive: true });
 
         // Main DB file
+        this.ensureFile(`main.db.bson`);
