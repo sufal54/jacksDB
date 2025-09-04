@@ -69,3 +69,4 @@ class Crypto {
      * @param newDoc - new doc in buffer
      * @returns buffer
      */
+    isWithinCapacity(oldDoc: Buffer, newDoc: Buffer): Buffer | null {
