@@ -712,3 +712,4 @@ export class FileManager {
         const [v, relRead] = await this.getLock(fileName).read();
         const idxData = await this.indexFind(fileName, value);
         const fullPath = path.join(this.dataBasePath, fileName);
+        relRead();
