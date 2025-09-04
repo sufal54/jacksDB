@@ -486,3 +486,4 @@ export class FileManager {
 
         for (const [key, valMap] of indexMap.entries()) {
             const file = `${key}.idx.bson`; // Key to file name
+            this.ensureFile(file); // Make file if it first time
