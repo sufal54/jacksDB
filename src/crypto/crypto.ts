@@ -10,3 +10,4 @@ class Crypto {
         // Generate a default key using OS hostname and platform if not provided
         const finalKey = secretKey || `${os.hostname()}-${os.platform()}`;
 
+        this.key = crypto.createHash("sha256").update(finalKey).digest();
