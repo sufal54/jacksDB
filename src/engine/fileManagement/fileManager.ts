@@ -335,3 +335,4 @@ export class FileManager {
     }
 
     /**
+     * Delete indexs from index file
