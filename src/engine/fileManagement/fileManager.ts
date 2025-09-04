@@ -862,3 +862,4 @@ export class FileManager {
                 }
                 writeStream.destroy();
 
+                readStream.destroy();
