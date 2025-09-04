@@ -488,3 +488,4 @@ export class FileManager {
             const file = `${key}.idx.bson`; // Key to file name
             this.ensureFile(file); // Make file if it first time
 
+            for (const [valStr, offsets] of valMap.entries()) {
