@@ -416,3 +416,4 @@ export class FileManager {
                 const encodeDoc = this.crypto.encrypt(JSON.stringify(doc));
                 encodeBufferDoc.push(encodeDoc);
                 const capacity = encodeDoc.readUInt32LE(5);
+                offset += 1 + 4 + 4 + 16 + capacity;
