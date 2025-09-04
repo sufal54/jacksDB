@@ -161,3 +161,4 @@ export class FileManager {
             if (headerBuffer[0] !== 0xFD) {
                 // console.warn("Invalid Header: not a valid block")
                 return;
+            }
