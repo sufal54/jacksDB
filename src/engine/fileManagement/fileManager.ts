@@ -675,3 +675,4 @@ export class FileManager {
             idxData[value].push(...dataBaseOffset);
             const newData: Record<string, any> = {
                 [value]: idxData[value],
+                offset: idxData.offset,
