@@ -708,3 +708,4 @@ export class FileManager {
    * @returns - void promise
    */
 
+    private async deleteFileIdxOffset(fileName: string, value: string, dataBaseOffset: number) {
