@@ -855,3 +855,4 @@ export class FileManager {
                     // Delete main file 
                     await fsp.rm(realFilePath, { force: true });
 
+                    // Rename temp.bson to the file
