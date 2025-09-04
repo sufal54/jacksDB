@@ -877,3 +877,4 @@ export class FileManager {
             });
         });
     }
+}
