@@ -86,3 +86,4 @@ export class FileManager {
             let leftover = Buffer.alloc(0);
 
             readStream.on("data", (chunk) => {
+                const buffer = Buffer.concat([leftover, Buffer.from(chunk)]);
