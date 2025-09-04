@@ -320,3 +320,4 @@ export class FileManager {
 
             // Cut extra buffer we adds +50 byte for future update
             // Some case it will Overlap with next Doc
+            encoded = encoded.slice(0, 1 + 4 + 4 + 16 + newLength);
