@@ -816,3 +816,4 @@ export class FileManager {
                             break;
                         }
 
+                        const length = buffer.readUInt32LE(i + 5);
