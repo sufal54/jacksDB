@@ -301,3 +301,4 @@ export class FileManager {
 
             // Store all Index file and its Offsets
             const indexFields = new Map<string, Map<string, number[]>>(); // strucher Map<filedName,Map<value,[indexs]>>
+            for (const [key, val] of Object.entries(newDoc)) {
