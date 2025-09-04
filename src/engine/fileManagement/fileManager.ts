@@ -519,3 +519,4 @@ export class FileManager {
             const [_, rel] = await this.getLock(fileName).read();
             const readStream = fs.createReadStream(path.join(this.dataBasePath, fileName));
             let leftover = Buffer.alloc(0); // Store half or incomplete previous chunk data
+
