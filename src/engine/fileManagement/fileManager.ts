@@ -718,3 +718,4 @@ export class FileManager {
             return;
         }
 
+        const [_, rel] = await this.getLock(fileName).write();
