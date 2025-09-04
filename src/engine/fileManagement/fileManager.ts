@@ -479,3 +479,4 @@ export class FileManager {
     }
 
     /**
+     * Write Doc fields value on index file
