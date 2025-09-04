@@ -73,3 +73,4 @@ export class FileManager {
         return lock;
     }
     /**
+     * scan entire database O(n) time
