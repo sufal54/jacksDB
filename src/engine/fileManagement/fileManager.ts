@@ -70,3 +70,4 @@ export class FileManager {
         if (!lock) {
             throw new Error(`Missing lock for file: ${fileName}`);
         }
+        return lock;
