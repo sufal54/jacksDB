@@ -102,3 +102,4 @@ export class FileManager {
                     const totalSize = 1 + 4 + 4 + 16 + capacity;
 
                     // Incomplete block
+                    if (offset + totalSize > buffer.length) {
