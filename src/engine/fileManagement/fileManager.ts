@@ -775,3 +775,4 @@ export class FileManager {
 
 
         const deletBufferMark = Buffer.alloc(1);
+        deletBufferMark.writeUInt8(0xDE);
