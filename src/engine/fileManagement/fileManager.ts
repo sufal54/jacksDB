@@ -310,3 +310,4 @@ export class FileManager {
                 this.indexAllFields(indexFields, val, offset, oldCapacity, key);
             }
             // Writes all indexs in index file
+            await this.writeIndexMap(indexFields);
