@@ -483,3 +483,4 @@ export class FileManager {
      * @param indexMap - Map of <field,Map<value,[offsets]>>
      */
     private async writeIndexMap(indexMap: Map<string, Map<string, number[]>>): Promise<void> {
+
