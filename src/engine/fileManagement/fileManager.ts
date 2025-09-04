@@ -129,3 +129,4 @@ export class FileManager {
                 readStream.destroy();
                 rel();
                 resolve(results);
+            });
