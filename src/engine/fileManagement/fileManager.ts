@@ -114,3 +114,4 @@ export class FileManager {
                             const json = JSON.parse(decrypted);
                             results.push(json);
                         } catch (err) {
+                            console.warn(`Error decrypting block at ${offset}:`, err);
