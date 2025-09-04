@@ -672,3 +672,4 @@ export class FileManager {
         const fileHandle = await fsp.open(fullPath, 'r+');
 
         try {
+            idxData[value].push(...dataBaseOffset);
