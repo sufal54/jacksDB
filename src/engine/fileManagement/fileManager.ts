@@ -694,3 +694,4 @@ export class FileManager {
         } catch (err) {
             console.error(err);
         } finally {
+            await fileHandle.close();
