@@ -202,3 +202,4 @@ export class FileManager {
                 // await file.close();
                 // rel();
                 console.warn("Block already deleted or invalid");
+                return;
