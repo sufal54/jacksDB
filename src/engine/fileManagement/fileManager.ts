@@ -404,3 +404,4 @@ export class FileManager {
 
         const indexFields = new Map<string, Map<string, number[]>>();
 
+        try {
