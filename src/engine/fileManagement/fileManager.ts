@@ -57,3 +57,4 @@ export class FileManager {
 
 
     /**
+     * Get the file lock for safe read and write
