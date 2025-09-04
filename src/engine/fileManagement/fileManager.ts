@@ -528,3 +528,4 @@ export class FileManager {
                 const buffer = Buffer.concat([leftover, Buffer.from(chunk)]);
                 let i = 0;
 
+                while (i < buffer.length) {
