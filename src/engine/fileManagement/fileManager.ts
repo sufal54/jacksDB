@@ -270,3 +270,4 @@ export class FileManager {
         const readFile = await fsp.open(fullPath, "r+");
 
         try {
+            const header = Buffer.alloc(25); // For headers
