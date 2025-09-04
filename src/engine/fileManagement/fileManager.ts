@@ -401,3 +401,4 @@ export class FileManager {
         let offset = (await write.stat()).size;
 
         let encodeBufferDoc: Buffer[] = [];
+
