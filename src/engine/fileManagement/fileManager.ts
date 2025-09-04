@@ -285,3 +285,4 @@ export class FileManager {
             const oldBlockBuf = Buffer.alloc(totalSize); // Buffer for store the oldDoc
             await readFile.read(oldBlockBuf, 0, totalSize, offset); // Get the Raw Data
             const oldJson = JSON.parse(this.crypto.decrypt(oldBlockBuf)) as IndexEntry; // Parse into Object
+
