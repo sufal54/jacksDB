@@ -303,3 +303,4 @@ export class FileManager {
             const indexFields = new Map<string, Map<string, number[]>>(); // strucher Map<filedName,Map<value,[indexs]>>
             for (const [key, val] of Object.entries(newDoc)) {
                 // If filed is offset then skip
+                if (key === "offset") {
