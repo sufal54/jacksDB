@@ -659,3 +659,4 @@ export class FileManager {
         const idxData = doc
         const fullPath = path.join(this.dataBasePath, fileName);
         relRead();
+
