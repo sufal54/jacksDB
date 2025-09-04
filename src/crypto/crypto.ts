@@ -12,3 +12,4 @@ class Crypto {
 
         this.key = crypto.createHash("sha256").update(finalKey).digest();
     }
+
