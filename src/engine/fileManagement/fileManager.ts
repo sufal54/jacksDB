@@ -716,3 +716,4 @@ export class FileManager {
         if (!idxData) {
             // console.error(`${value} not found in ${fullPath}`);
             return;
+        }
