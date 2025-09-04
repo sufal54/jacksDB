@@ -794,3 +794,4 @@ export class FileManager {
         return new Promise(async (resolve, reject) => {
 
             const realFilePath = path.join(this.dataBasePath, fileName);
+            const tempFilePath = path.join(this.dataBasePath, "temp.bson");
