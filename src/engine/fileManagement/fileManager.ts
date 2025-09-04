@@ -315,3 +315,4 @@ export class FileManager {
             // Copy Old doc capacity
             const capacityBuf = Buffer.alloc(4);
             capacityBuf.writeUInt32LE(oldCapacity);
+            // Overwrite oldcapacity in new Raw Doc
