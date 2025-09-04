@@ -556,3 +556,4 @@ export class FileManager {
 
 
                                 readStream.destroy() // Close readStream
+                                rel(); // Release lock
