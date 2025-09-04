@@ -96,3 +96,4 @@ export class FileManager {
                         break;
                     }
 
+                    const currByte = buffer[offset];
