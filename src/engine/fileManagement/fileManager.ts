@@ -852,3 +852,4 @@ export class FileManager {
             readStream.on("end", async () => {
 
                 try {
+                    // Delete main file 
