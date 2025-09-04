@@ -637,3 +637,4 @@ export class FileManager {
             const encodeDoc = this.crypto.encrypt(JSON.stringify(doc));
             await write.write(encodeDoc);
             await write.sync();
+        } catch (err) {
