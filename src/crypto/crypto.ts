@@ -65,3 +65,4 @@ class Crypto {
     /**
      * if new data is less then or equal of old data capacity 
      * then change old data with new data and return new updated buffer or return null
+     * @param oldDoc - old doc in buffer
