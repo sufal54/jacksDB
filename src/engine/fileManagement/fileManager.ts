@@ -394,3 +394,4 @@ export class FileManager {
         const flatDocs: Partial<IndexEntry>[] = docs.flat(); // Remove nestet array
 
         const [_, rel] = await this.getLock(fileName).write();
+        const fullPath = path.join(this.dataBasePath, fileName);
