@@ -51,3 +51,4 @@ export class FileManager {
             }
         } catch (err) {
             console.log(err);
+            throw new Error(`Error Occurs when try to ensure file ${fileName}`)
