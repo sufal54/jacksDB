@@ -603,3 +603,4 @@ export class FileManager {
    * @param {string} key - The field name to index (e.g. "name", "age").
    * @param {string | number | boolean} val - The actual value to index.
    * @param {number} offset - The byte offset of the corresponding record in the data file.
+   */
