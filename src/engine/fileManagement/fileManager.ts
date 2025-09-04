@@ -359,3 +359,4 @@ export class FileManager {
         const fullPath = [pathPrefix, key].filter(Boolean).join(".");
         // Handle nested values usin g recurstion
         // Case value array
+        if (Array.isArray(value)) {
