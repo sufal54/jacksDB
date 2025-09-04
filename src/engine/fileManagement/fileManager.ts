@@ -43,3 +43,4 @@ export class FileManager {
         const fullPath = path.join(this.dataBasePath, fileName);
 
         try {
+            if (!fs.existsSync(fullPath)) {
