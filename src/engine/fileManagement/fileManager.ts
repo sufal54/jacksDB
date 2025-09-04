@@ -596,3 +596,4 @@ export class FileManager {
 
 
     /**
+   * Adds an index entry for a specific key and value pointing to a data offset.
