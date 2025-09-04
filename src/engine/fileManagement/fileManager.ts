@@ -411,3 +411,4 @@ export class FileManager {
                 }
 
                 const currOffset = offset;
+
