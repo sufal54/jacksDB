@@ -91,3 +91,4 @@ export class FileManager {
 
                 while (offset < buffer.length) {
                     const remaining = buffer.length - offset;
+
