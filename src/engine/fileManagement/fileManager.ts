@@ -731,3 +731,4 @@ export class FileManager {
         }
 
         if (newOffsetArray.length === 0) {
+            // Delete the entire block
