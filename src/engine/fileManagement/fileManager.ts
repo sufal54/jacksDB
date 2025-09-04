@@ -584,3 +584,4 @@ export class FileManager {
             // On Error
             readStream.on("error", (err) => {
                 readStream.destroy();
+                rel();
