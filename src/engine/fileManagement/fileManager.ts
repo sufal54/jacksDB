@@ -169,3 +169,4 @@ export class FileManager {
             // Total block size
             const totalSize = 1 + 4 + 4 + 16 + capacity;
 
+            // Read the full block
