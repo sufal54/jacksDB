@@ -61,3 +61,4 @@ export class FileManager {
      * @param {string} fileName - name of file path with extension
      * @returns {RwLock} - Return specfice index RwLock
      */
+    private getLock(fileName: string): RwLock<void> {
