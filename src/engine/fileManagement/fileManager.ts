@@ -269,3 +269,4 @@ export class FileManager {
         const fullPath = path.join(this.dataBasePath, this.mainDB);
         const readFile = await fsp.open(fullPath, "r+");
 
+        try {
