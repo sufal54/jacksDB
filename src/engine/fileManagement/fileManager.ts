@@ -69,3 +69,4 @@ export class FileManager {
         const lock = this.fileLocks.get(fileName);
         if (!lock) {
             throw new Error(`Missing lock for file: ${fileName}`);
+        }
