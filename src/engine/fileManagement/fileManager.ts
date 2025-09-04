@@ -277,3 +277,4 @@ export class FileManager {
                 await readFile.close();
                 rel();
                 throw new Error("Invalid block or already deleted");
+            }
