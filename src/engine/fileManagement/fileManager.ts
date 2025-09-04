@@ -509,3 +509,4 @@ export class FileManager {
     Reads a binary file and extracts valid index blocks (tagged with 0xFD).
     Skips deleted blocks (tagged with 0xDE).
     
+    * @param {string} fileName - Name of the file to read.
