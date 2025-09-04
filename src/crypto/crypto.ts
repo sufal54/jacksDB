@@ -24,3 +24,4 @@ class Crypto {
         text = text.replace(/("[^"]*")|(\s+)/g, (match, quoted, space) => {
             return quoted ? quoted : "";
         });
+        // 16 byte Iv
