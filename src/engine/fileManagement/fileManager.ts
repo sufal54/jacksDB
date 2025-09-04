@@ -811,3 +811,4 @@ export class FileManager {
                     const tag = buffer[i];
 
                     if (tag === 0xFD || tag === 0xDE) {
+                        if (i + 5 > buffer.length) {// Incomplete block header
