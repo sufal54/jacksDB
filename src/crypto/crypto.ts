@@ -46,3 +46,4 @@ class Crypto {
     /**
      * takes encrypted buffer and decrypte it and return the value
      * @param encodeDoc - encrypted buffer
+     * @returns - json string
