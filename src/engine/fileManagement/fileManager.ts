@@ -328,3 +328,4 @@ export class FileManager {
             await writeFile.write(encoded, 0, encoded.length, offset);
             await writeFile.sync(); // Flush data into disk
             await writeFile.close();
+            writeRel();
