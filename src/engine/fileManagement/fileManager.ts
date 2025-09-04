@@ -737,3 +737,4 @@ export class FileManager {
             await fileHandle.write(markBuf, 0, 1, idxData.offset);
             await fileHandle.sync();
             await fileHandle.close();
+            rel();
