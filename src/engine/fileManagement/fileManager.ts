@@ -681,3 +681,4 @@ export class FileManager {
             const encodeDoc = this.crypto.encrypt(JSON.stringify(newData));
 
             if (idxData.capacity < encodeDoc.readUInt32LE(1)) {
+                await this.makeAsDeleteAddNew(fileName, idxData.offset, newData);
