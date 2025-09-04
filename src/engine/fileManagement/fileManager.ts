@@ -36,3 +36,4 @@ export class FileManager {
 
     }
     /**
+     * Ensure file and lock file exists if not it will create in sync mananer
