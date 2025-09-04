@@ -471,3 +471,4 @@ export class FileManager {
                 map.set(basePath, new Map());
             }
             const pathMap = map.get(basePath)!;
+            if (!pathMap.has(valStr)) {
