@@ -327,3 +327,4 @@ export class FileManager {
             // Overwrite new Doc on old location
             await writeFile.write(encoded, 0, encoded.length, offset);
             await writeFile.sync(); // Flush data into disk
+            await writeFile.close();
