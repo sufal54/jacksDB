@@ -735,3 +735,4 @@ export class FileManager {
             const markBuf = Buffer.alloc(1);
             markBuf.writeUInt8(0xDE);
             await fileHandle.write(markBuf, 0, 1, idxData.offset);
+            await fileHandle.sync();
