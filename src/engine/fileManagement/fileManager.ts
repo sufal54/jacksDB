@@ -554,3 +554,4 @@ export class FileManager {
                                 jsonData.length = bufferData.readInt32LE(1); // Inside object add data length
                                 jsonData.capacity = bufferData.readInt32LE(5); // Inside object add data capacity
 
+
