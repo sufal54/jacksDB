@@ -720,3 +720,4 @@ export class FileManager {
 
         const [_, rel] = await this.getLock(fileName).write();
         const fileHandle = await fsp.open(fullPath, 'r+');
+
