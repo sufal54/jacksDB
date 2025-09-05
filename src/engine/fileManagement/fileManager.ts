@@ -546,3 +546,4 @@ export class FileManager {
                             break;
                         }
                         // If it Mark as Vaild Data
+                        if (tag === 0xFD) {
