@@ -728,3 +728,4 @@ export class FileManager {
             await fileHandle.close();
             rel();
             return;
+        }
