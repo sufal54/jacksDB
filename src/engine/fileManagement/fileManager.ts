@@ -221,3 +221,4 @@ export class FileManager {
         } finally {
             await file.close();
             rel();
+        }
