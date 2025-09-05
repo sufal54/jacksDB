@@ -788,3 +788,4 @@ export class FileManager {
 
     // Remove those data are marked as delete or grabage
     /**
+        * @param {string} fileName - name of file path with extension
