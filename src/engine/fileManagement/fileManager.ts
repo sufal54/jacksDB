@@ -211,3 +211,4 @@ export class FileManager {
             await file.read(fullBuf, 0, totalSize, offset);
 
             const decrypted = this.crypto.decrypt(fullBuf);
+            jsonData = JSON.parse(decrypted) as IndexEntry;
