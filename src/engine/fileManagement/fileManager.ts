@@ -225,3 +225,4 @@ export class FileManager {
 
         if (jsonData) {
             try {
+                await this.cleanupIndexesFromDoc(jsonData);
