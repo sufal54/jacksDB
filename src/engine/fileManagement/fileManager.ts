@@ -224,3 +224,4 @@ export class FileManager {
         }
 
         if (jsonData) {
+            try {
