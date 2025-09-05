@@ -702,3 +702,4 @@ export class FileManager {
 
     /**
    * Delete main database field indexs update index file
+   * @param fileName - name of file with extenstion
