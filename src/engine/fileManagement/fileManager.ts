@@ -439,3 +439,4 @@ export class FileManager {
         await write.close();
         rel();
 
+        await this.writeIndexMap(indexFields);
