@@ -460,3 +460,4 @@ export class FileManager {
             // Object case
         } else if (typeof value === "object" && value !== null) {
             for (const [key, val] of Object.entries(value)) {
+                const fullPath = `${basePath}.${key}`;
