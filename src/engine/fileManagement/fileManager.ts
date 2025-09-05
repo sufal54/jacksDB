@@ -374,3 +374,4 @@ export class FileManager {
             const indexFile = `${fullPath}.idx.bson`;
             await this.deleteFileIdxOffset(indexFile, valStr, offset);
         }
+    }
