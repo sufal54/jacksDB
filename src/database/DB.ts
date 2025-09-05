@@ -19,3 +19,4 @@ export class JacksDB {
         if (!this.collections.has(name)) {
             const col = new Collection(name, schema, this.secret);
             this.collections.set(name, col);
+        }
