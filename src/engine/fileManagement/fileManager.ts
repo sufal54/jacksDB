@@ -64,3 +64,4 @@ export class FileManager {
     private getLock(fileName: string): RwLock<void> {
         if (!this.fileLocks.has(fileName)) {
             this.ensureFile(fileName);
+        }
