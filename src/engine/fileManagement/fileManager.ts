@@ -683,3 +683,4 @@ export class FileManager {
             if (idxData.capacity < encodeDoc.readUInt32LE(1)) {
                 await this.makeAsDeleteAddNew(fileName, idxData.offset, newData);
                 return;
+            }
