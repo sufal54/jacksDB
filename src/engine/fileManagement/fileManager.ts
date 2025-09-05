@@ -574,3 +574,4 @@ export class FileManager {
                     leftover = Buffer.alloc(0); // Clean it — nothing to carry over
                 }
             });
+            // End of readStream
