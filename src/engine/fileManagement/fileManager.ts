@@ -252,3 +252,4 @@ export class FileManager {
                 rel();
             } else {
                 await fsp.unlink(path.join(dir, file));
+            }
