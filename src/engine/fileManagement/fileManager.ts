@@ -387,3 +387,4 @@ export class FileManager {
     * @return {Promise<void>}  
     * @param {IndexEntry} doc - Object data we are going to insert
      */
+
