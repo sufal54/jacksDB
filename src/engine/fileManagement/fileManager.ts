@@ -510,3 +510,4 @@ export class FileManager {
     Skips deleted blocks (tagged with 0xDE).
     
     * @param {string} fileName - Name of the file to read.
+    * @return {Promise<IndexEntry | null>} - A fields indexs or null if not found
