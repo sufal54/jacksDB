@@ -4,3 +4,4 @@ import path from "node:path";
 import RwLock from "@sufalctl/rwlock";
 import Crypto from "../../crypto/crypto";
 import { IndexEntry, IndexOut, FindOptions } from "./types";
+
