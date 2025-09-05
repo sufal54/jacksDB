@@ -610,3 +610,4 @@ export class FileManager {
         this.ensureFile(file);
         const valStr = val.toString();
 
+        const exists = await this.indexFind(file, valStr);
