@@ -588,3 +588,4 @@ export class FileManager {
                 console.error(err);
                 reject(null);
 
+            });
