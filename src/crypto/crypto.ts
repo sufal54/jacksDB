@@ -48,3 +48,4 @@ class Crypto {
      * @param encodeDoc - encrypted buffer
      * @returns - json string
      */
+    decrypt(encodeDoc: Buffer): string {
