@@ -79,3 +79,4 @@ export class FileManager {
     async fullScan(): Promise<any[]> {
         const results: any[] = [];
         const [_, rel] = await this.getLock(this.mainDB).read();
+        const fullPath = path.join(this.dataBasePath, this.mainDB);
