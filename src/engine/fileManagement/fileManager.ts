@@ -262,3 +262,4 @@ export class FileManager {
      * @param offset - offset of database
      * @param newDoc - the doc we are going to insert
      * @returns 
+     */
