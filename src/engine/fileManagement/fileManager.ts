@@ -82,3 +82,4 @@ export class FileManager {
         const fullPath = path.join(this.dataBasePath, this.mainDB);
 
         return new Promise((resolve, reject) => {
+            const readStream = fs.createReadStream(fullPath);
