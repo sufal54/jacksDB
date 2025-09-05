@@ -186,3 +186,4 @@ export class FileManager {
      * It's takes Database offset and MArk it as deleted
      * @param offset - Database offset
      * @returns 
+     */
