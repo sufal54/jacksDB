@@ -620,3 +620,4 @@ export class FileManager {
             await this.appendIndexEntry(file, idxDoc);
         }
     }
+
