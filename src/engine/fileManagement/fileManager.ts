@@ -749,3 +749,4 @@ export class FileManager {
 
         try {
             const encodeDoc = this.crypto.encrypt(JSON.stringify(newData));
+            const capacityBuffer = Buffer.alloc(4);
