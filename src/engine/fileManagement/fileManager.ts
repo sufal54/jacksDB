@@ -647,3 +647,4 @@ export class FileManager {
 
 
     /**
+        * Delete main database field indexs update index file
