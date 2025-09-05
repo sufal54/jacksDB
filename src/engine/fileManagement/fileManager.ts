@@ -636,3 +636,4 @@ export class FileManager {
             doc.offset = (await write.stat()).size;
             const encodeDoc = this.crypto.encrypt(JSON.stringify(doc));
             await write.write(encodeDoc);
+            await write.sync();
