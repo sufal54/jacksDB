@@ -458,3 +458,4 @@ export class FileManager {
                 this.indexAllFields(map, item, offset, capacity, basePath); // Keep path as field name for array 
             }
             // Object case
+        } else if (typeof value === "object" && value !== null) {
