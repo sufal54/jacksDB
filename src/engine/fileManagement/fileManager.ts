@@ -770,3 +770,4 @@ export class FileManager {
 
     async makeAsDeleteAddNew(fileName: string, offset: number, doc?: Partial<IndexEntry>) {
         const [_, rel] = await this.getLock(fileName).write();
+        const filePath = path.join(this.dataBasePath, fileName);
