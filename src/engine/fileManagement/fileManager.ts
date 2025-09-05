@@ -345,3 +345,4 @@ export class FileManager {
                 continue;
             }
             await this.deleteFieldFromIndexes(key, val, doc.offset!);
+        }
