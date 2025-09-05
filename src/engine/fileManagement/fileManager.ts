@@ -424,3 +424,4 @@ export class FileManager {
                         continue;
                     }
                     this.indexAllFields(indexFields, value, currOffset, capacity, key);
+                }
