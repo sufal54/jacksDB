@@ -209,3 +209,4 @@ export class FileManager {
             const totalSize = 25 + capacity;
             const fullBuf = Buffer.alloc(totalSize);
             await file.read(fullBuf, 0, totalSize, offset);
+
