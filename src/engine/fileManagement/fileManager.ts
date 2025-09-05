@@ -276,3 +276,4 @@ export class FileManager {
             if (header[0] !== 0xFD) {
                 await readFile.close();
                 rel();
+                throw new Error("Invalid block or already deleted");
