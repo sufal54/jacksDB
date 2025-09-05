@@ -861,3 +861,4 @@ export class FileManager {
                     console.error("Failed to replace main file:", err);
                 }
                 writeStream.destroy();
+
