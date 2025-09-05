@@ -110,3 +110,4 @@ export class FileManager {
 
                     if (currByte === 0xFD) {
                         try {
+                            const decrypted = this.crypto.decrypt(block);
