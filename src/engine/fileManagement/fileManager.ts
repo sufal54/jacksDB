@@ -243,3 +243,4 @@ export class FileManager {
         if (files.length === 0) {
             return;
         }
+        for (const file of files) {
