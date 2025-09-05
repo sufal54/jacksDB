@@ -614,3 +614,4 @@ export class FileManager {
         if (exists) {
             // Append anothe offset
             await this.addFileIdxOffset(file, valStr, offset);
+        } else {
