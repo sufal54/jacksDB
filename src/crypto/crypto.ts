@@ -31,3 +31,4 @@ class Crypto {
         let encodeDoc = cipher.update(text, 'utf8', 'hex');
         encodeDoc += cipher.final('hex');
         const buffer = Buffer.from(encodeDoc, "hex");
+        const header = Buffer.alloc(9);
