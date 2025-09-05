@@ -561,3 +561,4 @@ export class FileManager {
                             }
                         }
 
+                        i += totalSize; // Skip either block type
