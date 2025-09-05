@@ -201,3 +201,4 @@ export class FileManager {
             if (header[0] !== 0xFD) {
                 // await file.close();
                 // rel();
+                console.warn("Block already deleted or invalid");
