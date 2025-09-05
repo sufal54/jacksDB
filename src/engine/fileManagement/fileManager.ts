@@ -655,3 +655,4 @@ export class FileManager {
         */
 
     private async addFileIdxOffset(fileName: string, value: string, doc: any, ...dataBaseOffset: number[]) {
+        const [v, relRead] = await this.getLock(fileName).read();
