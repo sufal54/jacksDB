@@ -799,3 +799,4 @@ export class FileManager {
             const readStream = fs.createReadStream(realFilePath);
             const writeStream = fs.createWriteStream(tempFilePath, { flags: "a" });
 
+            let leftover = Buffer.alloc(0); // Store half or incomplete previous chunk data
