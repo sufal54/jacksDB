@@ -99,3 +99,4 @@ export class FileManager {
                     const currByte = buffer[offset];
                     const length = buffer.readUInt32LE(offset + 1);
                     const capacity = buffer.readUInt32LE(offset + 5);
+                    const totalSize = 1 + 4 + 4 + 16 + capacity;
