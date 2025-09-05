@@ -175,3 +175,4 @@ export class FileManager {
             const jsonData = this.crypto.decrypt(fullBuffer);
 
             return JSON.parse(jsonData);
+        } finally {
