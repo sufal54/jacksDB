@@ -33,3 +33,4 @@ class Crypto {
         const buffer = Buffer.from(encodeDoc, "hex");
         const header = Buffer.alloc(9);
         header.writeUint8(0xFD, 0); // 0xFD stand for valid data
+        header.writeUint32LE(buffer.length, 1); // length of data
