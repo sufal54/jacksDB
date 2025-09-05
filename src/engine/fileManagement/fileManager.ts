@@ -35,3 +35,4 @@ export class FileManager {
         this.ensureFile(`main.db.bson`);
 
     }
+    /**
