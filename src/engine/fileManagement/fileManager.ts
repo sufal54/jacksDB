@@ -342,3 +342,4 @@ export class FileManager {
         for (const [key, val] of Object.entries(doc)) {
             // If offset field skip it
             if (key === "offset") {
+                continue;
