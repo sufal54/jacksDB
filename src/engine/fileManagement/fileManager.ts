@@ -824,3 +824,4 @@ export class FileManager {
                             break;
                         }
                         if (tag === 0xFD) {
+                            const data = buffer.slice(i, i + totalSize);
