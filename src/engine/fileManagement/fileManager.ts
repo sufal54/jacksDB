@@ -418,3 +418,4 @@ export class FileManager {
                 const capacity = encodeDoc.readUInt32LE(5);
                 offset += 1 + 4 + 4 + 16 + capacity;
 
+                // Send all key value for nested value 
