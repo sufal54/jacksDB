@@ -68,3 +68,4 @@ class Crypto {
      * @param oldDoc - old doc in buffer
      * @param newDoc - new doc in buffer
      * @returns buffer
+     */
