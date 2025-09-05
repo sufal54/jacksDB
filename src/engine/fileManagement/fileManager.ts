@@ -733,3 +733,4 @@ export class FileManager {
         if (newOffsetArray.length === 0) {
             // Delete the entire block
             const markBuf = Buffer.alloc(1);
+            markBuf.writeUInt8(0xDE);
