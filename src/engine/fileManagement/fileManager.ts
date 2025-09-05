@@ -286,3 +286,4 @@ export class FileManager {
             await readFile.read(oldBlockBuf, 0, totalSize, offset); // Get the Raw Data
             const oldJson = JSON.parse(this.crypto.decrypt(oldBlockBuf)) as IndexEntry; // Parse into Object
 
+            let encoded = this.crypto.encrypt(JSON.stringify({ ...newDoc, offset })); // NewDoc to Raw from
