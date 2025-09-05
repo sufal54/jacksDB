@@ -408,3 +408,4 @@ export class FileManager {
             for (const doc of flatDocs) {
                 if (!doc) {
                     continue;
+                }
