@@ -88,3 +88,4 @@ class Crypto {
         return oldDoc;
     }
 }
+export default Crypto;
