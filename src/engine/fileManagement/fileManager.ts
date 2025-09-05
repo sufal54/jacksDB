@@ -170,3 +170,4 @@ export class FileManager {
             const totalSize = 1 + 4 + 4 + 16 + capacity;
 
             // Read the full block
+            const fullBuffer = Buffer.alloc(totalSize);
