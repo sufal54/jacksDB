@@ -485,3 +485,4 @@ export class FileManager {
     private async writeIndexMap(indexMap: Map<string, Map<string, number[]>>): Promise<void> {
 
         for (const [key, valMap] of indexMap.entries()) {
+            const file = `${key}.idx.bson`; // Key to file name
