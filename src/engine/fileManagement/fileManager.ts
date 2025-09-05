@@ -330,3 +330,4 @@ export class FileManager {
             await writeFile.close();
             writeRel();
         } catch (err) {
+            console.log(err);
