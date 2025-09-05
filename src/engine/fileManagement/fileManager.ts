@@ -363,3 +363,4 @@ export class FileManager {
             for (const item of value) {
                 await this.deleteFieldFromIndexes("", item, offset, fullPath);
             }
+            // Case value Object
