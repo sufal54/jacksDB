@@ -768,3 +768,4 @@ export class FileManager {
        * @returns - void promise
        */
 
+    async makeAsDeleteAddNew(fileName: string, offset: number, doc?: Partial<IndexEntry>) {
