@@ -492,3 +492,4 @@ export class FileManager {
                 const existing = await this.indexFind(file, valStr); // Find is the value already exists
                 // Case exists then add another offset else append
                 if (existing) {
+                    await this.addFileIdxOffset(file, valStr, existing, ...offsets); // handles merge
