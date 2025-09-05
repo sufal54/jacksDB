@@ -517,3 +517,4 @@ export class FileManager {
         return new Promise(async (resolve, reject) => {
 
             const [_, rel] = await this.getLock(fileName).read();
+            const readStream = fs.createReadStream(path.join(this.dataBasePath, fileName));
