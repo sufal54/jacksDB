@@ -360,3 +360,4 @@ export class FileManager {
         // Handle nested values usin g recurstion
         // Case value array
         if (Array.isArray(value)) {
+            for (const item of value) {
