@@ -89,3 +89,4 @@ export class FileManager {
                 const buffer = Buffer.concat([leftover, Buffer.from(chunk)]);
                 let offset = 0;
 
+                while (offset < buffer.length) {
