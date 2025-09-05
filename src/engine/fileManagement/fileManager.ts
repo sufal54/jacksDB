@@ -705,3 +705,4 @@ export class FileManager {
    * @param fileName - name of file with extenstion
    * @param value - field value which is key of index file
    * @param dataBaseOffset - main database offset which is save on index file
+   * @returns - void promise
