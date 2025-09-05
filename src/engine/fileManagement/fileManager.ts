@@ -53,3 +53,4 @@ export class FileManager {
             console.log(err);
             throw new Error(`Error Occurs when try to ensure file ${fileName}`)
         }
+    }
