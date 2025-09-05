@@ -317,3 +317,4 @@ export class FileManager {
             capacityBuf.writeUInt32LE(oldCapacity);
             // Overwrite oldcapacity in new Raw Doc
             capacityBuf.copy(encoded, 5);
+
