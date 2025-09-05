@@ -292,3 +292,4 @@ export class FileManager {
             await readFile.close();
             rel();
 
+            await this.cleanupIndexesFromDoc(oldJson); // Clean old doc offset from index file
