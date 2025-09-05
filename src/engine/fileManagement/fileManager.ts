@@ -54,3 +54,4 @@ export class FileManager {
             throw new Error(`Error Occurs when try to ensure file ${fileName}`)
         }
     }
+
