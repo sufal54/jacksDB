@@ -212,3 +212,4 @@ export class FileManager {
 
             const decrypted = this.crypto.decrypt(fullBuf);
             jsonData = JSON.parse(decrypted) as IndexEntry;
+
