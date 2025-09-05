@@ -618,3 +618,4 @@ export class FileManager {
             // Create new index object
             const idxDoc = { [valStr]: [offset], offset };
             await this.appendIndexEntry(file, idxDoc);
+        }
