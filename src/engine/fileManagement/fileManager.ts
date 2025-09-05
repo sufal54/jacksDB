@@ -245,3 +245,4 @@ export class FileManager {
         }
         for (const file of files) {
             const fileLock = this.fileLocks.get(file);
+            // If file lock have then lock the file and delete for safety else just delete the file
