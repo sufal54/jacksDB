@@ -715,3 +715,4 @@ export class FileManager {
         relRead();
         if (!idxData) {
             // console.error(`${value} not found in ${fullPath}`);
+            return;
