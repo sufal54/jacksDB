@@ -305,3 +305,4 @@ export class FileManager {
                 // If filed is offset then skip
                 if (key === "offset") {
                     continue;
+                }
