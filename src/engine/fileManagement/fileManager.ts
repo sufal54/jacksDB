@@ -355,3 +355,4 @@ export class FileManager {
      * @param offset 
      * @param pathPrefix - Object case for join prevous filed
      */
+    private async deleteFieldFromIndexes(key: string, value: any, offset: number, pathPrefix: string = ""): Promise<void> {
