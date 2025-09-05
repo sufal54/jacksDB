@@ -859,3 +859,4 @@ export class FileManager {
                     await fsp.rename(tempFilePath, realFilePath);
                 } catch (err) {
                     console.error("Failed to replace main file:", err);
+                }
