@@ -456,3 +456,4 @@ export class FileManager {
         if (Array.isArray(value)) {
             for (const item of value) {
                 this.indexAllFields(map, item, offset, capacity, basePath); // Keep path as field name for array 
+            }
