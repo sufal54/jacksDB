@@ -809,3 +809,4 @@ export class FileManager {
 
                 while (i < buffer.length) {
                     const tag = buffer[i];
+
