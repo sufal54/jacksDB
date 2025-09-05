@@ -322,3 +322,4 @@ export class FileManager {
             // Some case it will Overlap with next Doc
             encoded = encoded.slice(0, 1 + 4 + 4 + 16 + newLength);
 
+            const [_, writeRel] = await this.getLock(this.mainDB).write();
