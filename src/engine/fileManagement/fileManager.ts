@@ -604,3 +604,4 @@ export class FileManager {
    * @param {string | number | boolean} val - The actual value to index.
    * @param {number} offset - The byte offset of the corresponding record in the data file.
    */
+    private async indexField(key: string, val: string | number | boolean, offset: number) {
