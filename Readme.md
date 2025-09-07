@@ -22,7 +22,9 @@
 - npm i jacksdb
 
 ```ts
-import { JacksDB, Schema } from "jacksdb"; // or from your relative path
+import jacksdb from "jacksdb"; // or from your relative path
+
+const { JacksDB, Schema } = jacksdb;
 ```
 
 ## Define a Schema
@@ -46,6 +48,12 @@ const userSchema = new Schema({
 
 ```ts
 const db = new JacksDB("your-secret-key"); // secret-key optional
+```
+
+## Create Collections
+
+```ts
+const users = db.collection("users", userSchema); // Collection name and schema
 ```
 
 ## Insert Data
