@@ -18,3 +18,4 @@ class Crypto {
      * including 0xfd 4byte length 4byte of capcity 16byte of iv and rest of data + 50byte of extra length
      * @param text - json string
      * @returns - encrypted buffer
+     */
