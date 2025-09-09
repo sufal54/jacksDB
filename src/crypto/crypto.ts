@@ -74,3 +74,4 @@ class Crypto {
         const newDataLen = newDoc.readUInt32LE(1);
 
         if (oldCapacity < newDataLen) {
+            return null;
