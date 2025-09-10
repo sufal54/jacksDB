@@ -9,3 +9,4 @@
   "stringArrayThreshold": 1,
   "rotateStringArray": true,
   "selfDefending": true,
+  "disableConsoleOutput": false,
