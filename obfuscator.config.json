@@ -11,3 +11,4 @@
   "selfDefending": true,
   "disableConsoleOutput": false,
   "renameGlobals": false,
+  "transformObjectKeys": false,
