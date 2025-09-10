@@ -12,3 +12,4 @@
   "disableConsoleOutput": false,
   "renameGlobals": false,
   "transformObjectKeys": false,
+  "identifierNamesGenerator": "mangled",  
