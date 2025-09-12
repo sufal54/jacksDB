@@ -89,3 +89,13 @@ export class FileManager {
                 const buffer = Buffer.concat([leftover, Buffer.from(chunk)]);
                 let offset = 0;
 
+                while (offset < buffer.length) {
+                    const remaining = buffer.length - offset;
+
+                    if (remaining < 25) { // Not enough for even the header
+                        break;
+                    }
+
+                    const currByte = buffer[offset];
+                    const length = buffer.readUInt32LE(offset + 1);
+                    const capacity = buffer.readUInt32LE(offset + 5);
