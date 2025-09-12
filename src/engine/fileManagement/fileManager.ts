@@ -139,3 +139,13 @@ export class FileManager {
         });
     }
 
+
+    /**
+     * Time O(1)
+     * It's takes offset and return single Doc
+     * Error if worng offset or Mark as deleted
+     * @param offset - Database offset
+     * @returns 
+     */
+    async dataBaseFind(offset: number) {
+        const [_, rel] = await this.getLock(this.mainDB).read();
