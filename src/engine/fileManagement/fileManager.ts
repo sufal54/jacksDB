@@ -379,3 +379,13 @@ export class FileManager {
 
 
 
+    /**
+    * Append document to the Database
+    * Also Update/Create indexes to the specfice index file
+    * 
+    * @param {string} fileName - Name of the file to write with extenstion.
+    * @return {Promise<void>}  
+    * @param {IndexEntry} doc - Object data we are going to insert
+     */
+
+
