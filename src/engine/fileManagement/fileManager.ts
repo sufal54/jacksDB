@@ -69,3 +69,13 @@ export class FileManager {
         const lock = this.fileLocks.get(fileName);
         if (!lock) {
             throw new Error(`Missing lock for file: ${fileName}`);
+        }
+        return lock;
+    }
+    /**
+     * scan entire database O(n) time
+     * @returns {any[]} - array of json data
+     */
+    async fullScan(): Promise<any[]> {
+        const results: any[] = [];
+        const [_, rel] = await this.getLock(this.mainDB).read();
