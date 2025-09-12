@@ -509,3 +509,13 @@ export class FileManager {
     Reads a binary file and extracts valid index blocks (tagged with 0xFD).
     Skips deleted blocks (tagged with 0xDE).
     
+    * @param {string} fileName - Name of the file to read.
+    * @return {Promise<IndexEntry | null>} - A fields indexs or null if not found
+  */
+
+    async indexFind(fileName: string, value: string): Promise<IndexOut | null> {
+        return new Promise(async (resolve, reject) => {
+
+            const [_, rel] = await this.getLock(fileName).read();
+            const readStream = fs.createReadStream(path.join(this.dataBasePath, fileName));
+            let leftover = Buffer.alloc(0); // Store half or incomplete previous chunk data
