@@ -309,3 +309,13 @@ export class FileManager {
                 // Add all indexs inside indesFiels
                 this.indexAllFields(indexFields, val, offset, oldCapacity, key);
             }
+            // Writes all indexs in index file
+            await this.writeIndexMap(indexFields);
+
+            // Copy Old doc capacity
+            const capacityBuf = Buffer.alloc(4);
+            capacityBuf.writeUInt32LE(oldCapacity);
+            // Overwrite oldcapacity in new Raw Doc
+            capacityBuf.copy(encoded, 5);
+
+            // Cut extra buffer we adds +50 byte for future update
