@@ -759,3 +759,13 @@ export class FileManager {
             rel();
         }
     }
+
+    /**
+       * Mark as delete data and append new one
+       * @param fileName - name of file with extenstion
+       * @param offset - field value which is key of index file
+       * @param doc - option if data pase then append it
+       * @returns - void promise
+       */
+
+    async makeAsDeleteAddNew(fileName: string, offset: number, doc?: Partial<IndexEntry>) {
