@@ -819,3 +819,13 @@ export class FileManager {
                         const length = buffer.readUInt32LE(i + 5);
                         const totalSize = 1 + 4 + 4 + 16 + length;
 
+                        if (i + totalSize > buffer.length) {// Incomplete block body
+                            isBroke = true;
+                            break;
+                        }
+                        if (tag === 0xFD) {
+                            const data = buffer.slice(i, i + totalSize);
+                            writeStream.write(data, (err) => {
+                                if (err) {
+                                    writeStream.destroy();
+                                    readStream.destroy();
