@@ -399,3 +399,13 @@ export class FileManager {
 
         // Size of file is the offset of new Doc
         let offset = (await write.stat()).size;
+
+        let encodeBufferDoc: Buffer[] = [];
+
+        const indexFields = new Map<string, Map<string, number[]>>();
+
+        try {
+            for (const doc of flatDocs) {
+                if (!doc) {
+                    continue;
+                }
