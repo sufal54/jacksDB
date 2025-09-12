@@ -569,3 +569,13 @@ export class FileManager {
                 }
 
                 if (isBroke) {
+                    leftover = buffer.slice(i); // Save only the unprocessed part
+                } else {
+                    leftover = Buffer.alloc(0); // Clean it — nothing to carry over
+                }
+            });
+            // End of readStream
+            readStream.on("end", () => {
+
+                readStream.destroy();
+                rel();
