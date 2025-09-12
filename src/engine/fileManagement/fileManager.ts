@@ -599,3 +599,13 @@ export class FileManager {
    * Adds an index entry for a specific key and value pointing to a data offset.
    * If the value already exists in the index, the offset is added to its list.
    * If not, a new index entry is created and stored.
+   * 
+   * @param {string} key - The field name to index (e.g. "name", "age").
+   * @param {string | number | boolean} val - The actual value to index.
+   * @param {number} offset - The byte offset of the corresponding record in the data file.
+   */
+    private async indexField(key: string, val: string | number | boolean, offset: number) {
+        const file = `${key}.idx.bson`;
+        // Ensure fiel exist or create new
+        this.ensureFile(file);
+        const valStr = val.toString();
