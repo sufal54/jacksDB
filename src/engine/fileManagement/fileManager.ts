@@ -249,3 +249,13 @@ export class FileManager {
             if (fileLock) {
                 const [_, rel] = await fileLock.write();
                 await fsp.unlink(path.join(dir, file));
+                rel();
+            } else {
+                await fsp.unlink(path.join(dir, file));
+            }
+
+        }
+    }
+
+    /**
+     * update database if new doc length is greater then its capacity then delete old doce append new also update indxes
