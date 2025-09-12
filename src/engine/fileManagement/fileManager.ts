@@ -619,3 +619,13 @@ export class FileManager {
             const idxDoc = { [valStr]: [offset], offset };
             await this.appendIndexEntry(file, idxDoc);
         }
+    }
+
+    /**
+     * Appends a new index entry to the end of an index file.
+     * The entry is encrypted and written with its offset information.
+     * 
+     * @param {string} fileName - Name of the index file to write to.
+     * @param {Partial<IndexEntry>} doc - The document to store (value-to-offset mapping).
+     */
+    private async appendIndexEntry(fileName: string, doc: Partial<IndexEntry>): Promise<void> {
