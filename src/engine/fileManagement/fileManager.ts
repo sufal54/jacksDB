@@ -59,3 +59,13 @@ export class FileManager {
     /**
      * Get the file lock for safe read and write
      * @param {string} fileName - name of file path with extension
+     * @returns {RwLock} - Return specfice index RwLock
+     */
+    private getLock(fileName: string): RwLock<void> {
+        if (!this.fileLocks.has(fileName)) {
+            this.ensureFile(fileName);
+        }
+
+        const lock = this.fileLocks.get(fileName);
+        if (!lock) {
+            throw new Error(`Missing lock for file: ${fileName}`);
