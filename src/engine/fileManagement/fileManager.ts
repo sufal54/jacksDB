@@ -409,3 +409,13 @@ export class FileManager {
                 if (!doc) {
                     continue;
                 }
+
+                const currOffset = offset;
+
+                doc.offset = currOffset;
+                const encodeDoc = this.crypto.encrypt(JSON.stringify(doc));
+                encodeBufferDoc.push(encodeDoc);
+                const capacity = encodeDoc.readUInt32LE(5);
+                offset += 1 + 4 + 4 + 16 + capacity;
+
+                // Send all key value for nested value 
