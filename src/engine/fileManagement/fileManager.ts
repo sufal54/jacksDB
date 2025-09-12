@@ -459,3 +459,13 @@ export class FileManager {
             }
             // Object case
         } else if (typeof value === "object" && value !== null) {
+            for (const [key, val] of Object.entries(value)) {
+                const fullPath = `${basePath}.${key}`;
+                this.indexAllFields(map, val, offset, capacity, fullPath);
+            }
+
+            // For Primitive data
+        } else if (["string", "number", "boolean"].includes(typeof value)) {
+            const valStr = value.toString();
+            if (!map.has(basePath)) {
+                map.set(basePath, new Map());
