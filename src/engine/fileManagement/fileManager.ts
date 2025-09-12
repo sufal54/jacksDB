@@ -799,3 +799,13 @@ export class FileManager {
             const readStream = fs.createReadStream(realFilePath);
             const writeStream = fs.createWriteStream(tempFilePath, { flags: "a" });
 
+            let leftover = Buffer.alloc(0); // Store half or incomplete previous chunk data
+
+            let isBroke = false; // check is leftover store data or clean
+
+            readStream.on("data", (chunk) => {
+                const buffer = Buffer.concat([leftover, Buffer.from(chunk)]);
+                let i = 0;
+
+                while (i < buffer.length) {
+                    const tag = buffer[i];
