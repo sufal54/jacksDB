@@ -109,3 +109,13 @@ export class FileManager {
                     const block = buffer.slice(offset, offset + totalSize);
 
                     if (currByte === 0xFD) {
+                        try {
+                            const decrypted = this.crypto.decrypt(block);
+                            const json = JSON.parse(decrypted);
+                            results.push(json);
+                        } catch (err) {
+                            console.warn(`Error decrypting block at ${offset}:`, err);
+                        }
+                    }
+
+                    // Skip both deleted (0xDE) and valid (0xFD) blocks
