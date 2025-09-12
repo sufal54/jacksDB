@@ -809,3 +809,13 @@ export class FileManager {
 
                 while (i < buffer.length) {
                     const tag = buffer[i];
+
+                    if (tag === 0xFD || tag === 0xDE) {
+                        if (i + 5 > buffer.length) {// Incomplete block header
+                            isBroke = true;
+                            break;
+                        }
+
+                        const length = buffer.readUInt32LE(i + 5);
+                        const totalSize = 1 + 4 + 4 + 16 + length;
+
