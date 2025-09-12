@@ -289,3 +289,13 @@ export class FileManager {
             let encoded = this.crypto.encrypt(JSON.stringify({ ...newDoc, offset })); // NewDoc to Raw from
             const newLength = encoded.readUInt32LE(1);
             await readFile.sync();
+            await readFile.close();
+            rel();
+
+            await this.cleanupIndexesFromDoc(oldJson); // Clean old doc offset from index file
+            // Case when new Doc length is greater then old data's capacity
+            if (newLength > oldCapacity) {
+                await this.makeAsDeleteAddNew(this.mainDB, offset, newDoc); // Mark old Doc as deleted and append new Doc
+                return;
+            }
+
