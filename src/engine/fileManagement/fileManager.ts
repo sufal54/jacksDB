@@ -239,3 +239,13 @@ export class FileManager {
     async deleteAllFiles(): Promise<void> {
         const dir = this.dataBasePath;
         // All files inside of Dir
+        const files = await fsp.readdir(dir);
+        if (files.length === 0) {
+            return;
+        }
+        for (const file of files) {
+            const fileLock = this.fileLocks.get(file);
+            // If file lock have then lock the file and delete for safety else just delete the file
+            if (fileLock) {
+                const [_, rel] = await fileLock.write();
+                await fsp.unlink(path.join(dir, file));
