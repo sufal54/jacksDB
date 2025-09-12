@@ -579,3 +579,13 @@ export class FileManager {
 
                 readStream.destroy();
                 rel();
+                resolve(null);
+            });
+            // On Error
+            readStream.on("error", (err) => {
+                readStream.destroy();
+                rel();
+                console.error(err);
+                reject(null);
+
+            });
