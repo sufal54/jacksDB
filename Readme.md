@@ -49,3 +49,13 @@ const userSchema = new Schema({
 ```ts
 const db = new JacksDB("your-secret-key"); // secret-key optional
 ```
+
+## Create Collections
+
+```ts
+const users = db.collection("users", userSchema); // Collection name and schema
+```
+
+## Insert Data
+
+- insertOne(doc: object)
