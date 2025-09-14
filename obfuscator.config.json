@@ -7,3 +7,4 @@
   "stringArray": true,
   "stringArrayEncoding": ["base64"],
   "stringArrayThreshold": 1,
+  "rotateStringArray": true,
