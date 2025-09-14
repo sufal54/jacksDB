@@ -49,3 +49,13 @@ class Schema {
 
         for (const key in this.definition) {
             const expected = this.definition[key];
+
+            if (!(key in doc)) {
+                throw new Error(`Missing field: ${key}`);
+            }
+
+            const actual = doc[key];
+
+            // Handle array types
+            if (Array.isArray(expected)) {
+                if (!Array.isArray(actual)) {
