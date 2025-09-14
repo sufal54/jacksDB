@@ -4,3 +4,4 @@
   "controlFlowFlatteningThreshold": 1,
   "deadCodeInjection": true,
   "deadCodeInjectionThreshold": 1,
+  "stringArray": true,
