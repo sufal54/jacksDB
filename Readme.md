@@ -99,3 +99,13 @@ await users.insertMany([
 const result = await users.find({ age: 30 });
 ```
 
+Optional query options:
+
+```ts
+await users.find(
+  {},
+  {
+    sort: { age: -1 },
+    skip: 10,
+    limit: 5,
+  }
