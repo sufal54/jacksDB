@@ -69,3 +69,13 @@ await users.insertOne({
   meta: { city: "Delhi", active: true },
 });
 ```
+
+- insertMany(docs: object[])
+
+```ts
+await users.insertMany([
+  {
+    id: 2,
+    name: "Bob",
+    age: 25,
+    tags: ["coder"],
