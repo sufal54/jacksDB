@@ -139,3 +139,13 @@ await users.updateMany({ tags: "blogger" }, { "meta.active": false });
 ```ts
 await users.deleteOne({ name: "Mona" });
 ```
+
+- deleteMany(query)
+
+```ts
+await users.deleteMany({ "meta.city": "Delhi" });
+```
+
+## Supported Query Operators
+
+| Operator  | Usage Example                                                 | Description           |
