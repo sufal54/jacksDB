@@ -150,3 +150,4 @@ export class FileManager {
     async dataBaseFind(offset: number) {
         const [_, rel] = await this.getLock(this.mainDB).read();
         const fullPath = path.join(this.dataBasePath, this.mainDB);
+        const file = await fsp.open(fullPath, 'r');
