@@ -20,3 +20,4 @@ export class FileManager {
     * @param {string} name - name of collection
     * @param {String} secret - option a secret key for better encryption
     * @return {this} 
+  */
