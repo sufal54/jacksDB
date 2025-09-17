@@ -83,3 +83,4 @@ export class FileManager {
 
         return new Promise((resolve, reject) => {
             const readStream = fs.createReadStream(fullPath);
+            let leftover = Buffer.alloc(0);
