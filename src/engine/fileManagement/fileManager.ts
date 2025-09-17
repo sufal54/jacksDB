@@ -21,3 +21,4 @@ export class FileManager {
     * @param {String} secret - option a secret key for better encryption
     * @return {this} 
   */
+    constructor(
