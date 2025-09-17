@@ -29,3 +29,4 @@ export class FileManager {
         this.crypto = new Crypto(secret);
 
         // Make path if does not exist
+        fs.mkdirSync(this.dataBasePath, { recursive: true });
