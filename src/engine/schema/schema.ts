@@ -90,3 +90,4 @@ class Schema {
             } else {
                 const expectedTypeName = this.getTypeName(expected);
                 const actualTypeName = typeof actual;
+                if (actualTypeName !== expectedTypeName) {
