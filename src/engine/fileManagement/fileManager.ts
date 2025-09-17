@@ -299,3 +299,4 @@ export class FileManager {
                 return;
             }
 
+            // Store all Index file and its Offsets
