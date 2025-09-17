@@ -163,3 +163,4 @@ export class FileManager {
                 return;
             }
 
+            // const length = headerBuffer.readUInt32LE(1);
