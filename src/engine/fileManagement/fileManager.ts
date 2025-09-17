@@ -198,3 +198,4 @@ export class FileManager {
             const header = Buffer.alloc(25);
             await file.read(header, 0, 25, offset);
 
+            if (header[0] !== 0xFD) {
