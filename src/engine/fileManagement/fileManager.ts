@@ -827,3 +827,4 @@ export class FileManager {
                             const data = buffer.slice(i, i + totalSize);
                             writeStream.write(data, (err) => {
                                 if (err) {
+                                    writeStream.destroy();
