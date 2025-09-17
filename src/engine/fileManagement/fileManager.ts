@@ -666,3 +666,4 @@ export class FileManager {
             };
             await this.appendIndexEntry(fileName, newEntry);
             return;
+        }
