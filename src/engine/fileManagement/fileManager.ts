@@ -232,3 +232,4 @@ export class FileManager {
         }
     }
     /**
+     * For deleteMany({})
