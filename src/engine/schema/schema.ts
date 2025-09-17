@@ -107,3 +107,4 @@ class Schema {
             default:
                 throw new Error(`Unsupported type in schema: ${type}`);
         }
+    }
