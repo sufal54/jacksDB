@@ -326,3 +326,4 @@ export class FileManager {
             const writeFile = await fsp.open(fullPath, "r+");
             // Overwrite new Doc on old location
             await writeFile.write(encoded, 0, encoded.length, offset);
+            await writeFile.sync(); // Flush data into disk
