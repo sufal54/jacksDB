@@ -187,3 +187,4 @@ export class FileManager {
      * @param offset - Database offset
      * @returns 
      */
+    async dataBaseDelete(offset: number): Promise<void> {
