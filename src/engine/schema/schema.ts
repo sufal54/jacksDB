@@ -76,3 +76,4 @@ class Schema {
                         if (actualItemType !== expectedTypeName) {
                             throw new Error(`Field "${key}[${i}]" must be ${expectedTypeName}, got ${actualItemType}`);
                         }
+                    }
