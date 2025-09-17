@@ -66,3 +66,4 @@ export class FileManager {
             this.ensureFile(fileName);
         }
 
+        const lock = this.fileLocks.get(fileName);
