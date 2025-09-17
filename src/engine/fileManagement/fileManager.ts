@@ -722,3 +722,4 @@ export class FileManager {
         const fileHandle = await fsp.open(fullPath, 'r+');
 
         const offsetArray = idxData[value];
+        const newOffsetArray = offsetArray.filter((item) => item !== dataBaseOffset);
