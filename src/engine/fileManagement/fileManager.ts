@@ -306,3 +306,4 @@ export class FileManager {
                 if (key === "offset") {
                     continue;
                 }
+                // Add all indexs inside indesFiels
