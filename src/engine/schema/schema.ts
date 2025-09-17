@@ -58,3 +58,4 @@ class Schema {
 
             // Handle array types
             if (Array.isArray(expected)) {
+                if (!Array.isArray(actual)) {
