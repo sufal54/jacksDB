@@ -493,3 +493,4 @@ export class FileManager {
                 // Case exists then add another offset else append
                 if (existing) {
                     await this.addFileIdxOffset(file, valStr, existing, ...offsets); // handles merge
+                } else {
