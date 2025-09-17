@@ -59,3 +59,4 @@ export class FileManager {
     /**
      * Get the file lock for safe read and write
      * @param {string} fileName - name of file path with extension
+     * @returns {RwLock} - Return specfice index RwLock
