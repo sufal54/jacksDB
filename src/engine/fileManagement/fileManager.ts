@@ -62,3 +62,4 @@ export class FileManager {
      * @returns {RwLock} - Return specfice index RwLock
      */
     private getLock(fileName: string): RwLock<void> {
+        if (!this.fileLocks.has(fileName)) {
