@@ -663,3 +663,4 @@ export class FileManager {
         if (!idxData) {
             const newEntry: Partial<IndexEntry> = {
                 [value]: dataBaseOffset,
+            };
