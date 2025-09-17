@@ -199,3 +199,4 @@ export class FileManager {
             await file.read(header, 0, 25, offset);
 
             if (header[0] !== 0xFD) {
+                // await file.close();
