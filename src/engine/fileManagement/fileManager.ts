@@ -272,3 +272,4 @@ export class FileManager {
         try {
             const header = Buffer.alloc(25); // For headers
             await readFile.read(header, 0, 25, offset);
+            // Invalid Block return
