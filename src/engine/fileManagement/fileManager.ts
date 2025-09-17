@@ -195,3 +195,4 @@ export class FileManager {
         let jsonData: IndexEntry | null = null;
 
         try {
+            const header = Buffer.alloc(25);
