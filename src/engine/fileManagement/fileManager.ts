@@ -829,3 +829,4 @@ export class FileManager {
                                 if (err) {
                                     writeStream.destroy();
                                     readStream.destroy();
+                                    rel();
