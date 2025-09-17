@@ -247,3 +247,4 @@ export class FileManager {
             const fileLock = this.fileLocks.get(file);
             // If file lock have then lock the file and delete for safety else just delete the file
             if (fileLock) {
+                const [_, rel] = await fileLock.write();
