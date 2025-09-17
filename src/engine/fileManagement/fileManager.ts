@@ -113,3 +113,4 @@ export class FileManager {
                             const decrypted = this.crypto.decrypt(block);
                             const json = JSON.parse(decrypted);
                             results.push(json);
+                        } catch (err) {
