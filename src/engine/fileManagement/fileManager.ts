@@ -498,3 +498,4 @@ export class FileManager {
                         [valStr]: offsets,
                         offset: undefined // will be added by appendIndexEntry
                     };
+                    await this.appendIndexEntry(file, doc);
