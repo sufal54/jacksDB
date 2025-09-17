@@ -308,3 +308,4 @@ export class FileManager {
                 }
                 // Add all indexs inside indesFiels
                 this.indexAllFields(indexFields, val, offset, oldCapacity, key);
+            }
