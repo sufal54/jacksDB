@@ -49,3 +49,13 @@ class Crypto {
      * @returns - json string
      */
     decrypt(encodeDoc: Buffer): string {
+        if (encodeDoc[0] !== 0xFD) { // Invaild data case
+            throw new Error("Invaild encodeDoc Data");
+        }
+        const len = encodeDoc.readUint32LE(1);
+
+        const iv = encodeDoc.slice(9, 25);
+        const encodeDocText = encodeDoc.slice(25, 25 + len).toString("hex");
+
+        const decipher = crypto.createDecipheriv(this.algorithm, this.key, iv);
+        let decodeDoc = decipher.update(encodeDocText, 'hex', 'utf8');
