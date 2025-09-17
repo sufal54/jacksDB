@@ -853,3 +853,4 @@ export class FileManager {
 
                 try {
                     // Delete main file 
+                    await fsp.rm(realFilePath, { force: true });
