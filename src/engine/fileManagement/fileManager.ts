@@ -686,3 +686,4 @@ export class FileManager {
             }
 
             const capacityBuffer = Buffer.alloc(4);
+            capacityBuffer.writeInt32LE(idxData.capacity);
