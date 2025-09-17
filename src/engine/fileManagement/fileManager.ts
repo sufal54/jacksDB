@@ -704,3 +704,4 @@ export class FileManager {
    * Delete main database field indexs update index file
    * @param fileName - name of file with extenstion
    * @param value - field value which is key of index file
+   * @param dataBaseOffset - main database offset which is save on index file
