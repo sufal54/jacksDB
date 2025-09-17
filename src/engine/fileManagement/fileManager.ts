@@ -431,3 +431,4 @@ export class FileManager {
             await write.sync();
         } catch (err) {
             console.error("appendInFile error:", err);
+            await write.close();
