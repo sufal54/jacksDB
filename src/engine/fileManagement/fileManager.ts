@@ -229,3 +229,4 @@ export class FileManager {
             } catch (err) {
                 console.error("Failed to clean up index:", err);
             }
+        }
