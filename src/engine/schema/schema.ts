@@ -42,3 +42,4 @@ class Schema {
     validate(doc: any): boolean {
         // Check for unexpected fields
         for (const key in doc) {
+            if (!(key in this.definition)) {
