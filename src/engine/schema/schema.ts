@@ -3,3 +3,4 @@ export type SchemaDefinition = {
     | StringConstructor
     | NumberConstructor
     | BooleanConstructor
+    | SchemaDefinition
