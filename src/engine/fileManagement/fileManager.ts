@@ -47,3 +47,4 @@ export class FileManager {
                 fs.writeFileSync(fullPath, "");
             }
             if (!this.fileLocks.has(fileName)) {
+                this.fileLocks.set(fileName, new RwLock<void>(undefined));
