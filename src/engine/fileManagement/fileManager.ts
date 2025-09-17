@@ -40,3 +40,4 @@ export class FileManager {
      * @param {string} fileName - name of file path with extension
      */
     private ensureFile(fileName: string): void {
+        const fullPath = path.join(this.dataBasePath, fileName);
