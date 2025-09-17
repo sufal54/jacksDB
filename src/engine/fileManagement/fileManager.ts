@@ -623,3 +623,4 @@ export class FileManager {
 
     /**
      * Appends a new index entry to the end of an index file.
+     * The entry is encrypted and written with its offset information.
