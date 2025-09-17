@@ -210,3 +210,4 @@ export class FileManager {
             const fullBuf = Buffer.alloc(totalSize);
             await file.read(fullBuf, 0, totalSize, offset);
 
+            const decrypted = this.crypto.decrypt(fullBuf);
