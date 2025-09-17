@@ -555,3 +555,4 @@ export class FileManager {
                                 jsonData.capacity = bufferData.readInt32LE(5); // Inside object add data capacity
 
 
+                                readStream.destroy() // Close readStream
