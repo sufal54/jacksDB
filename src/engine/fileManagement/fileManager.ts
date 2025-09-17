@@ -6,3 +6,4 @@ import Crypto from "../../crypto/crypto";
 import { IndexEntry, IndexOut, FindOptions } from "./types";
 
 export class FileManager {
+    private dataBasePath = "JacksDB";
