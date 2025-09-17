@@ -364,3 +364,4 @@ export class FileManager {
                 await this.deleteFieldFromIndexes("", item, offset, fullPath);
             }
             // Case value Object
+        } else if (typeof value === "object" && value !== null) {
