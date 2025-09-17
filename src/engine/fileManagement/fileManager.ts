@@ -600,3 +600,4 @@ export class FileManager {
    * If the value already exists in the index, the offset is added to its list.
    * If not, a new index entry is created and stored.
    * 
+   * @param {string} key - The field name to index (e.g. "name", "age").
