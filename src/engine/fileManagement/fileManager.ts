@@ -658,3 +658,4 @@ export class FileManager {
         const [v, relRead] = await this.getLock(fileName).read();
         const idxData = doc
         const fullPath = path.join(this.dataBasePath, fileName);
+        relRead();
