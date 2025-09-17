@@ -12,3 +12,4 @@ export class FileManager {
     private crypto: Crypto;
 
 
+    private _index: Map<string, Map<string, Set<number>>> = new Map(); // test no use
