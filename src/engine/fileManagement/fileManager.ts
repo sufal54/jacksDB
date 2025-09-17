@@ -375,3 +375,4 @@ export class FileManager {
             await this.deleteFileIdxOffset(indexFile, valStr, offset);
         }
     }
+
