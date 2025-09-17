@@ -274,3 +274,4 @@ export class FileManager {
             await readFile.read(header, 0, 25, offset);
             // Invalid Block return
             if (header[0] !== 0xFD) {
+                await readFile.close();
