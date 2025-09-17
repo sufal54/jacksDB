@@ -250,3 +250,4 @@ export class FileManager {
                 const [_, rel] = await fileLock.write();
                 await fsp.unlink(path.join(dir, file));
                 rel();
+            } else {
