@@ -88,3 +88,4 @@ class Schema {
 
                 // Handle primitives
             } else {
+                const expectedTypeName = this.getTypeName(expected);
