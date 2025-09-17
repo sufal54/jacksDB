@@ -136,3 +136,4 @@ export class FileManager {
                 rel();
                 reject(err);
             });
+        });
