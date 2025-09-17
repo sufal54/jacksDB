@@ -762,3 +762,4 @@ export class FileManager {
 
     /**
        * Mark as delete data and append new one
+       * @param fileName - name of file with extenstion
