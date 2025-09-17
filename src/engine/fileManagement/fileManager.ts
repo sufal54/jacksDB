@@ -534,3 +534,4 @@ export class FileManager {
 
                     if (tag === 0xFD || tag === 0xDE) {
                         if (i + 9 > buffer.length) {// Incomplete block header
+                            isBroke = true;
