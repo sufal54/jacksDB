@@ -44,3 +44,4 @@ export class FileManager {
 
         try {
             if (!fs.existsSync(fullPath)) {
+                fs.writeFileSync(fullPath, "");
