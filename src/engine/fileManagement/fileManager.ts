@@ -106,3 +106,4 @@ export class FileManager {
                         break;
                     }
 
+                    const block = buffer.slice(offset, offset + totalSize);
