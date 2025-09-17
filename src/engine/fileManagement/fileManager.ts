@@ -626,3 +626,4 @@ export class FileManager {
      * The entry is encrypted and written with its offset information.
      * 
      * @param {string} fileName - Name of the index file to write to.
+     * @param {Partial<IndexEntry>} doc - The document to store (value-to-offset mapping).
