@@ -16,3 +16,4 @@ export class FileManager {
     private _fieldIndexes: Record<string, Map<string, number | number[]>> = {}; // test no use
 
     /**
+    Initialize FileManager of a collection
