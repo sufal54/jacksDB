@@ -814,3 +814,4 @@ export class FileManager {
                         if (i + 5 > buffer.length) {// Incomplete block header
                             isBroke = true;
                             break;
+                        }
