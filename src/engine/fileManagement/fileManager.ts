@@ -747,3 +747,4 @@ export class FileManager {
         newData[value] = newOffsetArray;
         newData.offset = idxData.offset;
 
+        try {
