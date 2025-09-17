@@ -529,3 +529,4 @@ export class FileManager {
                 let i = 0;
 
                 while (i < buffer.length) {
+                    // Check current index
