@@ -421,3 +421,4 @@ export class FileManager {
                 // Send all key value for nested value 
                 for (const [key, value] of Object.entries(doc)) {
                     if (key === "offset") {
+                        continue;
