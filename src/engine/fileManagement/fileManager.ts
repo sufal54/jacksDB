@@ -870,3 +870,4 @@ export class FileManager {
             readStream.on("error", (err) => {
                 writeStream.destroy();
 
+                readStream.destroy();
