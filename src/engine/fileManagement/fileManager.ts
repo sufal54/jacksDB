@@ -237,3 +237,4 @@ export class FileManager {
      * @returns 
      */
     async deleteAllFiles(): Promise<void> {
+        const dir = this.dataBasePath;
