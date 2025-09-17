@@ -781,3 +781,4 @@ export class FileManager {
         await write.close();
         rel();
         if (doc) {
+            await this.dataBaseInsert(fileName, doc);
