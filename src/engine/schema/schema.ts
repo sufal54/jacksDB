@@ -20,3 +20,4 @@ class Schema {
                 if (this.isPlainObject(item)) {
                     // Array of nested schemas
                     this.definition[key] = [new Schema(item as SchemaDefinition)];
+                } else {
