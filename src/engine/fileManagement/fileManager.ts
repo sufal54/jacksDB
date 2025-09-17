@@ -85,3 +85,4 @@ export class FileManager {
             const readStream = fs.createReadStream(fullPath);
             let leftover = Buffer.alloc(0);
 
+            readStream.on("data", (chunk) => {
