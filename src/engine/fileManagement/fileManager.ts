@@ -325,3 +325,4 @@ export class FileManager {
             const [_, writeRel] = await this.getLock(this.mainDB).write();
             const writeFile = await fsp.open(fullPath, "r+");
             // Overwrite new Doc on old location
+            await writeFile.write(encoded, 0, encoded.length, offset);
