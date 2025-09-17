@@ -42,3 +42,4 @@ export class FileManager {
     private ensureFile(fileName: string): void {
         const fullPath = path.join(this.dataBasePath, fileName);
 
+        try {
