@@ -763,3 +763,4 @@ export class FileManager {
     /**
        * Mark as delete data and append new one
        * @param fileName - name of file with extenstion
+       * @param offset - field value which is key of index file
