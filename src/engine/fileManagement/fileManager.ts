@@ -33,3 +33,4 @@ export class FileManager {
 
         // Main DB file
         this.ensureFile(`main.db.bson`);
+
