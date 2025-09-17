@@ -192,3 +192,4 @@ export class FileManager {
         const fullPath = path.join(this.dataBasePath, this.mainDB);
         const file = await fsp.open(fullPath, "r+");
 
+        let jsonData: IndexEntry | null = null;
