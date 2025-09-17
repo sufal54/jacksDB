@@ -638,3 +638,4 @@ export class FileManager {
             await write.write(encodeDoc);
             await write.sync();
         } catch (err) {
+            console.error("appendIndexEntry error:", err);
