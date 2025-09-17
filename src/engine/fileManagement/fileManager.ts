@@ -832,3 +832,4 @@ export class FileManager {
                                     rel();
                                     return reject(err);
                                 }
+                            });
