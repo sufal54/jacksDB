@@ -797,3 +797,4 @@ export class FileManager {
             const tempFilePath = path.join(this.dataBasePath, "temp.bson");
             const [_, rel] = await this.getLock(fileName).write();
             const readStream = fs.createReadStream(realFilePath);
+            const writeStream = fs.createWriteStream(tempFilePath, { flags: "a" });
