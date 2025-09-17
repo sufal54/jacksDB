@@ -80,3 +80,4 @@ export class FileManager {
         const results: any[] = [];
         const [_, rel] = await this.getLock(this.mainDB).read();
         const fullPath = path.join(this.dataBasePath, this.mainDB);
+
