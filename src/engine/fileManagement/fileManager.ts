@@ -369,3 +369,4 @@ export class FileManager {
                 await this.deleteFieldFromIndexes(k, v, offset, fullPath);
             }
             // Primitive Data
+        } else if (["string", "number", "boolean"].includes(typeof value)) {
