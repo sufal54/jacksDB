@@ -786,3 +786,4 @@ export class FileManager {
         }
     }
 
+    // Remove those data are marked as delete or grabage
