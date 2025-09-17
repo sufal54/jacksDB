@@ -177,3 +177,4 @@ export class FileManager {
             return JSON.parse(jsonData);
         } finally {
             await file.close().catch((e) => console.error(e));
+            rel();
