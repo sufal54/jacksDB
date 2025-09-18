@@ -94,3 +94,4 @@ class Schema {
                     throw new Error(`Field "${key}" must be ${expectedTypeName}, got ${actualTypeName}`);
                 }
             }
+        }
