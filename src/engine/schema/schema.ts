@@ -70,3 +70,4 @@ class Schema {
                             throw new Error(`Field "${key}[${i}]" must be a nested object`);
                         }
                         itemType.validate(item);
+                    } else {
