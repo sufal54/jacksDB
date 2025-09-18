@@ -62,3 +62,4 @@ class Schema {
                     throw new Error(`Field "${key}" must be an array`);
                 }
 
+                const itemType = expected[0];
