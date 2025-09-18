@@ -56,3 +56,4 @@ class Schema {
 
             const actual = doc[key];
 
+            // Handle array types
