@@ -64,3 +64,4 @@ class Schema {
 
                 const itemType = expected[0];
                 for (let i = 0; i < actual.length; i++) {
+                    const item = actual[i];
