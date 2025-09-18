@@ -37,3 +37,4 @@ class Schema {
 
     private isPlainObject(obj: any) {
         return typeof obj === "object" && obj !== null && !Array.isArray(obj) && !(obj instanceof Schema);
+    }
