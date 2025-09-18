@@ -50,3 +50,4 @@ class Schema {
         for (const key in this.definition) {
             const expected = this.definition[key];
 
+            if (!(key in doc)) {
