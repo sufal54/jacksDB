@@ -58,3 +58,4 @@ class Crypto {
         const encodeDocText = encodeDoc.slice(25, 25 + len).toString("hex");
 
         const decipher = crypto.createDecipheriv(this.algorithm, this.key, iv);
+        let decodeDoc = decipher.update(encodeDocText, 'hex', 'utf8');
