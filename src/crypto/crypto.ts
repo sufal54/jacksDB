@@ -87,3 +87,4 @@ class Crypto {
         newDoc.copy(oldDoc, 25, 25, 25 + newDataLen);
         return oldDoc;
     }
+}
