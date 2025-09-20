@@ -59,3 +59,13 @@ const users = db.collection("users", userSchema); // Collection name and schema
 ## Insert Data
 
 - insertOne(doc: object)
+
+```ts
+await users.insertOne({
+  id: 1,
+  name: "Alice",
+  age: 30,
+  tags: ["engineer", "blogger"],
+  meta: { city: "Delhi", active: true },
+});
+```
