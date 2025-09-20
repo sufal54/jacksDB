@@ -29,3 +29,13 @@ const { JacksDB, Schema } = jacksdb;
 
 ## Define a Schema
 
+You must define a schema using Schema before using a collection:
+
+```ts
+const userSchema = new Schema({
+  id: Number,
+  name: String,
+  age: Number,
+  tags: [String],
+  meta: {
+    city: String,
