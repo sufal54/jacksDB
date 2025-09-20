@@ -169,3 +169,13 @@ await users.deleteMany({ "meta.city": "Delhi" });
 | `insertOne()`     | O(1 + f)                        | `f` = number of indexed fields  |
 | `find()`          | O(1) with index, O(n) full scan | Uses indexes if available       |
 | `updateOne()`     | O(f)                            | Clean + reindex affected fields |
+| `deleteOne()`     | O(f)                            | Clean index entries             |
+| `insertMany()`    | O(k × f)                        | `k` = number of documents       |
+| `updateMany()`    | O(n × f)                        | For each matched document       |
+| `deleteMany()`    | O(n × f)                        | Same as updateMany              |
+| `fullScan()`      | O(n)                            | Streamed read of all documents  |
+| `removeGarbage()` | O(n)                            | Rewrites only valid blocks      |
+
+
+
+
