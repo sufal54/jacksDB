@@ -70,3 +70,4 @@ class Crypto {
      * @returns buffer
      */
     isWithinCapacity(oldDoc: Buffer, newDoc: Buffer): Buffer | null {
+        const oldCapacity = oldDoc.readUint32LE(5);
