@@ -35,3 +35,4 @@ class Crypto {
         header.writeUint8(0xFD, 0); // 0xFD stand for valid data
         header.writeUint32LE(buffer.length, 1); // length of data
         header.writeUint32LE(buffer.length + 50, 5); // capacity extra 50 bytes
+
