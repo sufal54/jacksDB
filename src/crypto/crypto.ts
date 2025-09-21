@@ -80,3 +80,4 @@ class Crypto {
         // Update header with new data length
         oldDoc.writeUInt32LE(newDataLen, 1);            // Set new length in old header
 
+        // Copy new IV
