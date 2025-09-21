@@ -67,3 +67,4 @@ class Crypto {
      * then change old data with new data and return new updated buffer or return null
      * @param oldDoc - old doc in buffer
      * @param newDoc - new doc in buffer
+     * @returns buffer
