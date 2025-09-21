@@ -61,3 +61,4 @@ class Crypto {
         let decodeDoc = decipher.update(encodeDocText, 'hex', 'utf8');
         decodeDoc += decipher.final();
         return decodeDoc;
+    }
