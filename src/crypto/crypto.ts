@@ -75,3 +75,4 @@ class Crypto {
 
         if (oldCapacity < newDataLen) {
             return null;
+        }
