@@ -55,3 +55,4 @@ class Crypto {
         const len = encodeDoc.readUint32LE(1);
 
         const iv = encodeDoc.slice(9, 25);
+        const encodeDocText = encodeDoc.slice(25, 25 + len).toString("hex");
