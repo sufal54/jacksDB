@@ -28,3 +28,4 @@ class Crypto {
         const iv = crypto.randomBytes(16);
         const cipher = crypto.createCipheriv(this.algorithm, this.key, iv);
 
+        let encodeDoc = cipher.update(text, 'utf8', 'hex');
