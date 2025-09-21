@@ -8,3 +8,4 @@ class Crypto {
 
     constructor(secretKey?: string) {
         // Generate a default key using OS hostname and platform if not provided
+        const finalKey = secretKey || `${os.hostname()}-${os.platform()}`;
