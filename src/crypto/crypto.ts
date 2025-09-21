@@ -19,3 +19,4 @@ class Crypto {
      * @param text - json string
      * @returns - encrypted buffer
      */
+    encrypt(text: string): Buffer {
