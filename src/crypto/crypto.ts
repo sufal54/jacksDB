@@ -79,3 +79,13 @@ class Crypto {
 
         // Update header with new data length
         oldDoc.writeUInt32LE(newDataLen, 1);            // Set new length in old header
+
+        // Copy new IV
+        newDoc.copy(oldDoc, 9, 9, 25);                  // IV (16 bytes)
+
+        // Copy new encrypted data
+        newDoc.copy(oldDoc, 25, 25, 25 + newDataLen);
+        return oldDoc;
+    }
+}
+export default Crypto;
