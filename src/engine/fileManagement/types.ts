@@ -13,3 +13,4 @@ export type FindOptions = {
     sort?: Record<string, 1 | -1>;
     skip?: number;
     limit?: number;
+}
