@@ -8,3 +8,4 @@ export class JacksDB {
     constructor(secret?: string) {
         this.secret = secret;
     }
+
