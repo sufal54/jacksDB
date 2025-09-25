@@ -9,3 +9,4 @@ export type IndexOut = {
     capacity: number;
 } & Record<string, number[]>;
 
+export type FindOptions = {
