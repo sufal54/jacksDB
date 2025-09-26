@@ -4,7 +4,6 @@
   "description": "",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",
-  
   "scripts": {
     "start": "ts-node test/main.test.ts",
     "build": "tsc",
@@ -26,6 +25,7 @@
   "license": "ISC",
   "dependencies": {
     "@sufalctl/rwlock": "^2.0.2",
+    "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   },
   "devDependencies": {
