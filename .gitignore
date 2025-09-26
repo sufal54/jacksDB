@@ -1,4 +1,4 @@
-node_modules/
+
 dist/
 JacksDB/
 testing.ts
