@@ -23,3 +23,17 @@ export class JacksDB {
         return this.collections.get(name)!;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
