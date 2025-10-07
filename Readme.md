@@ -89,3 +89,13 @@ await users.insertMany([
     meta: { city: "Delhi", active: true },
   },
 ]);
+```
+
+## Find Documents
+
+- find(query, options?)
+
+```ts
+const result = await users.find({ age: 30 });
+```
+
