@@ -146,6 +146,8 @@ await users.deleteOne({ name: "Mona" });
 await users.deleteMany({ "meta.city": "Delhi" });
 ```
 
+- DataBase location $HOME/JacksDB/\*Collections
+
 ## Supported Query Operators
 
 | Operator  | Usage Example                                                 | Description           |
@@ -175,17 +177,3 @@ await users.deleteMany({ "meta.city": "Delhi" });
 | `deleteMany()`    | O(n × f)                        | Same as updateMany              |
 | `fullScan()`      | O(n)                            | Streamed read of all documents  |
 | `removeGarbage()` | O(n)                            | Rewrites only valid blocks      |
-
-
-
-
-
-
-
-
-
-
-
-
-
-

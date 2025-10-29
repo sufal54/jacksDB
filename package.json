@@ -1,6 +1,6 @@
 {
   "name": "jacksdb",
-  "version": "1.3.12",
+  "version": "1.4.0",
   "description": "",
   "main": "dist/src/index.js",
   "types": "dist/src/index.d.ts",

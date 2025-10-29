@@ -3,6 +3,7 @@ import fsp from "node:fs/promises";
 import path from "node:path";
 import RwLock from "@sufalctl/rwlock";
 import Crypto from "../../crypto/crypto";
+import os from "node:os";
 import { IndexEntry, IndexOut, FindOptions } from "./types";
 
 export class FileManager {
@@ -25,7 +26,7 @@ export class FileManager {
         name: string,
         secret?: string
     ) {
-        this.dataBasePath = path.join(this.dataBasePath, name); // Path of collection in database
+        this.dataBasePath = path.join(os.homedir(), this.dataBasePath, name); // Path of collection in database
         this.crypto = new Crypto(secret);
 
         // Make path if does not exist
